@@ -5,7 +5,7 @@ import Link from "next/link"
 const Tab = ({ tabName, icon, to }) => {
   return (
     <Link href={to}>
-      <button className='flex items-center w-44 py-2 rounded-full hover:bg-[#22184c]'>
+      <button className='flex items-center w-44 py-2 rounded-full hover:bg-[#150f2e]'>
         <div className='w-14'>
           <FontAwesomeIcon icon={icon} size='xl' />
         </div>
