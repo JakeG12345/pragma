@@ -44,7 +44,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='bg-gradient-to-b from-sky-500 to-indigo-500 h-screen flex flex-col items-center'>
+    <div className='flex flex-col items-center w-72'>
       <Link href='/'>
         <span className='flex space-x-3 my-12 cursor-pointer'>
           <h1 className='text-4xl font-bold'>Pragma</h1>

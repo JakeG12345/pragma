@@ -9,19 +9,15 @@ function MyApp({ Component, pageProps }) {
       serverUrl='https://vitfkaqzlt7v.usemoralis.com:2053/server'
       appId='xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL'
     >
-      <div className='flex'>
-        <div className='w-72'>
-          <div className='fixed w-72'>
-            <Sidebar />
-          </div>
+      <div className='flex justify-between'>
+        <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
+          <Sidebar />
         </div>
 
         <Component {...pageProps} />
 
-        <div className='w-72'>
-          <div className='fixed right-0 top-0 w-72'>
-            <AdBar />
-          </div>
+        <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
+          <AdBar />
         </div>
       </div>
     </MoralisProvider>
