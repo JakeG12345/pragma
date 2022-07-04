@@ -1,8 +1,8 @@
 const main = async () => {
-  const factory = await hre.ethers.getContractFactory("TheFeed")
+  const factory = await hre.ethers.getContractFactory("Pragma")
   const contract = await factory.deploy()
   await contract.deployed()
-  console.log("TheFeed deployed to:", contract.address)
+  console.log("Pragma deployed to:", contract.address)
 }
 
 ;(async () => {
