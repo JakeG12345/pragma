@@ -5,7 +5,6 @@ import {
   faHome,
   faUser,
   faGear,
-  faSearch,
   faEllipsis,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
@@ -112,7 +111,6 @@ const Sidebar = () => {
 
       <nav className='space-y-3 -ml-16'>
         <Tab tabName='Home' icon={faHome} to='/' />
-        <Tab tabName='Search' icon={faSearch} to='/search' />
         <Tab tabName='Profile' icon={faUser} to='/profile' />
         <Tab tabName='Settings' icon={faGear} to='/settings' />
       </nav>
