@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar"
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
+
   return (
     <MoralisProvider
       serverUrl='https://vitfkaqzlt7v.usemoralis.com:2053/server'

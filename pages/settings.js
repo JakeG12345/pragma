@@ -1,12 +1,35 @@
 import React, { useState } from "react"
-import { useMoralis } from "react-moralis"
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
+import abi from "../helpers/abi.json"
 
 const Settings = () => {
-  const { isAuthenticated } = useMoralis()
+  const { isAuthenticated, enableWeb3 } = useMoralis()
+  const contractProcessor = useWeb3ExecuteFunction()
+
   const [newUsername, setNewUsername] = useState("")
 
-  const changeUsername = () => {
+  const changeUsername = async () => {
+    await enableWeb3()
 
+    if (newUsername.trim().length < 1) {
+      alert("Username must be at least 1 character")
+      return
+    }
+    const options = {
+      contractAddress: "0x0ac48D1524e665aF98Ffa98605D292B6e7feEFCf",
+      functionName: "changeName",
+      abi: abi,
+      params: { newUsername: newUsername },
+    }
+    await contractProcessor.fetch({
+      params: options,
+      onSuccess: () => {
+        console.log("Username should update shortly")
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+    })
   }
 
   return (
