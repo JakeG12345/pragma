@@ -6,3 +6,54 @@ body {
     color: white;
     background-image: linear-gradient(to right, #22184c, #1a3136);
 }
+
+
+/* Below is all for Notification */
+.notification-item {
+    box-shadow: 0 0 10px rgba(0,0,0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    animation: SlideLeft 0.4s;
+    animation-fill-mode: forwards;
+    width: 300px;
+    background-color: white;
+    color: #22184c;
+}
+
+@keyframes SlideLeft {
+    0% {
+        margin-left: 120%;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+
+@keyframes SlideRight {
+    0% {
+        margin-left: 0;
+    }
+
+    100% {
+        margin-left: 120%;
+    }
+}
+
+.notification-item.exit {
+    animation: SlideRight 0.4s;
+    animation-fill-mode: forwards;
+}
+
+.notification-item .bar {
+    height: 10px;
+}
+
+.notification-item.success .bar {
+    background-color: #65d266;
+}
+
+.notification-item.error .bar {
+    background-color: #ff0000;
+}
