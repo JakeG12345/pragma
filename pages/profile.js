@@ -5,7 +5,7 @@ import bannerPlaceholder from "../images/bannerPlaceholder.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import Image from "next/image"
 
-const profile = () => {
+const Profile = () => {
   const { isAuthenticated } = useMoralis()
 
   return (
@@ -32,4 +32,4 @@ const profile = () => {
   )
 }
 
-export default profile
+export default Profile
