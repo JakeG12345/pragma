@@ -37,7 +37,7 @@ const Notification = (props) => {
 
   useEffect(() => {
     if (width === 100) handleCloseNotification()
-  }, [width, handleCloseNotification])
+  }, [width])
 
   useEffect(() => {
     handleStartTimer()
