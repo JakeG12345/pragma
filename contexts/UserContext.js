@@ -35,6 +35,7 @@ export const UserProvider = ({ children }) => {
     })
 
     const user = Moralis.User.current()
+    if (user == null) return
     const ethAddress = user.attributes.ethAddress
     setUserShortenedAddress(
       `${ethAddress.slice(0, 4)}...${ethAddress.slice(38)}`
