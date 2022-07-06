@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import Tab from "./Tab"
-import abi from "../helpers/abi.json"
 import {
   faHome,
   faUser,
@@ -15,59 +14,14 @@ import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import Link from "next/link"
 import {
   useMoralis,
-  useMoralisWeb3Api,
-  useMoralisWeb3ApiCall,
 } from "react-moralis"
+import { UserContext } from "../contexts/UserContext"
 
 const Sidebar = () => {
-  const { isAuthenticated, authenticate, logout, Moralis } = useMoralis()
-  const { native } = useMoralisWeb3Api()
+  const { isAuthenticated, authenticate, logout } = useMoralis()
+  const [userAddress, userShortenedAddress, userdata, updateUserdata] = useContext(UserContext)
 
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
-  const [shortenedAddress, setShortenedAddress] = useState("Loading...")
-  const [userAddress, setUserAddress] = useState()
-
-  const getUserDataOptions = {
-    chain: "mumbai",
-    address: "0x0ac48D1524e665aF98Ffa98605D292B6e7feEFCf",
-    function_name: "getUserData",
-    abi: abi,
-    params: { userAddress: userAddress },
-  }
-
-  const startServer = async () => {
-    await Moralis.start({
-      serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
-      appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
-    })
-  }
-
-  const updateData = () => {
-    startServer()
-    const user = Moralis.User.current()
-    const ethAddress = user.attributes.ethAddress
-    setShortenedAddress(`${ethAddress.slice(0, 4)}...${ethAddress.slice(38)}`)
-    setUserAddress(ethAddress)
-    const params = {
-      chain: "mumbai",
-      address: "0x0ac48D1524e665aF98Ffa98605D292B6e7feEFCf",
-      function_name: "getUserData",
-      abi: abi,
-      params: { userAddress: ethAddress },
-    }
-    fetch({ params: params })
-  }
-
-  const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
-    native.runContractFunction,
-    { ...getUserDataOptions }
-  )
-
-  useEffect(() => {
-    if (isAuthenticated && userAddress == null) {
-      updateData()
-    }
-  })
 
   const login = async () => {
     if (!isAuthenticated) {
@@ -76,7 +30,7 @@ const Sidebar = () => {
       })
         .then(function (user) {
           console.log("logged in user:", user)
-          setUserAddress(user.get("ethAddress"))
+          updateUserdata()
         })
         .catch(function (error) {
           console.log(error)
@@ -127,9 +81,9 @@ const Sidebar = () => {
             <Image src={pfpPlaceholder} alt='pfp' height={40} width={40} />
             <div>
               <h5 className='font-bold'>
-                {data ? (data[0] === "" ? "No name" : data[0]) : "Loading..."}
+                {userdata ? (userdata[0] === "" ? "No name" : userdata[0]) : "Loading..."}
               </h5>
-              <p className='text-gray-300 text-sm'>{shortenedAddress}</p>
+              <p className='text-gray-300 text-sm'>{userShortenedAddress}</p>
             </div>
             <div className='pl-2'>
               <button
