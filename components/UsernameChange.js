@@ -29,7 +29,7 @@ const UsernameChange = () => {
       return
     }
     const options = {
-      contractAddress: "0x0ac48D1524e665aF98Ffa98605D292B6e7feEFCf",
+      contractAddress: "0x8e156D34935d82466aF96E5b6B09DA9207004730",
       functionName: "changeName",
       abi: abi,
       params: { newUsername: newUsername },

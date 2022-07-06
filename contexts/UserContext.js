@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
 
   const getUserdataOptions = {
     chain: "mumbai",
-    address: "0x0ac48D1524e665aF98Ffa98605D292B6e7feEFCf",
+    address: "0x8e156D34935d82466aF96E5b6B09DA9207004730",
     function_name: "getUserData",
     abi: abi,
     params: { userAddress: userAddress },
@@ -44,7 +44,7 @@ export const UserProvider = ({ children }) => {
 
     const options = {
       chain: "mumbai",
-      address: "0x0ac48D1524e665aF98Ffa98605D292B6e7feEFCf",
+      address: "0x8e156D34935d82466aF96E5b6B09DA9207004730",
       function_name: "getUserData",
       abi: abi,
       params: { userAddress: ethAddress },

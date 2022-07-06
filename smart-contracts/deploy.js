@@ -1,5 +1,5 @@
 const main = async () => {
-  const factory = await hre.ethers.getContractFactory("Pragma")
+  const factory = await hre.ethers.getContractFactory("PragmaUserdata")
   const contract = await factory.deploy()
   await contract.deployed()
   console.log("Pragma deployed to:", contract.address)
