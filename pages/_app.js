@@ -12,21 +12,21 @@ function MyApp({ Component, pageProps }) {
       appId='xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL'
     >
       <NotificationProvider>
-        <UserProvider>
-          <div className='flex justify-ce'>
-            <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
-              <Sidebar />
-            </div>
+          <UserProvider>
+            <div className='flex justify-ce'>
+              <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
+                <Sidebar />
+              </div>
 
-            <div className='w-full'>
-              <Component {...pageProps} />
-            </div>
+              <div className='w-full'>
+                <Component {...pageProps} />
+              </div>
 
-            <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
-              <AdBar />
+              <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
+                <AdBar />
+              </div>
             </div>
-          </div>
-        </UserProvider>
+          </UserProvider>
       </NotificationProvider>
     </MoralisProvider>
   )

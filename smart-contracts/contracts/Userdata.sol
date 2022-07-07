@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.12;
 
 contract PragmaUserdata {
     struct user {
@@ -26,11 +26,11 @@ contract PragmaUserdata {
     }
 
     function changePfp(string memory newPfp) external {
-        users[msg.sender].pfp = newPfp;
+        users[msg.sender].pfp = string.concat("ipfs://", newPfp);
     }
 
     function changeBanner(string memory newBanner) external {
-        users[msg.sender].banner = newBanner;
+        users[msg.sender].banner = string.concat("ipfs://", newBanner);
     }
 
     function changeBio(string memory newBio) external {

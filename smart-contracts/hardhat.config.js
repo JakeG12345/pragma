@@ -5,7 +5,7 @@ require("@nomiclabs/hardhat-etherscan");
 // Deployed on polygon mumbai to 0x7f6e32ac1106717fa64e05959d261d7d07b43980
 
 module.exports = {
-  solidity: "0.8.7",
+  solidity: "0.8.12",
   defaultNetwork: "polygonMumbai",
   networks: {
     polygonMumbai: {

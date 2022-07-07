@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import UserContext from '../../contexts/UserContext'
+import UserContext from "../../contexts/UserContext"
 import { useMoralisWeb3Api } from "react-moralis"
 
 const resolveLink = (url) => {
@@ -38,9 +38,7 @@ const PfpChange = () => {
         <h3 className='text-lg font-medium'>NFTs</h3>
         <div>-</div>
         <p className='text-sm'>
-          Pragma posts and other NFTs that do not store their data on IPFS do
-          not show as Pragma does not allow them to be uploaded as a profile
-          picture.
+          {/*  */}
         </p>
       </span>
 
