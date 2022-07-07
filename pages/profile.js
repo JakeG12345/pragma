@@ -15,7 +15,7 @@ const Profile = () => {
       {isAuthenticated ? (
         <div>
           <div>
-            <Image src={bannerPlaceholder} alt='banner' height={250} />
+            <Image src={userdata ? userdata[2] : bannerPlaceholder} alt='banner' width={1000} height={250} />
             <div className='absolute top-32 ml-12 z-10'>
               <Image
                 src={pfpPlaceholder}
@@ -25,9 +25,10 @@ const Profile = () => {
               />
               <h1 className='text-xl font-semibold mt-3'>{userdata && userdata[0]}</h1>
               <p className='text-gray-300'>{userShortenedAddress}</p>
+              <p onClick={() => console.log(userdata)}>{userdata && userdata[3]}</p>
             </div>
           </div>
-          <hr className='mt-40' />
+          <hr className='mt-60' />
         </div>
       ) : (
         <NotAuthenticated pageName='profile' />

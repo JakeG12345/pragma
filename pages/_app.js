@@ -6,7 +6,6 @@ import { UserProvider } from "../contexts/UserContext"
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
-
   return (
     <MoralisProvider
       serverUrl='https://vitfkaqzlt7v.usemoralis.com:2053/server'
@@ -14,12 +13,14 @@ function MyApp({ Component, pageProps }) {
     >
       <NotificationProvider>
         <UserProvider>
-          <div className='flex justify-between'>
+          <div className='flex justify-ce'>
             <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
               <Sidebar />
             </div>
 
-            <Component {...pageProps} />
+            <div className='w-full'>
+              <Component {...pageProps} />
+            </div>
 
             <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
               <AdBar />

@@ -1,26 +1,25 @@
 import React from "react"
 import NotAuthenticated from "../components/NotAuthenticated"
 import { useMoralis } from "react-moralis"
-import UsernameChange from "../components/UsernameChange"
-import PfpChange from "../components/PfpChange"
-import BannerChange from '../components/BannerChange'
+import UsernameChange from "../components/settings/UsernameChange"
+import PfpChange from "../components/settings/PfpChange"
+import BannerChange from "../components/settings/BannerChange"
+import BioChange from "../components/settings/BioChange"
 
 const Settings = () => {
   const { isAuthenticated } = useMoralis()
   return (
     <div>
       {isAuthenticated ? (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col w-full px-10 items-center'>
           <h1 className='text-4xl mt-14 mb-10 font-bold'>Settings</h1>
-          <p className='mx-10 text-center'>
-            Your account details are stored on the blockchain hence meaning
-            while changing them, there will be a gas fee
+          <p className=' text-center'>
+            Every Pragma account&apos;s details are stored on the blockchain
           </p>
-          <UsernameChange />
-          <div className='mt-14'>
+          <div className='space-y-14 mt-10 px-5 w-full'>
+            <UsernameChange />
+            <BioChange />
             <BannerChange />
-          </div>
-          <div className='mt-14'>
             <PfpChange />
           </div>
         </div>
