@@ -38,7 +38,7 @@ const PfpChange = () => {
         <h3 className='text-lg font-medium'>NFTs</h3>
         <div>-</div>
         <p className='text-sm'>
-          {/*  */}
+          Test
         </p>
       </span>
 
