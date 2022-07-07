@@ -11,7 +11,7 @@ const Settings = () => {
   return (
     <div>
       {isAuthenticated ? (
-        <div className='flex flex-col w-full px-10 items-center'>
+        <div className='flex flex-col w-full px-10 pb-20 items-center'>
           <h1 className='text-4xl mt-14 mb-10 font-bold'>Settings</h1>
           <p className=' text-center'>
             Every Pragma account&apos;s details are stored on the blockchain

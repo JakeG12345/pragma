@@ -12,14 +12,14 @@ import Image from "next/image"
 import polygonLogo from "../images/polygonLogo.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import Link from "next/link"
-import {
-  useMoralis,
-} from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { UserContext } from "../contexts/UserContext"
+import resolveLink from "../helpers/resolveLink"
 
 const Sidebar = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata, updateUserdata] = useContext(UserContext)
+  const [userAddress, userShortenedAddress, userdata, updateUserdata] =
+    useContext(UserContext)
 
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
 
@@ -78,10 +78,26 @@ const Sidebar = () => {
         </button>
         {isAuthenticated && (
           <span className='flex items-center space-x-3'>
-            <Image src={pfpPlaceholder} alt='pfp' height={40} width={40} />
+            <Image
+              src={
+                userdata
+                  ? userdata[1]
+                    ? resolveLink(userdata[1])
+                    : pfpPlaceholder
+                  : pfpPlaceholder
+              }
+              alt={pfpPlaceholder}
+              height={45}
+              width={45}
+              style={{ borderRadius: 45 / 2 }}
+            />
             <div>
               <h5 className='font-bold'>
-                {userdata ? (userdata[0] === "" ? "No name" : userdata[0]) : "Loading..."}
+                {userdata
+                  ? userdata[0] === ""
+                    ? "No name"
+                    : userdata[0]
+                  : "Loading..."}
               </h5>
               <p className='text-gray-300 text-sm'>{userShortenedAddress}</p>
             </div>

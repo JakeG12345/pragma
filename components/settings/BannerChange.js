@@ -38,8 +38,8 @@ const BannerChange = () => {
       return
     }
     const data = theFile
-    if (data.type !== "image/png") {
-      handleNewNotification("ERROR", "Banner must be a png image")
+    if ((data.type !== "image/png") && (data.type !== "image/jpeg")) {
+      handleNewNotification("ERROR", "Banner must be a png or jpeg image")
       return
     }
     handleNewNotification(
@@ -54,8 +54,7 @@ const BannerChange = () => {
         "Image has successfully uploaded to IPFS"
       )
       changeBanner(file.ipfs())
-    }
-    else {
+    } else {
       handleNewNotification(
         "ERROR",
         "Something went wrong while uploading file to IPFS. Please try again later."
@@ -63,14 +62,19 @@ const BannerChange = () => {
     }
   }
 
-  const changeBanner = async (banner) => {
+  const changeBanner = async (bannerLink) => {
     await enableWeb3()
 
+    const ipfsBannerLink = bannerLink.replace(
+      "https://ipfs.moralis.io:2053/ipfs/",
+      ""
+    )
+
     const options = {
-      contractAddress: "0x8e156D34935d82466aF96E5b6B09DA9207004730",
+      contractAddress: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
       functionName: "changeBanner",
       abi: abi,
-      params: { newBanner: banner },
+      params: { newBanner: ipfsBannerLink },
     }
 
     await contractProcessor.fetch({
@@ -78,7 +82,7 @@ const BannerChange = () => {
       onSuccess: () => {
         handleNewNotification(
           "SUCCESS",
-          "Name should update shortly. Check MetaMask to view transaction."
+          "Banner should update shortly. Check MetaMask to view transaction."
         )
       },
       onError: (error) => {
@@ -101,7 +105,7 @@ const BannerChange = () => {
           />
         </div>
         <button
-          className='text-lg font-medium mr-20 py-1 px-4 rounded-full bg-indigo-500'
+          className='text-lg font-medium mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
           onClick={selectNewBanner}
         >
           Select Image

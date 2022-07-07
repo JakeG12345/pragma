@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['ipfs.moralis.io'],
+    domains: ['ipfs.moralis.io', 'gateway.ipfs.io'],
   },
 }
 

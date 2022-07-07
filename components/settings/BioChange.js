@@ -9,8 +9,6 @@ const BioChange = () => {
   const contractProcessor = useWeb3ExecuteFunction()
   const dispatch = useNotification()
 
-  const [newBio, setNewBio] = useState()
-
   const handleNewNotification = (type, message) => {
     dispatch({
       type: type,
@@ -18,19 +16,21 @@ const BioChange = () => {
     })
   }
 
+  const [newBio, setNewBio] = useState("")
+
   const changeBio = async () => {
     await enableWeb3()
 
     if (newBio.trim().length < 1) {
-      alert("Bio must be at least 1 character")
+      handleNewNotification("ERROR", "Bio must be at least 1 character")
       return
     }
     if (newBio.trim().length >= 150) {
-      alert("Bio must be at most 150 characters")
+      handleNewNotification("ERROR", "Bio must be at most 150 characters")
       return
     }
     const options = {
-      contractAddress: "0x8e156D34935d82466aF96E5b6B09DA9207004730",
+      contractAddress: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
       functionName: "changeBio",
       abi: abi,
       params: { newBio: newBio },

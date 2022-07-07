@@ -17,20 +17,20 @@ const UsernameChange = () => {
       message: message,
     })
   }
-
+  
   const changeUsername = async () => {
     await enableWeb3()
 
     if (newUsername.trim().length < 1) {
-      alert("Username must be at least 1 character")
+      handleNewNotification("ERROR", "Username must be at least 1 characters")
       return
     }
     if (newUsername.trim().length >= 15) {
-      alert("Username must be at most 15 characters")
+      handleNewNotification("ERROR", "Username must be at most 15 characters")
       return
     }
     const options = {
-      contractAddress: "0x8e156D34935d82466aF96E5b6B09DA9207004730",
+      contractAddress: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
       functionName: "changeName",
       abi: abi,
       params: { newUsername: newUsername },
