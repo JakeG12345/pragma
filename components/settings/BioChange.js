@@ -59,9 +59,7 @@ const BioChange = () => {
           placeholder='Bio'
           onChange={(e) => setNewBio(e.target.value)}
         />
-        <div className='mr-5'>
-          <SaveButton onClick={changeBio} />
-        </div>
+        <SaveButton onClick={changeBio} />
       </span>
     </div>
   )

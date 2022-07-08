@@ -176,9 +176,7 @@ const PfpChange = () => {
         >
           Select Image
         </button>
-        <div className='mr-5'>
-          <SaveButton onClick={confirmSelectedPhotoImg} />
-        </div>
+        <SaveButton onClick={confirmSelectedPhotoImg} />
       </span>
       {selectedFile && (
         <div className='mt-5 w-full flex items-center justify-center cursor-pointer'>
@@ -194,12 +192,10 @@ const PfpChange = () => {
       )}
       <span className='flex justify-between items-center'>
         <h3 className='text-lg font-medium'>Your NFTs</h3>
-        <div className='mr-5'>
-          <SaveButton onClick={confirmSelectedNftPfp} />
-        </div>
+        <SaveButton onClick={confirmSelectedNftPfp} />
       </span>
-      <div className='flex items-center justify-center'>
-        <div className='grid grid-cols-3 gap-3'>
+      <div className='flex items-center justify-center -mx-10 xl:-mx-14'>
+        <div className='grid grid-cols-2 xl:grid-cols-3 gap-3'>
           {mumbaiNFTImages &&
             mumbaiNFTImages.map((e, i) => {
               return (

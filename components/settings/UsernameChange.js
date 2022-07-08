@@ -17,7 +17,7 @@ const UsernameChange = () => {
       message: message,
     })
   }
-  
+
   const changeUsername = async () => {
     await enableWeb3()
 
@@ -50,18 +50,30 @@ const UsernameChange = () => {
   }
 
   return (
-    <div className='flex items-center justify-between'>
-      <h3 className='text-xl font-semibold'>Change Account Username</h3>
-      <input
-        className='w-48 px-2 h-8 rounded-md text-[#150f2e] outline-none'
-        value={newUsername}
-        placeholder='Username'
-        onChange={(e) => setNewUsername(e.target.value)}
-      />
-      <div className='mr-5'>
+    <>
+      <div className='block xl:hidden space-y-2'>
+        <h3 className='text-xl font-semibold'>Change Account Username</h3>
+        <span className='flex justify-between'>
+          <input
+            className='w-48 px-2 h-8 rounded-md text-[#150f2e] outline-none'
+            value={newUsername}
+            placeholder='Username'
+            onChange={(e) => setNewUsername(e.target.value)}
+          />
+          <SaveButton onClick={changeUsername} />
+        </span>
+      </div>
+      <div className='items-center justify-between hidden xl:flex'>
+        <h3 className='text-xl font-semibold'>Change Account Username</h3>
+        <input
+          className='w-48 px-2 h-8 rounded-md text-[#150f2e] outline-none'
+          value={newUsername}
+          placeholder='Username'
+          onChange={(e) => setNewUsername(e.target.value)}
+        />
         <SaveButton onClick={changeUsername} />
       </div>
-    </div>
+    </>
   )
 }
 

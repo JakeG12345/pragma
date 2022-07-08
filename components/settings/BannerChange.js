@@ -38,7 +38,7 @@ const BannerChange = () => {
       return
     }
     const data = theFile
-    if ((data.type !== "image/png") && (data.type !== "image/jpeg")) {
+    if (data.type !== "image/png" && data.type !== "image/jpeg") {
       handleNewNotification("ERROR", "Banner must be a png or jpeg image")
       return
     }
@@ -94,7 +94,7 @@ const BannerChange = () => {
   return (
     <div className='space-y-3'>
       <span className='flex items-center justify-between'>
-        <h2 className='text-xl font-semibold'>Change Banner Image</h2>
+        <h2 className='text-xl font-semibold'>Change Banner</h2>
         <div>
           <input
             type='file'
@@ -105,14 +105,12 @@ const BannerChange = () => {
           />
         </div>
         <button
-          className='text-lg font-medium mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
+          className='text-lg font-medium mr-12 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
           onClick={selectNewBanner}
         >
           Select Image
         </button>
-        <div className='mr-5'>
-          <SaveButton onClick={uploadBannerToIPFS} />
-        </div>
+        <SaveButton onClick={uploadBannerToIPFS} />
       </span>
       {selectedFile && (
         <div className='mt-5 w-full cursor-pointer'>

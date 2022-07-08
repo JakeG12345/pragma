@@ -48,7 +48,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='flex flex-col items-center w-72'>
+    <div className='flex flex-col items-center w-48 lg:w-64 xl:w-72'>
       <Link href='/'>
         <span className='flex space-x-3 my-12 cursor-pointer'>
           <h1 className='text-4xl font-bold'>Pragma</h1>
@@ -63,7 +63,7 @@ const Sidebar = () => {
         </span>
       </Link>
 
-      <nav className='space-y-3 -ml-16'>
+      <nav className='space-y-3 -ml-6 xl:-ml-10'>
         <Tab tabName='Home' icon={faHome} to='/' />
         <Tab tabName='Profile' icon={faUser} to='/profile' />
         <Tab tabName='Settings' icon={faGear} to='/settings' />
@@ -71,7 +71,7 @@ const Sidebar = () => {
 
       <div className='absolute bottom-20 space-y-5 flex flex-col items-center'>
         <button
-          className='py-3 w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e]'
+          className='py-3 w-52 xl:w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e]'
           onClick={isAuthenticated ? post : login}
         >
           {isAuthenticated ? "Mint Post" : "Connect Wallet"}
@@ -101,7 +101,7 @@ const Sidebar = () => {
               </h5>
               <p className='text-gray-300 text-sm'>{userShortenedAddress}</p>
             </div>
-            <div className='pl-2'>
+            <div className='xl:pl-2'>
               <button
                 className='cursor-pointer'
                 onClick={() => setIsLogoutShowing(!isLogoutShowing)}
