@@ -54,7 +54,7 @@ const BioChange = () => {
       <h2 className='text-xl font-semibold'>Change Bio Description</h2>
       <span className='flex items-center justify-between'>
         <textarea
-          className='w-9/12 p-1 rounded-md text-[#150f2e] outline-none'
+          className='w-8/12 lg:w-9/12 p-1 rounded-md text-[#150f2e] outline-none'
           value={newBio}
           placeholder='Bio'
           onChange={(e) => setNewBio(e.target.value)}

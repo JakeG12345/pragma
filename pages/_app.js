@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
               </div>
 
-              <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
+              <div className='sticky hidden md:block top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
                 <AdBar />
               </div>
             </div>

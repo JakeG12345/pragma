@@ -93,24 +93,26 @@ const BannerChange = () => {
 
   return (
     <div className='space-y-3'>
-      <span className='flex items-center justify-between'>
+      <span className='flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between'>
         <h2 className='text-xl font-semibold'>Change Banner</h2>
-        <div>
-          <input
-            type='file'
-            name='banner'
-            ref={inputFile}
-            onChange={changeHandler}
-            className='hidden'
-          />
+        <div className='flex justify-between lg:'>
+          <div>
+            <input
+              type='file'
+              name='banner'
+              ref={inputFile}
+              onChange={changeHandler}
+              className='hidden'
+            />
+          </div>
+          <button
+            className='text-lg font-medium absolute lg:static lg:mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
+            onClick={selectNewBanner}
+          >
+            Select Image
+          </button>
+          <SaveButton onClick={uploadBannerToIPFS} />
         </div>
-        <button
-          className='text-lg font-medium mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
-          onClick={selectNewBanner}
-        >
-          Select Image
-        </button>
-        <SaveButton onClick={uploadBannerToIPFS} />
       </span>
       {selectedFile && (
         <div className='mt-5 w-full cursor-pointer'>

@@ -159,24 +159,26 @@ const PfpChange = () => {
         image and we will upload it to IPFS and then put the IPFS link with your
         account details on the blockchain.
       </p>
-      <span className='flex items-center justify-between'>
+      <span className='flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between'>
         <h2 className='text-lg font-medium'>Select Image</h2>
-        <div>
-          <input
-            type='file'
-            name='pfp'
-            ref={inputFile}
-            onChange={fileChangeHandler}
-            className='hidden'
-          />
+        <div className='flex justify-between lg:'>
+          <div>
+            <input
+              type='file'
+              name='pfp'
+              ref={inputFile}
+              onChange={fileChangeHandler}
+              className='hidden'
+            />
+          </div>
+          <button
+            className='text-lg font-medium absolute lg:static lg:mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
+            onClick={fileChangeHandler}
+          >
+            Select Image
+          </button>
+          <SaveButton onClick={confirmSelectedPhotoImg} />
         </div>
-        <button
-          className='text-lg font-medium mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
-          onClick={selectNewPfp}
-        >
-          Select Image
-        </button>
-        <SaveButton onClick={confirmSelectedPhotoImg} />
       </span>
       {selectedFile && (
         <div className='mt-5 w-full flex items-center justify-center cursor-pointer'>
@@ -195,7 +197,7 @@ const PfpChange = () => {
         <SaveButton onClick={confirmSelectedNftPfp} />
       </span>
       <div className='flex items-center justify-center -mx-10 xl:-mx-14'>
-        <div className='grid grid-cols-2 xl:grid-cols-3 gap-3'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3'>
           {mumbaiNFTImages &&
             mumbaiNFTImages.map((e, i) => {
               return (
