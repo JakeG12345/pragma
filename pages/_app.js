@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
       <NotificationProvider>
           <UserProvider>
             <div className='flex'>
-              <div className='sticky top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
+              <div className='sticky top-0 h-screen z-20 bg-gradient-to-b from-sky-500 to-indigo-500'>
                 <Sidebar />
               </div>
 

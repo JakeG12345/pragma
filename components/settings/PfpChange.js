@@ -171,7 +171,7 @@ const PfpChange = () => {
           />
         </div>
         <button
-          className='text-lg font-medium mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
+          className='text-lg font-medium mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
           onClick={selectNewPfp}
         >
           Select Image

@@ -22,6 +22,7 @@ const Sidebar = () => {
     useContext(UserContext)
 
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
+  const [isDetailsShowing, setIsDetailsShowing] = useState(false)
 
   const login = async () => {
     if (!isAuthenticated) {
@@ -48,11 +49,21 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='flex flex-col items-center w-48 lg:w-64 xl:w-72'>
+    <div className='flex flex-col items-center w-20 lg:w-64 xl:w-72'>
       <Link href='/'>
-        <span className='flex space-x-3 my-12 cursor-pointer'>
-          <h1 className='text-4xl font-bold'>Pragma</h1>
-          <div>
+        <div className='my-12 cursor-pointer'>
+          <span className='hidden lg:flex space-x-3'>
+            <h1 className='text-4xl font-bold'>Pragma</h1>
+            <div>
+              <Image
+                src={polygonLogo}
+                alt='polygon logo'
+                height={40}
+                width={45}
+              />
+            </div>
+          </span>
+          <div className='block lg:hidden'>
             <Image
               src={polygonLogo}
               alt='polygon logo'
@@ -60,10 +71,10 @@ const Sidebar = () => {
               width={45}
             />
           </div>
-        </span>
+        </div>
       </Link>
 
-      <nav className='space-y-3 -ml-6 xl:-ml-10'>
+      <nav className='space-y-3 lg:-ml-6 xl:-ml-10'>
         <Tab tabName='Home' icon={faHome} to='/' />
         <Tab tabName='Profile' icon={faUser} to='/profile' />
         <Tab tabName='Settings' icon={faGear} to='/settings' />
@@ -71,44 +82,107 @@ const Sidebar = () => {
 
       <div className='absolute bottom-20 space-y-5 flex flex-col items-center'>
         <button
-          className='py-3 w-52 xl:w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e]'
+          className='py-3 w-52 xl:w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e] hidden lg:block'
           onClick={isAuthenticated ? post : login}
         >
           {isAuthenticated ? "Mint Post" : "Connect Wallet"}
         </button>
         {isAuthenticated && (
-          <span className='flex items-center space-x-3'>
-            <Image
-              src={
-                userdata
-                  ? userdata[1]
-                    ? resolveLink(userdata[1])
-                    : pfpPlaceholder
-                  : pfpPlaceholder
-              }
-              alt={pfpPlaceholder}
-              height={45}
-              width={45}
-              style={{ borderRadius: 45 / 2 }}
-            />
-            <div>
-              <h5 className='font-bold'>
-                {userdata
-                  ? userdata[0] === ""
-                    ? "No name"
-                    : userdata[0]
-                  : "Loading..."}
-              </h5>
-              <p className='text-gray-300 text-sm'>{userShortenedAddress}</p>
+          <span className='flex items-center justify-center'>
+            <div
+              className='cursor-pointer lg:hidden'
+              onMouseLeave={() => setIsDetailsShowing(false)}
+              onMouseEnter={() => setIsDetailsShowing(true)}
+            >
+              {!isDetailsShowing ? (
+                <Link href='/profile'>
+                  <div>
+                    <Image
+                      src={
+                        userdata
+                          ? userdata[1]
+                            ? resolveLink(userdata[1])
+                            : pfpPlaceholder
+                          : pfpPlaceholder
+                      }
+                      alt={pfpPlaceholder}
+                      height={45}
+                      width={45}
+                      style={{ borderRadius: 45 / 2 }}
+                    />
+                  </div>
+                </Link>
+              ) : (
+                <Link href='/profile'>
+                  <div className='ml-28 flex h-16 px-2 items-center space-x-3 bg-sky-500 rounded-lg'>
+                    <div className='w-12 h-12 rounded-full border-white border-2'>
+                      <Image
+                        src={
+                          userdata
+                            ? userdata[1]
+                              ? resolveLink(userdata[1])
+                              : pfpPlaceholder
+                            : pfpPlaceholder
+                        }
+                        alt={pfpPlaceholder}
+                        height={45}
+                        width={45}
+                        style={{ borderRadius: 45 / 2 }}
+                      />
+                    </div>
+                    <span className='pr-2'>
+                      <h5 className='font-bold'>
+                        {userdata
+                          ? userdata[0] === ""
+                            ? "No name"
+                            : userdata[0]
+                          : "Loading..."}
+                      </h5>
+                      <p className='text-gray-300 text-sm'>
+                        {userShortenedAddress}
+                      </p>
+                    </span>
+                  </div>
+                </Link>
+              )}
             </div>
-            <div className='xl:pl-2'>
-              <button
-                className='cursor-pointer'
-                onClick={() => setIsLogoutShowing(!isLogoutShowing)}
-              >
-                <FontAwesomeIcon icon={faEllipsis} />
-              </button>
-            </div>
+            <span className='hidden lg:flex items-center space-x-2'>
+              <Link href='/profile'>
+                <div className='flex flex-col items-center cursor-pointer'>
+                  <Image
+                    src={
+                      userdata
+                        ? userdata[1]
+                          ? resolveLink(userdata[1])
+                          : pfpPlaceholder
+                        : pfpPlaceholder
+                    }
+                    alt={pfpPlaceholder}
+                    height={45}
+                    width={45}
+                    style={{ borderRadius: 45 / 2 }}
+                  />
+                </div>
+              </Link>
+              <div>
+                <h5 className='font-bold'>
+                  {userdata
+                    ? userdata[0] === ""
+                      ? "No name"
+                      : userdata[0]
+                    : "Loading..."}
+                </h5>
+                <p className='text-gray-300 text-sm'>{userShortenedAddress}</p>
+              </div>
+              <div className='hidden lg:block pl-1 xl:pl-2'>
+                <button
+                  className='cursor-pointer'
+                  onClick={() => setIsLogoutShowing((prev) => !prev)}
+                >
+                  <FontAwesomeIcon icon={faEllipsis} />
+                </button>
+              </div>
+            </span>
           </span>
         )}
       </div>
