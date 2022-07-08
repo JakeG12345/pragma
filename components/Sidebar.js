@@ -6,6 +6,7 @@ import {
   faGear,
   faEllipsis,
   faXmark,
+  faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
@@ -15,14 +16,16 @@ import Link from "next/link"
 import { useMoralis } from "react-moralis"
 import { UserContext } from "../contexts/UserContext"
 import resolveLink from "../helpers/resolveLink"
+import useNotification from './notifications/useNotification'
 
 const Sidebar = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis()
   const [userAddress, userShortenedAddress, userdata, updateUserdata] =
     useContext(UserContext)
-
+  const dispatch = useNotification()
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
   const [isDetailsShowing, setIsDetailsShowing] = useState(false)
+  const [logoutIconColour, setLogoutIconColour] = useState("white")
 
   const login = async () => {
     if (!isAuthenticated) {
@@ -40,8 +43,11 @@ const Sidebar = () => {
   }
 
   const logOut = async () => {
-    console.log("logOut was called")
     await logout()
+    dispatch({
+      type: "SUCCESS",
+      message: "You have successfully disconnected your wallet"
+    })
   }
 
   const post = () => {
@@ -88,15 +94,68 @@ const Sidebar = () => {
           {isAuthenticated ? "Mint Post" : "Connect Wallet"}
         </button>
         {isAuthenticated && (
-          <span className='flex items-center justify-center'>
-            <div
-              className='cursor-pointer lg:hidden'
-              onMouseLeave={() => setIsDetailsShowing(false)}
-              onMouseEnter={() => setIsDetailsShowing(true)}
-            >
-              {!isDetailsShowing ? (
+          <div>
+            <span className='flex items-center justify-center'>
+              <div
+                className='cursor-pointer lg:hidden'
+                onMouseLeave={() => setIsDetailsShowing(false)}
+                onMouseEnter={() => setIsDetailsShowing(true)}
+              >
+                {!isDetailsShowing ? (
+                  <Link href='/profile'>
+                    <div>
+                      <Image
+                        src={
+                          userdata
+                            ? userdata[1]
+                              ? resolveLink(userdata[1])
+                              : pfpPlaceholder
+                            : pfpPlaceholder
+                        }
+                        alt={pfpPlaceholder}
+                        height={45}
+                        width={45}
+                        style={{ borderRadius: 45 / 2 }}
+                      />
+                    </div>
+                  </Link>
+                ) : (
+                  <Link href='/profile'>
+                    <span className='flex items-center space-x-3 ml-32 h-16 px-2 w-48 bg-[#0f6818] rounded-lg'>
+                      <div className='w-12 h-12 rounded-full border-white border-2'>
+                        <Image
+                          src={
+                            userdata
+                              ? userdata[1]
+                                ? resolveLink(userdata[1])
+                                : pfpPlaceholder
+                              : pfpPlaceholder
+                          }
+                          alt={pfpPlaceholder}
+                          height={45}
+                          width={45}
+                          style={{ borderRadius: 45 / 2 }}
+                        />
+                      </div>
+                      <div className='pr-2'>
+                        <h5 className='font-bold'>
+                          {userdata
+                            ? userdata[0] === ""
+                              ? "No name"
+                              : userdata[0]
+                            : "Loading..."}
+                        </h5>
+                        <p className='text-gray-300 text-sm'>
+                          {userShortenedAddress}
+                        </p>
+                      </div>
+                    </span>
+                  </Link>
+                )}
+              </div>
+              <span className='hidden lg:flex items-center space-x-2'>
                 <Link href='/profile'>
-                  <div>
+                  <div className='flex flex-col items-center cursor-pointer'>
                     <Image
                       src={
                         userdata
@@ -112,78 +171,46 @@ const Sidebar = () => {
                     />
                   </div>
                 </Link>
-              ) : (
-                <Link href='/profile'>
-                  <div className='ml-28 flex h-16 px-2 items-center space-x-3 bg-sky-500 rounded-lg'>
-                    <div className='w-12 h-12 rounded-full border-white border-2'>
-                      <Image
-                        src={
-                          userdata
-                            ? userdata[1]
-                              ? resolveLink(userdata[1])
-                              : pfpPlaceholder
-                            : pfpPlaceholder
-                        }
-                        alt={pfpPlaceholder}
-                        height={45}
-                        width={45}
-                        style={{ borderRadius: 45 / 2 }}
-                      />
-                    </div>
-                    <span className='pr-2'>
-                      <h5 className='font-bold'>
-                        {userdata
-                          ? userdata[0] === ""
-                            ? "No name"
-                            : userdata[0]
-                          : "Loading..."}
-                      </h5>
-                      <p className='text-gray-300 text-sm'>
-                        {userShortenedAddress}
-                      </p>
-                    </span>
-                  </div>
-                </Link>
-              )}
-            </div>
-            <span className='hidden lg:flex items-center space-x-2'>
-              <Link href='/profile'>
-                <div className='flex flex-col items-center cursor-pointer'>
-                  <Image
-                    src={
-                      userdata
-                        ? userdata[1]
-                          ? resolveLink(userdata[1])
-                          : pfpPlaceholder
-                        : pfpPlaceholder
-                    }
-                    alt={pfpPlaceholder}
-                    height={45}
-                    width={45}
-                    style={{ borderRadius: 45 / 2 }}
-                  />
+                <div>
+                  <h5 className='font-bold'>
+                    {userdata
+                      ? userdata[0] === ""
+                        ? "No name"
+                        : userdata[0]
+                      : "Loading..."}
+                  </h5>
+                  <p className='text-gray-300 text-sm'>
+                    {userShortenedAddress}
+                  </p>
                 </div>
-              </Link>
-              <div>
-                <h5 className='font-bold'>
-                  {userdata
-                    ? userdata[0] === ""
-                      ? "No name"
-                      : userdata[0]
-                    : "Loading..."}
-                </h5>
-                <p className='text-gray-300 text-sm'>{userShortenedAddress}</p>
-              </div>
-              <div className='hidden lg:block pl-1 xl:pl-2'>
-                <button
-                  className='cursor-pointer'
-                  onClick={() => setIsLogoutShowing((prev) => !prev)}
-                >
-                  <FontAwesomeIcon icon={faEllipsis} />
-                </button>
-              </div>
+                <div className='hidden lg:block pl-1 xl:pl-2'>
+                  <button
+                    className='cursor-pointer'
+                    onClick={() => setIsLogoutShowing((prev) => !prev)}
+                  >
+                    <FontAwesomeIcon icon={faEllipsis} />
+                  </button>
+                </div>
+              </span>
             </span>
-          </span>
+            <div className='mt-5 flex justify-center lg:hidden'>
+              <button
+                onClick={() => {
+                  console.log("Yo")
+                  setLogoutIconColour("white")
+                  logOut()
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faArrowRightFromBracket}
+                  size='2xl'
+                  color={logoutIconColour}
+                  onMouseEnter={() => setLogoutIconColour("red")}
+                  onMouseLeave={() => setLogoutIconColour("white")}
+                />
+              </button>
+            </div>
+          </div>
         )}
       </div>
       {isAuthenticated && isLogoutShowing && (
@@ -192,7 +219,7 @@ const Sidebar = () => {
             className='text-[#ff3c2e] text-lg font-semibold'
             onClick={() => {
               setIsLogoutShowing(false)
-              logOut()
+              logout()
             }}
           >
             Disconnect

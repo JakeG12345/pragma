@@ -23,8 +23,8 @@ const NotAuthenticated = ({ pageName }) => {
 
   return (
     <div className='flex flex-col items-center space-y-5'>
-      <h1 className='text-4xl mt-20 font-bold'>Please Connect Wallet</h1>
-      <p className='mx-10 mb-3'>
+      <h1 className='text-4xl mt-20 font-bold text-center mx-3'>Please Connect Wallet</h1>
+      <p className='mx-3 md:mx-10 mb-3 text-center'>
         In order to view and interact with the {pageName} page, you need to
         authenticate with MetaMask
       </p>

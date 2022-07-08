@@ -11,7 +11,7 @@ const Settings = () => {
   return (
     <div>
       {isAuthenticated ? (
-        <div className='flex flex-col w-full px-10 xl:px-14 pb-20 items-center'>
+        <div className='flex flex-col w-full px-5 md:px-10 xl:px-14 pb-20 items-center'>
           <h1 className='text-4xl mt-14 mb-10 font-bold'>
             Settings
           </h1>
