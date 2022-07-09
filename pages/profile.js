@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { useMoralis } from "react-moralis"
 import NotAuthenticated from "../components/NotAuthenticated"
 import bannerPlaceholder from "../images/bannerPlaceholder.png"
@@ -6,16 +6,19 @@ import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import Image from "next/image"
 import { UserContext } from "../contexts/UserContext"
 import resolveLink from "../helpers/resolveLink"
+import Link from "next/link"
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
   const [userAddress, userShortenedAddress, userdata] = useContext(UserContext)
+  const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
+  const [selectedTab, setSelectedTab] = useState(2)
 
   return (
     <div>
       {isAuthenticated ? (
         <div>
-          <div>
+          <div className='bg-[#0000002e]'>
             <Image
               src={
                 userdata
@@ -28,27 +31,90 @@ const Profile = () => {
               width={1000}
               height={250}
             />
-            <div className='absolute top-32 ml-12 z-10'>
-              <Image
-                src={pfpPlaceholder}
-                alt='profile picture'
-                height={150}
-                width={150}
-                style={{ borderRadius: 150 / 2 }}
-              />
-              <h1 className='text-xl font-semibold mt-3'>
-                {userdata && userdata[0]}
-              </h1>
-              <p
-                className='text-gray-300'
-                onClick={() => console.log(userdata)}
-              >
-                {userShortenedAddress}
-              </p>
-              <p>{userdata && userdata[3]}</p>
+            <span className='flex justify-between items-center'>
+              <div className='-mt-24 ml-10 z-10'>
+                <Image
+                  src={
+                    userdata
+                      ? userdata[1]
+                        ? resolveLink(userdata[1])
+                        : pfpPlaceholder
+                      : pfpPlaceholder
+                  }
+                  alt='profile picture'
+                  height={175}
+                  width={175}
+                  style={{ borderRadius: 175 / 2 }}
+                />
+                <div className='ml-3'>
+                  <h1 className='text-xl font-semibold mt-3'>
+                    {userdata && userdata[0]}
+                  </h1>
+                  <a
+                    href={`https://mumbai.polygonscan.com/address/${userAddress}`}
+                    target='_blank'
+                    rel='noopener'
+                  >
+                    <p
+                      className='text-gray-300 cursor-pointer'
+                      onMouseEnter={() => setIsMouseOverAddress(true)}
+                      onMouseLeave={() => setIsMouseOverAddress(false)}
+                    >
+                      {isMouseOverAddress ? userAddress : userShortenedAddress}
+                    </p>
+                  </a>
+                </div>
+                <span className='flex ml-3 mt-5 space-x-10'>
+                  <span className='flex text-sm hover:underline cursor-pointer'>
+                    <h4 className='font-semibold cursor-pointer'>73</h4>
+                    &nbsp;
+                    <h5 className='text-gray-300'>Following</h5>
+                  </span>
+                  <span className='flex text-sm hover:underline cursor-pointer'>
+                    <h4 className='font-semibold cursor-pointer'>73</h4>
+                    &nbsp;
+                    <h5 className='text-gray-300'>Followers</h5>
+                  </span>
+                </span>
+              </div>
+              <Link href='/settings'>
+                <button className='mr-12 -mt-12 py-1 px-3 rounded-full bg-indigo-500 hover:bg-indigo-600 text-lg font-bold'>
+                  Edit profile
+                </button>
+              </Link>
+            </span>
+            <div className='flex justify-center border-b border-gray-500'>
+              <span className='flex lg:w-1/2 justify-around mt-5 font-semibold'>
+                <div
+                  className={`${
+                    selectedTab == 1 && "border-b-4 border-sky-500"
+                  } cursor-pointer w-14 text-center`}
+                  onClick={() => setSelectedTab(1)}
+                >
+                  About
+                </div>
+                <div
+                  className={`${
+                    selectedTab == 2 && "border-b-4 border-sky-500"
+                  } cursor-pointer w-14 text-center`}
+                  onClick={() => setSelectedTab(2)}
+                >
+                  Posts
+                </div>
+                <div
+                  className={`${
+                    selectedTab == 3 && "border-b-4 border-sky-500"
+                  } cursor-pointer w-14 text-center`}
+                  onClick={() => setSelectedTab(3)}
+                >
+                  NFTs
+                </div>
+              </span>
             </div>
           </div>
-          <hr className='mt-60' />
+          {selectedTab == 1 && <div></div>}
+          {selectedTab == 2 && <div>Posts</div>}
+          {selectedTab == 3 && <div>NFTs</div>}
         </div>
       ) : (
         <NotAuthenticated pageName='profile' />
