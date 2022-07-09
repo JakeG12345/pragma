@@ -55,7 +55,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='flex flex-col items-center w-20 lg:w-64 xl:w-72'>
+    <div className='flex flex-col items-center w-16 md:20 lg:w-64 xl:w-72'>
       <Link href='/'>
         <div className='my-12 cursor-pointer'>
           <span className='hidden lg:flex space-x-3'>
@@ -121,7 +121,7 @@ const Sidebar = () => {
                   </Link>
                 ) : (
                   <Link href='/profile'>
-                    <span className='flex items-center space-x-3 ml-32 h-16 px-2 w-48 bg-[#0f6818] rounded-lg'>
+                    <span className='flex items-center space-x-3 ml-36 h-16 px-2 w-48 bg-[#0f6818] rounded-lg'>
                       <div className='w-12 h-12 rounded-full border-white border-2'>
                         <Image
                           src={

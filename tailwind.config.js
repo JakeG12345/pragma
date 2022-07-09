@@ -4,14 +4,18 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      screen: {
-        sm: "480px",
-        md: "768px",
-        lg: "976px",
-        xl: "1440px",
-      },
+    screens: {
+      sm: "400px",
+      // => @media (min-width: 640px) { ... }
+
+      md: "768px",
+      // => @media (min-width: 768px) { ... }
+
+      lg: "976px",
+      // => @media (min-width: 1024px) { ... }
+
+      xl: "1440px",
+      // => @media (min-width: 1280px) { ... }
     },
   },
-  plugins: [],
 }

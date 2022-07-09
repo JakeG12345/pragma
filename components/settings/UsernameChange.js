@@ -52,7 +52,8 @@ const UsernameChange = () => {
   return (
     <>
       <div className='block xl:hidden space-y-2'>
-        <h3 className='text-xl font-semibold'>Change Account Username</h3>
+        <h3 className='text-xl font-semibold sm:hidden'>Change Account</h3>
+        <h3 className='text-xl font-semibold hidden sm:block'>Change Account Username</h3>
         <span className='flex justify-between'>
           <input
             className='w-48 px-2 h-8 rounded-md text-[#150f2e] outline-none'
