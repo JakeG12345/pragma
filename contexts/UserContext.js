@@ -5,15 +5,17 @@ import {
   useMoralisWeb3ApiCall,
 } from "react-moralis"
 import abi from "../helpers/abi.json"
+import resolveLink from "../helpers/resolveLink"
 
 export const UserContext = createContext(null)
 
 export const UserProvider = ({ children }) => {
   const { Moralis } = useMoralis()
-  const { native } = useMoralisWeb3Api()
+  const { native, account } = useMoralisWeb3Api()
 
   const [userAddress, setUserAddress] = useState("Loading...")
   const [userShortenedAddress, setUserShortenedAddress] = useState("Loading...")
+  const [userNFTs, setUserNFTs] = useState()
 
   const getUserdataOptions = {
     chain: "mumbai",
@@ -42,14 +44,30 @@ export const UserProvider = ({ children }) => {
     )
     setUserAddress(ethAddress)
 
-    const options = {
+    const userdataOptions = {
       chain: "mumbai",
       address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
       function_name: "getUserData",
       abi: abi,
       params: { userAddress: ethAddress },
     }
-    fetch({ params: options })
+    fetch({ params: userdataOptions })
+
+    const getNftOptions = {
+      chain: "mumbai",
+      address: ethAddress,
+    }
+    const nftData = await account.getNFTs(getNftOptions)
+    const nftImages = nftData.result.map((e) => {
+      const image = JSON.parse(e.metadata)?.image
+      if (image == null) return "no img"
+      return resolveLink(image)
+    })
+    function imageFilterer(value) {
+      return value != "no img"
+    }
+    const filteredNftImages = nftImages.filter(imageFilterer)
+    setUserNFTs(filteredNftImages)
   }
 
   useEffect(() => {
@@ -58,7 +76,13 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={[userAddress, userShortenedAddress, data, updateUserdata]}
+      value={[
+        userAddress,
+        userShortenedAddress,
+        data,
+        updateUserdata,
+        userNFTs,
+      ]}
     >
       {children}
     </UserContext.Provider>

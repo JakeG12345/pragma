@@ -1,24 +1,21 @@
-import React, { useEffect, useState, useContext, useRef } from "react"
+import React, { useState, useContext, useRef } from "react"
 import UserContext from "../../contexts/UserContext"
 import {
-  useMoralisWeb3Api,
   useWeb3ExecuteFunction,
   useMoralis,
 } from "react-moralis"
 import Image from "next/image"
 import { SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
-import resolveLink from "../../helpers/resolveLink"
 import abi from "../../helpers/abi.json"
+import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 
 const PfpChange = () => {
-  const Web3Api = useMoralisWeb3Api()
   const { enableWeb3, Moralis } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const [userAddress] = useContext(UserContext)
+  const [userAddress, a, b, c, userNFTs] = useContext(UserContext)
   const dispatch = useNotification()
 
-  const [mumbaiNFTImages, setMumbaiNFTImages] = useState()
   const [selectedPfp, setSelectedPfp] = useState()
   const [selectedPfpIpfs, setSelectedPfpIpfs] = useState()
 
@@ -32,28 +29,6 @@ const PfpChange = () => {
       message: message,
     })
   }
-
-  const getNFTs = async () => {
-    const options = {
-      chain: "mumbai",
-      address: userAddress,
-    }
-    const nftData = await Web3Api.account.getNFTs(options)
-    const nftImages = nftData.result.map((e) => {
-      const image = JSON.parse(e.metadata)?.image
-      if (image == null) return "no img"
-      return resolveLink(image)
-    })
-    function imageFilterer(value) {
-      return value != "no img"
-    }
-    const filteredNftImages = nftImages.filter(imageFilterer)
-    setMumbaiNFTImages(filteredNftImages)
-  }
-
-  useEffect(() => {
-    if (userAddress != "Loading...") getNFTs()
-  }, [userAddress])
 
   const selectNewPfp = () => {
     inputFile.current.click()
@@ -198,8 +173,8 @@ const PfpChange = () => {
       </span>
       <div className='flex items-center justify-center -mx-10 xl:-mx-14'>
         <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3'>
-          {mumbaiNFTImages &&
-            mumbaiNFTImages.map((e, i) => {
+          {userNFTs &&
+            userNFTs.map((e, i) => {
               return (
                 <div
                   key={i}
@@ -215,6 +190,7 @@ const PfpChange = () => {
                     src={e}
                     height={300}
                     width={300}
+                    alt='pfp nft'
                     style={{ borderRadius: 300 / 2 }}
                   />
                 </div>

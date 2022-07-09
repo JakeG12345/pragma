@@ -7,12 +7,14 @@ import Image from "next/image"
 import { UserContext } from "../contexts/UserContext"
 import resolveLink from "../helpers/resolveLink"
 import Link from "next/link"
+import About from "../components/profile/About"
+import NFTs from '../components/profile/NFTs'
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
   const [userAddress, userShortenedAddress, userdata] = useContext(UserContext)
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
-  const [selectedTab, setSelectedTab] = useState(2)
+  const [selectedTab, setSelectedTab] = useState(1)
 
   return (
     <div>
@@ -44,6 +46,7 @@ const Profile = () => {
                   alt='profile picture'
                   height={175}
                   width={175}
+                  priority={true}
                   style={{ borderRadius: 175 / 2 }}
                 />
                 <div className='ml-3'>
@@ -53,7 +56,7 @@ const Profile = () => {
                   <a
                     href={`https://mumbai.polygonscan.com/address/${userAddress}`}
                     target='_blank'
-                    rel='noopener'
+                    rel='noreferrer'
                   >
                     <p
                       className='text-gray-300 cursor-pointer'
@@ -85,13 +88,13 @@ const Profile = () => {
             </span>
             <div className='flex justify-center border-b border-gray-500'>
               <span className='flex lg:w-1/2 justify-around mt-5 font-semibold'>
-                <div
+              <div
                   className={`${
                     selectedTab == 1 && "border-b-4 border-sky-500"
                   } cursor-pointer w-14 text-center`}
                   onClick={() => setSelectedTab(1)}
                 >
-                  About
+                  Posts
                 </div>
                 <div
                   className={`${
@@ -99,7 +102,7 @@ const Profile = () => {
                   } cursor-pointer w-14 text-center`}
                   onClick={() => setSelectedTab(2)}
                 >
-                  Posts
+                  About
                 </div>
                 <div
                   className={`${
@@ -112,9 +115,11 @@ const Profile = () => {
               </span>
             </div>
           </div>
-          {selectedTab == 1 && <div></div>}
-          {selectedTab == 2 && <div>Posts</div>}
-          {selectedTab == 3 && <div>NFTs</div>}
+          <div>
+            {selectedTab == 1 && <div>Posts</div>}
+            {selectedTab == 2 && <About />}
+            {selectedTab == 3 && <NFTs />}
+          </div>
         </div>
       ) : (
         <NotAuthenticated pageName='profile' />
