@@ -3,12 +3,13 @@ import { useMoralis } from "react-moralis"
 import NotAuthenticated from "../components/NotAuthenticated"
 import bannerPlaceholder from "../images/bannerPlaceholder.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
+import openseaLogo from "../images/openseaLogo.png"
 import Image from "next/image"
 import { UserContext } from "../contexts/UserContext"
 import resolveLink from "../helpers/resolveLink"
 import Link from "next/link"
 import About from "../components/profile/About"
-import NFTs from '../components/profile/NFTs'
+import NFTs from "../components/profile/NFTs"
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
@@ -20,7 +21,7 @@ const Profile = () => {
     <div>
       {isAuthenticated ? (
         <div>
-          <div className='bg-[#0000002e]'>
+          <div className='bg-[#00000045]'>
             <Image
               src={
                 userdata
@@ -80,15 +81,34 @@ const Profile = () => {
                   </span>
                 </span>
               </div>
-              <Link href='/settings'>
-                <button className='mr-12 -mt-12 py-1 px-3 rounded-full bg-indigo-500 hover:bg-indigo-600 text-lg font-bold'>
-                  Edit profile
-                </button>
-              </Link>
+              <span className='-mt-12 flex items-center'>
+                <a
+                  href={`https://testnets.opensea.io/${userAddress}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <button className='mr-5 py-1 pl-2 pr-5 rounded-full bg-sky-500 hover:bg-sky-600 text-lg font-bold'>
+                    <span className='flex items-center space-x-2'>
+                      <Image
+                        src={openseaLogo}
+                        alt='opensea logo'
+                        width={25}
+                        height={25}
+                      />
+                      <h4>Opensea</h4>
+                    </span>
+                  </button>
+                </a>
+                <Link href='/settings'>
+                  <button className='mr-12 py-1 px-3 rounded-full bg-indigo-500 hover:bg-indigo-600 text-lg font-bold'>
+                    Edit profile
+                  </button>
+                </Link>
+              </span>
             </span>
             <div className='flex justify-center border-b border-gray-500'>
               <span className='flex lg:w-1/2 justify-around mt-5 font-semibold'>
-              <div
+                <div
                   className={`${
                     selectedTab == 1 && "border-b-4 border-sky-500"
                   } cursor-pointer w-14 text-center`}

@@ -16,6 +16,7 @@ export const UserProvider = ({ children }) => {
   const [userAddress, setUserAddress] = useState("Loading...")
   const [userShortenedAddress, setUserShortenedAddress] = useState("Loading...")
   const [userNFTs, setUserNFTs] = useState()
+  const [userNftData, setUserNftData] = useState()
 
   const getUserdataOptions = {
     chain: "mumbai",
@@ -58,6 +59,7 @@ export const UserProvider = ({ children }) => {
       address: ethAddress,
     }
     const nftData = await account.getNFTs(getNftOptions)
+    setUserNftData(nftData)
     const nftImages = nftData.result.map((e) => {
       const image = JSON.parse(e.metadata)?.image
       if (image == null) return "no img"
@@ -82,6 +84,7 @@ export const UserProvider = ({ children }) => {
         data,
         updateUserdata,
         userNFTs,
+        userNftData,
       ]}
     >
       {children}
