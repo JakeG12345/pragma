@@ -1,6 +1,6 @@
 import Image from "next/image"
 import React, { useRef, useState } from "react"
-import { SaveButton } from "../Buttons"
+import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
 import abi from "../../helpers/abi.json"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
@@ -105,12 +105,11 @@ const BannerChange = () => {
               className='hidden'
             />
           </div>
-          <button
-            className='text-lg font-medium absolute lg:static lg:mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
+          <IndigoButton
             onClick={selectNewBanner}
-          >
-            Select Image
-          </button>
+            extraStyles='absolute font-medium lg:static lg:mr-8 xl:mr-20'
+            text='Select Image'
+          />
           <SaveButton onClick={uploadBannerToIPFS} />
         </div>
       </span>

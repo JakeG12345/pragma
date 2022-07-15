@@ -1,11 +1,8 @@
 import React, { useState, useContext, useRef } from "react"
 import UserContext from "../../contexts/UserContext"
-import {
-  useWeb3ExecuteFunction,
-  useMoralis,
-} from "react-moralis"
+import { useWeb3ExecuteFunction, useMoralis } from "react-moralis"
 import Image from "next/image"
-import { SaveButton } from "../Buttons"
+import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
 import abi from "../../helpers/abi.json"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
@@ -146,12 +143,11 @@ const PfpChange = () => {
               className='hidden'
             />
           </div>
-          <button
-            className='text-lg font-medium absolute lg:static lg:mr-8 xl:mr-20 py-1 px-4 rounded-full bg-indigo-500 hover:bg-indigo-600'
+          <IndigoButton
             onClick={fileChangeHandler}
-          >
-            Select Image
-          </button>
+            extraStyles='absolute font-medium lg:static lg:mr-8 xl:mr-20'
+            text='Select Image'
+          />
           <SaveButton onClick={confirmSelectedPhotoImg} />
         </div>
       </span>

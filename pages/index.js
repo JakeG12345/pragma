@@ -1,14 +1,9 @@
-import FeedPost from "../components/FeedPost";
+import PostInFeed from '../components/PostInFeed';
 
 export default function Home() {
   return (
     <div>
-      <FeedPost />
-      <FeedPost />
-      <FeedPost />
-      <FeedPost />
-      <FeedPost />
-      {/* <NFTPosts /> */}
+      <PostInFeed />
     </div>
   )
 }

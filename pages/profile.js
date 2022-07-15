@@ -10,6 +10,7 @@ import resolveLink from "../helpers/resolveLink"
 import Link from "next/link"
 import About from "../components/profile/About"
 import NFTs from "../components/profile/NFTs"
+import { IndigoButton } from "../components/Buttons"
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
@@ -44,7 +45,7 @@ const Profile = () => {
                         : pfpPlaceholder
                       : pfpPlaceholder
                   }
-                  alt='profile picture'
+                  alt='pfp'
                   height={175}
                   width={175}
                   priority={true}
@@ -75,7 +76,9 @@ const Profile = () => {
                     <h5 className='text-gray-300'>Following</h5>
                   </span>
                   <span className='flex text-sm hover:underline cursor-pointer'>
-                    <h4 className='font-semibold cursor-pointer'>73</h4>
+                    <h4 className='font-semibold cursor-pointer'>
+                      {userdata && userdata[4]}
+                    </h4>
                     &nbsp;
                     <h5 className='text-gray-300'>Followers</h5>
                   </span>
@@ -99,10 +102,10 @@ const Profile = () => {
                     </span>
                   </button>
                 </a>
-                <Link href='/settings'>
-                  <button className='mr-12 py-1 px-3 rounded-full bg-indigo-500 hover:bg-indigo-600 text-lg font-bold'>
-                    Edit profile
-                  </button>
+                <Link href='/settings' passHref>
+                  <div>
+                    <IndigoButton text='Edit profile' extraStyles='mr-12 font-bold' />
+                  </div>
                 </Link>
               </span>
             </span>
