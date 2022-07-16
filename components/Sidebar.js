@@ -1,14 +1,5 @@
 import React, { useState, useContext } from "react"
 import Tab from "./Tab"
-import {
-  faHome,
-  faUser,
-  faGear,
-  faEllipsis,
-  faXmark,
-  faArrowRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import polygonLogo from "../images/polygonLogo.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
@@ -16,7 +7,7 @@ import Link from "next/link"
 import { useMoralis } from "react-moralis"
 import { UserContext } from "../contexts/UserContext"
 import resolveLink from "../helpers/resolveLink"
-import useNotification from './notifications/useNotification'
+import useNotification from "./notifications/useNotification"
 
 const Sidebar = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis()
@@ -25,7 +16,7 @@ const Sidebar = () => {
   const dispatch = useNotification()
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
   const [isDetailsShowing, setIsDetailsShowing] = useState(false)
-  const [logoutIconColour, setLogoutIconColour] = useState("white")
+  const [isLogoutHover, setIsLogoutHover] = useState(false)
 
   const login = async () => {
     if (!isAuthenticated) {
@@ -46,7 +37,7 @@ const Sidebar = () => {
     await logout()
     dispatch({
       type: "SUCCESS",
-      message: "You have successfully disconnected your wallet"
+      message: "You have successfully disconnected your wallet",
     })
   }
 
@@ -81,9 +72,9 @@ const Sidebar = () => {
       </Link>
 
       <nav className='space-y-3 lg:-ml-6 xl:-ml-10'>
-        <Tab tabName='Home' icon={faHome} to='/' />
-        <Tab tabName='Profile' icon={faUser} to='/profile' />
-        <Tab tabName='Settings' icon={faGear} to='/settings' />
+        <Tab tabName='Home' to='/' svgLocation='/house-solid.svg' />
+        <Tab tabName='Profile' to='/profile' svgLocation='/user-solid.svg' />
+        <Tab tabName='Settings' to='/settings' svgLocation='/gear-solid.svg' />
       </nav>
 
       <div className='absolute bottom-20 space-y-5 flex flex-col items-center'>
@@ -121,7 +112,7 @@ const Sidebar = () => {
                   </Link>
                 ) : (
                   <Link href='/profile'>
-                    <span className='flex items-center space-x-3 ml-36 h-16 px-2 w-48 bg-[#0f6818] rounded-lg'>
+                    <span className='flex items-center space-x-3 ml-36 h-16 px-2 w-48 bg-[#000000d0] border-white border-2 rounded-lg'>
                       <div className='w-12 h-12 rounded-full border-white border-2'>
                         <Image
                           src={
@@ -188,7 +179,7 @@ const Sidebar = () => {
                     className='cursor-pointer'
                     onClick={() => setIsLogoutShowing((prev) => !prev)}
                   >
-                    <FontAwesomeIcon icon={faEllipsis} />
+                    <Image src='/more.svg' height={17.5} width={17.5} />
                   </button>
                 </div>
               </span>
@@ -196,17 +187,16 @@ const Sidebar = () => {
             <div className='mt-5 flex justify-center lg:hidden'>
               <button
                 onClick={() => {
-                  console.log("Yo")
-                  setLogoutIconColour("white")
+                  setIsLogoutHover(false)
                   logOut()
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faArrowRightFromBracket}
-                  size='2xl'
-                  color={logoutIconColour}
-                  onMouseEnter={() => setLogoutIconColour("red")}
-                  onMouseLeave={() => setLogoutIconColour("white")}
+                <Image
+                  src={isLogoutHover ? "/logout-red.svg" : "/logout-white.svg"}
+                  width={35}
+                  height={35}
+                  onMouseEnter={() => setIsLogoutHover(true)}
+                  onMouseLeave={() => setIsLogoutHover(false)}
                 />
               </button>
             </div>
@@ -228,7 +218,9 @@ const Sidebar = () => {
             className='absolute right-4'
             onClick={() => setIsLogoutShowing(false)}
           >
-            <FontAwesomeIcon icon={faXmark} size='xl' />
+            <div className='flex items-center justify-center'>
+              <Image src='/xmark-solid.svg' width={25} height={25} />
+            </div>
           </button>
         </span>
       )}

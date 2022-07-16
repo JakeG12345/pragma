@@ -88,8 +88,7 @@ const PfpChange = () => {
       const shortenedIpfs = file
         .ipfs()
         .replace("https://ipfs.moralis.io:2053/ipfs/", "")
-      console.log(shortenedIpfs)
-      // changePfp(shortenedIpfs)
+      changePfp(shortenedIpfs)
     } else {
       handleNewNotification(
         "ERROR",
@@ -144,7 +143,7 @@ const PfpChange = () => {
             />
           </div>
           <IndigoButton
-            onClick={fileChangeHandler}
+            onClick={selectNewPfp}
             extraStyles='absolute font-medium lg:static lg:mr-8 xl:mr-20'
             text='Select Image'
           />

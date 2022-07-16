@@ -23,34 +23,39 @@ const Profile = () => {
       {isAuthenticated ? (
         <div>
           <div className='bg-[#00000045]'>
-            <Image
-              src={
-                userdata
-                  ? userdata[2]
-                    ? resolveLink(userdata[2])
+            <div className='border-b border-gray-500'>
+              <Image
+                src={
+                  userdata
+                    ? userdata[2]
+                      ? resolveLink(userdata[2])
+                      : bannerPlaceholder
                     : bannerPlaceholder
-                  : bannerPlaceholder
-              }
-              alt='banner'
-              width={1000}
-              height={250}
-            />
+                }
+                alt='banner'
+                width={1000}
+                height={250}
+              />
+            </div>
+
             <span className='flex justify-between items-center'>
               <div className='-mt-24 ml-10 z-10'>
-                <Image
-                  src={
-                    userdata
-                      ? userdata[1]
-                        ? resolveLink(userdata[1])
+                <div className='border-white border-2 rounded-full w-40 h-40'>
+                  <Image
+                    src={
+                      userdata
+                        ? userdata[1]
+                          ? resolveLink(userdata[1])
+                          : pfpPlaceholder
                         : pfpPlaceholder
-                      : pfpPlaceholder
-                  }
-                  alt='pfp'
-                  height={175}
-                  width={175}
-                  priority={true}
-                  style={{ borderRadius: 175 / 2 }}
-                />
+                    }
+                    alt='pfp'
+                    height={175}
+                    width={175}
+                    priority={true}
+                    style={{ borderRadius: 175 / 2 }}
+                  />
+                </div>
                 <div className='ml-3'>
                   <h1 className='text-xl font-semibold mt-3'>
                     {userdata && userdata[0]}
@@ -104,7 +109,10 @@ const Profile = () => {
                 </a>
                 <Link href='/settings' passHref>
                   <div>
-                    <IndigoButton text='Edit profile' extraStyles='mr-12 font-bold' />
+                    <IndigoButton
+                      text='Edit profile'
+                      extraStyles='mr-12 font-bold'
+                    />
                   </div>
                 </Link>
               </span>

@@ -1,9 +1,9 @@
 import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import Image from 'next/image'
 
-const Tab = ({ tabName, icon, to }) => {
+const Tab = ({ tabName, to, svgLocation }) => {
   const router = useRouter()
 
   return (
@@ -13,8 +13,8 @@ const Tab = ({ tabName, icon, to }) => {
           router.asPath == to && "bg-[#22184c]"
         }`}
       >
-        <div className='w-14'>
-          <FontAwesomeIcon icon={icon} size='xl' />
+        <div className='w-14 flex items-center justify-center'>
+          <Image src={svgLocation} width={25} height={25} />
         </div>
         <h3 className='text-2xl font-semibold hidden lg:block'>{tabName}</h3>
       </button>
