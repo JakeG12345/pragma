@@ -1,9 +1,14 @@
-import PostInFeed from '../components/PostInFeed';
+import { useMoralis } from 'react-moralis';
+import PostInFeed from '../components/home/PostInFeed';
+import TopConnectWallet from '../components/home/TopConnectWallet';
 
 export default function Home() {
+  const { isAuthenticated } = useMoralis()
+
   return (
     <div>
-      <PostInFeed />
+      {isAuthenticated ? <PostInFeed /> : <TopConnectWallet />}
+      
     </div>
   )
 }
