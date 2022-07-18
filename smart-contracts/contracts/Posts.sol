@@ -9,7 +9,7 @@ contract PragmaPosts is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("The Feed Posts V10", "FEED") {}
+    constructor() ERC721("The Feed Posts V11", "FEED") {}
 
     function mintPost(string memory title, string memory description, string memory image) public {
         _tokenIds.increment();

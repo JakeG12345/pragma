@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import abi from "../../helpers/abi.json"
+import abi from "../../helpers/userdataAbi.json"
 import useNotification from "../notifications/useNotification"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { SaveButton } from "../Buttons"

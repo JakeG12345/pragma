@@ -4,11 +4,49 @@ import UserContext from "../../contexts/UserContext"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { IndigoButton } from "../Buttons"
+import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis'
+import abi from "../../helpers/postsAbi.json"
+import useNotification from '../notifications/useNotification'
 
 const PostInFeed = () => {
+  const { enableWeb3 } = useMoralis()
+  const contractProcessor = useWeb3ExecuteFunction()
   const [userAddress, userShortenedAddress, userdata] = useContext(UserContext)
+  const dispatch = useNotification()
   const [heading, setHeading] = useState("")
   const [text, setText] = useState("")
+
+  const handleNewNotification = (type, message) => {
+    dispatch({
+      type: type,
+      message: message,
+    })
+  }
+
+  const post = async () => {
+    const options = {
+      contractAddress: "0xf99F9f79BD478415807aF5a0b7C49f17E40981D5",
+      functionName: "mintPost",
+      abi: abi,
+      params: { title: heading, description: text, image: "No img" },
+    }
+
+    await enableWeb3()
+
+    await contractProcessor.fetch({
+      params: options,
+      onSuccess: () => {
+        handleNewNotification(
+          "SUCCESS",
+          "Post should be minted as NFT onto blockchain shorty"
+        )
+      },
+      onError: (error) => {
+        handleNewNotification("ERROR", error.message)
+      },
+    })
+  }
+
 
   return (
     <div className='bg-[#00000045] border-b border-gray-500'>
@@ -51,7 +89,7 @@ const PostInFeed = () => {
             </div>
             <span className='flex items-center justify-between'>
               <IndigoButton text='Select Image' extraStyles='font-semibold' />
-              <button className='px-5 py-1 rounded-full text-lg font-semibold bg-sky-500 hover:bg-sky-600'>
+              <button className='px-5 py-1 rounded-full text-lg font-semibold bg-sky-500 hover:bg-sky-600' onClick={post}>
                 Mint Post
               </button>
             </span>

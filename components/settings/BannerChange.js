@@ -2,7 +2,7 @@ import Image from "next/image"
 import React, { useRef, useState } from "react"
 import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
-import abi from "../../helpers/abi.json"
+import abi from "../../helpers/userdataAbi.json"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 
 const BannerChange = () => {

@@ -4,7 +4,7 @@ import {
   useMoralisWeb3Api,
   useMoralisWeb3ApiCall,
 } from "react-moralis"
-import abi from "../helpers/abi.json"
+import abi from "../helpers/userdataAbi.json"
 import resolveLink from "../helpers/resolveLink"
 
 export const UserContext = createContext(null)

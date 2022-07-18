@@ -4,8 +4,7 @@ import { useWeb3ExecuteFunction, useMoralis } from "react-moralis"
 import Image from "next/image"
 import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
-import abi from "../../helpers/abi.json"
-import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
+import abi from "../../helpers/userdataAbi.json"
 
 const PfpChange = () => {
   const { enableWeb3, Moralis } = useMoralis()
