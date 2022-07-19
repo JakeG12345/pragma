@@ -4,9 +4,9 @@ import UserContext from "../../contexts/UserContext"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { IndigoButton } from "../Buttons"
-import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis'
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import abi from "../../helpers/postsAbi.json"
-import useNotification from '../notifications/useNotification'
+import useNotification from "../notifications/useNotification"
 
 const PostInFeed = () => {
   const { enableWeb3 } = useMoralis()
@@ -46,7 +46,6 @@ const PostInFeed = () => {
       },
     })
   }
-
 
   return (
     <div className='bg-[#00000045] border-b border-gray-500'>
@@ -89,7 +88,10 @@ const PostInFeed = () => {
             </div>
             <span className='flex items-center justify-between'>
               <IndigoButton text='Select Image' extraStyles='font-semibold' />
-              <button className='px-5 py-1 rounded-full text-lg font-semibold bg-sky-500 hover:bg-sky-600' onClick={post}>
+              <button
+                className='px-5 py-1 rounded-full text-lg font-semibold bg-sky-500 hover:bg-sky-600'
+                onClick={post}
+              >
                 Mint Post
               </button>
             </span>

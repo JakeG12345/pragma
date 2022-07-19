@@ -7,7 +7,7 @@ const NFTs = () => {
 
   return (
     <div className='m-14 mt-5 mx-5 space-y-3'>
-      <h1 className='ml-5 text-2xl font-bold'>Your NFTs</h1>
+      <h1 className='ml-5 text-2xl font-bold'>Your NFT Images</h1>
       <div className='flex items-center justify-center'>
         <div className='grid grid-cols-2 gap-5'>
           {userNFTs &&

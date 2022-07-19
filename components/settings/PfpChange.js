@@ -162,7 +162,7 @@ const PfpChange = () => {
         </div>
       )}
       <span className='flex justify-between items-center'>
-        <h3 className='text-lg font-medium'>Your NFTs</h3>
+        <h3 className='text-lg font-medium'>Your NFT Images</h3>
         <SaveButton onClick={confirmSelectedNftPfp} />
       </span>
       <div className='flex items-center justify-center -mx-10 xl:-mx-14'>

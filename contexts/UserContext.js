@@ -17,6 +17,7 @@ export const UserProvider = ({ children }) => {
   const [userShortenedAddress, setUserShortenedAddress] = useState("Loading...")
   const [userNFTs, setUserNFTs] = useState()
   const [userNftData, setUserNftData] = useState()
+  const [postNftData, setPostNftData] = useState()
 
   const getUserdataOptions = {
     chain: "mumbai",
@@ -31,7 +32,7 @@ export const UserProvider = ({ children }) => {
     { ...getUserdataOptions }
   )
 
-  const updateUserdata = async () => {
+  const updateData = async () => {
     await Moralis.start({
       serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
       appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
@@ -62,7 +63,8 @@ export const UserProvider = ({ children }) => {
     setUserNftData(nftData)
     const nftImages = nftData.result.map((e) => {
       const image = JSON.parse(e.metadata)?.image
-      if (image == null) return "no img"
+      // Image would be classified if less than 40 characters so is classified as no img
+      if (image == null || image.length < 40) return "no img"
       return resolveLink(image)
     })
     function imageFilterer(value) {
@@ -70,10 +72,17 @@ export const UserProvider = ({ children }) => {
     }
     const filteredNftImages = nftImages.filter(imageFilterer)
     setUserNFTs(filteredNftImages)
+
+    const postsOptions = {
+      chain: "mumbai",
+      token_address: "0xf99F9f79BD478415807aF5a0b7C49f17E40981D5",
+    }
+    const postData = await account.getNFTsForContract(postsOptions)
+    setPostNftData(postData)
   }
 
   useEffect(() => {
-    updateUserdata()
+    updateData()
   }, [])
 
   return (
@@ -82,9 +91,10 @@ export const UserProvider = ({ children }) => {
         userAddress,
         userShortenedAddress,
         data,
-        updateUserdata,
+        updateData,
         userNFTs,
         userNftData,
+        postNftData
       ]}
     >
       {children}
