@@ -5,7 +5,7 @@ import bannerPlaceholder from "../images/bannerPlaceholder.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import openseaLogo from "../images/openseaLogo.png"
 import Image from "next/image"
-import { UserContext } from "../contexts/UserContext"
+import Context from "../contexts/Context"
 import resolveLink from "../helpers/resolveLink"
 import Link from "next/link"
 import About from "../components/profile/About"
@@ -14,7 +14,7 @@ import { IndigoButton } from "../components/Buttons"
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata] = useContext(UserContext)
+  const [userAddress, userShortenedAddress, userdata] = useContext(Context)
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
   const [selectedTab, setSelectedTab] = useState(1)
 

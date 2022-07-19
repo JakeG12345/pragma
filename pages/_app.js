@@ -2,7 +2,7 @@ import { MoralisProvider } from "react-moralis"
 import AdBar from "../components/AdBar"
 import NotificationProvider from "../components/notifications/NotificationProvider"
 import Sidebar from "../components/Sidebar"
-import { UserProvider } from "../contexts/UserContext"
+import { ContextProvider } from '../contexts/Context'
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
@@ -30,7 +30,7 @@ const AppWrapper = ({ children }) => {
       appId='xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL'
     >
       <NotificationProvider>
-        <UserProvider>{children}</UserProvider>
+        <ContextProvider>{children}</ContextProvider>
       </NotificationProvider>
     </MoralisProvider>
   )

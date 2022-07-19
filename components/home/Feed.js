@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import UserContext from "../../contexts/UserContext"
+import UserContext from "../../contexts/Context"
 import Post from "./Post"
 
 const Feed = () => {
@@ -23,7 +23,7 @@ const Feed = () => {
               header={metadata.name}
               text={metadata.description}
               image={metadata.image}
-              owner={nft.owner_of}
+              posterAddress={nft.owner_of}
               key={nft.token_id}
             />
           )

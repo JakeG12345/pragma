@@ -1,6 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Post = ({header, text, image, owner}) => {
+const Post = ({header, text, image, posterAddress}) => {
+  
+
+  const getPosterDetails = () => {
+    console.log("Yo")
+  }
+
+  useEffect(() => {
+    getPosterDetails()
+  }, [])
+
   return (
     <div>
         <div>
@@ -9,7 +19,7 @@ const Post = ({header, text, image, owner}) => {
         <h2>{header}</h2>
         <p>{text}</p>
         <p>{image}</p>
-        <p>{owner}</p>
+        <p>{posterAddress}</p>
     </div>
   )
 }

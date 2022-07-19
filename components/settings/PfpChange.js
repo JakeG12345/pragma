@@ -1,15 +1,15 @@
 import React, { useState, useContext, useRef } from "react"
-import UserContext from "../../contexts/UserContext"
 import { useWeb3ExecuteFunction, useMoralis } from "react-moralis"
 import Image from "next/image"
 import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
 import abi from "../../helpers/userdataAbi.json"
+import Context from '../../contexts/Context'
 
 const PfpChange = () => {
   const { enableWeb3, Moralis } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const [userAddress, a, b, c, userNFTs] = useContext(UserContext)
+  const [userAddress, a, b, c, userNFTs] = useContext(Context)
   const dispatch = useNotification()
 
   const [selectedPfp, setSelectedPfp] = useState()

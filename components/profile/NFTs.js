@@ -1,9 +1,9 @@
 import Image from "next/image"
 import React, { useContext } from "react"
-import UserContext from "../../contexts/UserContext"
+import Context from "../../contexts/Context"
 
 const NFTs = () => {
-  const [userAddress, a, b, c, userNFTs] = useContext(UserContext)
+  const [userAddress, a, b, c, userNFTs] = useContext(Context)
 
   return (
     <div className='m-14 mt-5 mx-5 space-y-3'>

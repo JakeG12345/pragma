@@ -1,17 +1,17 @@
 import Image from "next/image"
 import React, { useContext, useState } from "react"
-import UserContext from "../../contexts/UserContext"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { IndigoButton } from "../Buttons"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import abi from "../../helpers/postsAbi.json"
 import useNotification from "../notifications/useNotification"
+import Context from '../../contexts/Context'
 
 const PostInFeed = () => {
   const { enableWeb3 } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const [userAddress, userShortenedAddress, userdata] = useContext(UserContext)
+  const [userAddress, userShortenedAddress, userdata] = useContext(Context)
   const dispatch = useNotification()
   const [heading, setHeading] = useState("")
   const [text, setText] = useState("")

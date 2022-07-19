@@ -5,14 +5,14 @@ import polygonLogo from "../images/polygonLogo.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import Link from "next/link"
 import { useMoralis } from "react-moralis"
-import { UserContext } from "../contexts/UserContext"
+import Context from "../contexts/Context"
 import resolveLink from "../helpers/resolveLink"
 import useNotification from "./notifications/useNotification"
 
 const Sidebar = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis()
   const [userAddress, userShortenedAddress, userdata, updateUserdata] =
-    useContext(UserContext)
+    useContext(Context)
   const dispatch = useNotification()
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
   const [isDetailsShowing, setIsDetailsShowing] = useState(false)

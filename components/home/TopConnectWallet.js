@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
 import { useMoralis } from "react-moralis"
-import UserContext from '../../contexts/UserContext'
+import Context from '../../contexts/Context'
 
 const TopConnectWallet = () => {
   const { authenticate, isAuthenticated } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata, updateUserdata] = useContext(UserContext)
+  const [userAddress, userShortenedAddress, userdata, updateUserdata] = useContext(Context)
 
 //0x2B6326DC3cf0aDDd9920C0721c9fFEB23D9160c5
 

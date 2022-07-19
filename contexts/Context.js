@@ -7,9 +7,9 @@ import {
 import abi from "../helpers/userdataAbi.json"
 import resolveLink from "../helpers/resolveLink"
 
-export const UserContext = createContext(null)
+export const Context = createContext(null)
 
-export const UserProvider = ({ children }) => {
+export const ContextProvider = ({ children }) => {
   const { Moralis } = useMoralis()
   const { native, account } = useMoralisWeb3Api()
 
@@ -37,9 +37,9 @@ export const UserProvider = ({ children }) => {
       serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
       appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
     })
-
     const user = Moralis.User.current()
     if (user == null) return
+
     const ethAddress = user.attributes.ethAddress
     setUserShortenedAddress(
       `${ethAddress.slice(0, 4)}...${ethAddress.slice(38)}`
@@ -86,7 +86,7 @@ export const UserProvider = ({ children }) => {
   }, [])
 
   return (
-    <UserContext.Provider
+    <Context.Provider
       value={[
         userAddress,
         userShortenedAddress,
@@ -94,12 +94,12 @@ export const UserProvider = ({ children }) => {
         updateData,
         userNFTs,
         userNftData,
-        postNftData
+        postNftData,
       ]}
     >
       {children}
-    </UserContext.Provider>
+    </Context.Provider>
   )
 }
 
-export default UserContext
+export default Context

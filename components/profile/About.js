@@ -1,10 +1,10 @@
 import Link from "next/link"
 import React, { useContext } from "react"
-import UserContext from "../../contexts/UserContext"
 import ReactLoading from 'react-loading';
+import Context from '../../contexts/Context';
 
 const About = () => {
-  const [userAddress, userShortenedAddress, userdata] = useContext(UserContext)
+  const [userAddress, userShortenedAddress, userdata] = useContext(Context)
 
   if (userdata == null) {
     return (
