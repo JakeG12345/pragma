@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import UserContext from "../../contexts/Context"
 import Post from "./Post"
 
-const Feed = () => {
+const Feed = ({ posts }) => {
   const [
     userAddress,
     userShortenedAddress,
@@ -10,13 +10,12 @@ const Feed = () => {
     updateData,
     userNFTs,
     userNftData,
-    postNftData,
   ] = useContext(UserContext)
 
   return (
-    <div onClick={() => console.log(postNftData)}>
-      {postNftData &&
-        postNftData.result.map((nft) => {
+    <div>
+      {posts &&
+        posts.result.map((nft) => {
           const metadata = JSON.parse(nft.metadata)
           return (
             <Post
@@ -28,7 +27,6 @@ const Feed = () => {
             />
           )
         })}
-      Yo
     </div>
   )
 }

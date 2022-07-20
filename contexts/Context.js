@@ -17,14 +17,12 @@ export const ContextProvider = ({ children }) => {
   const [userShortenedAddress, setUserShortenedAddress] = useState("Loading...")
   const [userNFTs, setUserNFTs] = useState()
   const [userNftData, setUserNftData] = useState()
-  const [postNftData, setPostNftData] = useState()
 
   const getUserdataOptions = {
     chain: "mumbai",
     address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
     function_name: "getUserData",
     abi: abi,
-    params: { userAddress: userAddress },
   }
 
   const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
@@ -72,13 +70,6 @@ export const ContextProvider = ({ children }) => {
     }
     const filteredNftImages = nftImages.filter(imageFilterer)
     setUserNFTs(filteredNftImages)
-
-    const postsOptions = {
-      chain: "mumbai",
-      token_address: "0xf99F9f79BD478415807aF5a0b7C49f17E40981D5",
-    }
-    const postData = await account.getNFTsForContract(postsOptions)
-    setPostNftData(postData)
   }
 
   useEffect(() => {
@@ -94,7 +85,6 @@ export const ContextProvider = ({ children }) => {
         updateData,
         userNFTs,
         userNftData,
-        postNftData,
       ]}
     >
       {children}
