@@ -1,20 +1,10 @@
-import React, { useContext } from "react"
-import UserContext from "../../contexts/Context"
+import React from "react"
 import Post from "./Post"
 
-const Feed = ({ posts }) => {
-  const [
-    userAddress,
-    userShortenedAddress,
-    data,
-    updateData,
-    userNFTs,
-    userNftData,
-  ] = useContext(UserContext)
-
+const Feed = ({posts}) => {
   return (
     <div>
-      {posts &&
+      {posts.result &&
         posts.result.map((nft) => {
           const metadata = JSON.parse(nft.metadata)
           return (
