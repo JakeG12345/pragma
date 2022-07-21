@@ -67,6 +67,57 @@
   {
     "inputs": [
       {
+        "internalType": "address[]",
+        "name": "addresses",
+        "type": "address[]"
+      }
+    ],
+    "name": "getBulkUserData",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "username",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "pfp",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "banner",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "bio",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "followers",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "followingArray",
+            "type": "address[]"
+          }
+        ],
+        "internalType": "struct PragmaUserdata.user[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "userAddress",
         "type": "address"

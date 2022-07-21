@@ -1,10 +1,10 @@
-import { useMoralis } from 'react-moralis';
-import Feed from '../components/home/Feed';
-import PostInFeed from '../components/home/PostInFeed';
-import TopConnectWallet from '../components/home/TopConnectWallet';
-import { postsAddress } from '../helpers/info';
+import { useMoralis } from "react-moralis"
+import Feed from "../components/home/Feed"
+import PostInFeed from "../components/home/PostInFeed"
+import TopConnectWallet from "../components/home/TopConnectWallet"
+import { postsAddress } from "../helpers/info"
 
-export default function Home({posts}) {
+export default function Home({ posts }) {
   const { isAuthenticated } = useMoralis()
 
   return (
@@ -23,20 +23,29 @@ export async function getStaticProps() {
         method: "GET",
         headers: {
           accept: "applications/json",
-          "X-API-Key":
-            process.env.MORALIS_API_KEY,
+          "X-API-Key": process.env.MORALIS_API_KEY,
         },
       }
     )
-    const posts = await res.json()
-  
+    const postData = await res.json()
+    const posterAddresses = postData.result.map((p) => {
+      return p.owner_of
+    })
+    const posts = {
+      data: postData,
+      addresses: posterAddresses
+    }
+
     return {
       props: {
         posts,
       },
     }
-  }
-  catch {
-    console.log("error with fetching post nfts")
+  } catch {
+    return {
+      props: {
+        msg: "ERROR",
+      },
+    }
   }
 }

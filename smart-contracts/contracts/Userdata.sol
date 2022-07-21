@@ -21,6 +21,14 @@ contract PragmaUserdata {
         return users[userAddress];
     }
 
+    function getBulkUserData(address[] memory addresses) external view returns(user[] memory) {
+        user[] memory theUsers = new user[](addresses.length);
+        for (uint i = 0; i < addresses.length; i++) {
+            theUsers[i] = users[addresses[i]];
+        }
+        return theUsers;
+    }
+
     function changeName(string memory newUsername) external {
         users[msg.sender].username = newUsername;
     }

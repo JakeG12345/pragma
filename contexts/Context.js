@@ -6,7 +6,7 @@ import {
 } from "react-moralis"
 import abi from "../helpers/userdataAbi.json"
 import resolveLink from "../helpers/resolveLink"
-import { userdataAddress } from '../helpers/info'
+import { postsAddress, userdataAddress } from "../helpers/info"
 
 export const Context = createContext(null)
 
