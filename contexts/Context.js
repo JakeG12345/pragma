@@ -6,6 +6,7 @@ import {
 } from "react-moralis"
 import abi from "../helpers/userdataAbi.json"
 import resolveLink from "../helpers/resolveLink"
+import { userdataAddress } from '../helpers/info'
 
 export const Context = createContext(null)
 
@@ -20,7 +21,7 @@ export const ContextProvider = ({ children }) => {
 
   const getUserdataOptions = {
     chain: "mumbai",
-    address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
+    address: userdataAddress,
     function_name: "getUserData",
     abi: abi,
   }
@@ -46,7 +47,7 @@ export const ContextProvider = ({ children }) => {
 
     const userdataOptions = {
       chain: "mumbai",
-      address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
+      address: userdataAddress,
       function_name: "getUserData",
       abi: abi,
       params: { userAddress: ethAddress },

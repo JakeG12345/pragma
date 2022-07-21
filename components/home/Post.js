@@ -4,13 +4,15 @@ import abi from "../../helpers/userdataAbi.json"
 import Image from "next/image"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
+import { OpenseaButton } from "../Buttons"
+import { userdataAddress } from '../../helpers/info'
 
-const Post = ({ header, text, image, posterAddress }) => {
+const Post = ({ header, text, image, tokenId, posterAddress }) => {
   const { native } = useMoralisWeb3Api()
 
   const userdataOptions = {
     chain: "mumbai",
-    address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
+    address: userdataAddress,
     function_name: "getUserData",
     abi: abi,
     params: { userAddress: posterAddress },
@@ -50,7 +52,7 @@ const Post = ({ header, text, image, posterAddress }) => {
         />
       </div>
 
-      <div className='ml-4'>
+      <div className='ml-4 w-full'>
         <span className='flex space-x-2'>
           <h3 className='font-medium'>
             {data ? (data[0] === "" ? "No name" : data[0]) : "Loading..."}
@@ -59,7 +61,16 @@ const Post = ({ header, text, image, posterAddress }) => {
             {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
           </p>
         </span>
-        <h2 className='font-semibold text-lg'>{header}</h2>
+        <span className='flex justify-between items-center mb-2'>
+          <h2 className='font-semibold text-lg'>{header}</h2>
+          <a
+            href={`https://testnets.opensea.io/assets/mumbai/0xf99f9f79bd478415807af5a0b7c49f17e40981d5/${tokenId}`}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <OpenseaButton />
+          </a>
+        </span>
         <p>{text}</p>
       </div>
     </div>

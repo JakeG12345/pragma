@@ -2,6 +2,7 @@ import { useMoralis } from 'react-moralis';
 import Feed from '../components/home/Feed';
 import PostInFeed from '../components/home/PostInFeed';
 import TopConnectWallet from '../components/home/TopConnectWallet';
+import { postsAddress } from '../helpers/info';
 
 export default function Home({posts}) {
   const { isAuthenticated } = useMoralis()
@@ -17,7 +18,7 @@ export default function Home({posts}) {
 export async function getStaticProps() {
   try {
     const res = await fetch(
-      "https://deep-index.moralis.io/api/v2/nft/0xf99F9f79BD478415807aF5a0b7C49f17E40981D5/owners?chain=mumbai&format=decimal",
+      `https://deep-index.moralis.io/api/v2/nft/${postsAddress}/owners?chain=mumbai&format=decimal`,
       {
         method: "GET",
         headers: {

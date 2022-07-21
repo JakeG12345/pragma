@@ -3,14 +3,13 @@ import { useMoralis } from "react-moralis"
 import NotAuthenticated from "../components/NotAuthenticated"
 import bannerPlaceholder from "../images/bannerPlaceholder.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
-import openseaLogo from "../images/openseaLogo.png"
 import Image from "next/image"
 import Context from "../contexts/Context"
 import resolveLink from "../helpers/resolveLink"
 import Link from "next/link"
 import About from "../components/profile/About"
 import NFTs from "../components/profile/NFTs"
-import { IndigoButton } from "../components/Buttons"
+import { IndigoButton, OpenseaButton } from "../components/Buttons"
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
@@ -95,17 +94,7 @@ const Profile = () => {
                   target='_blank'
                   rel='noreferrer'
                 >
-                  <button className='mr-5 py-1 pl-2 pr-5 rounded-full bg-sky-500 hover:bg-sky-600 text-lg font-bold'>
-                    <span className='flex items-center space-x-2'>
-                      <Image
-                        src={openseaLogo}
-                        alt='opensea logo'
-                        width={25}
-                        height={25}
-                      />
-                      <h4>Opensea</h4>
-                    </span>
-                  </button>
+                  <OpenseaButton />
                 </a>
                 <Link href='/settings' passHref>
                   <div>

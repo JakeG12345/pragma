@@ -7,6 +7,7 @@ import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import abi from "../../helpers/postsAbi.json"
 import useNotification from "../notifications/useNotification"
 import Context from '../../contexts/Context'
+import { postsAddress } from '../../helpers/info'
 
 const PostInFeed = () => {
   const { enableWeb3 } = useMoralis()
@@ -24,14 +25,18 @@ const PostInFeed = () => {
   }
 
   const post = async () => {
+
+    if (heading.length == 0) return handleNewNotification("ERROR", "Heading is required for all NFT posts")
+
+
+    await enableWeb3()
+
     const options = {
-      contractAddress: "0xf99F9f79BD478415807aF5a0b7C49f17E40981D5",
+      contractAddress: postsAddress,
       functionName: "mintPost",
       abi: abi,
       params: { title: heading, description: text, image: "No img" },
     }
-
-    await enableWeb3()
 
     await contractProcessor.fetch({
       params: options,

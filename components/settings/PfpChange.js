@@ -5,6 +5,7 @@ import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
 import abi from "../../helpers/userdataAbi.json"
 import Context from '../../contexts/Context'
+import { userdataAddress } from '../../helpers/info'
 
 const PfpChange = () => {
   const { enableWeb3, Moralis } = useMoralis()
@@ -98,7 +99,7 @@ const PfpChange = () => {
 
   const changePfp = async (newPfpIpfs) => {
     const options = {
-      contractAddress: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
+      contractAddress: userdataAddress,
       functionName: "changePfp",
       abi: abi,
       params: { newPfp: newPfpIpfs },
