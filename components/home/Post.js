@@ -33,37 +33,35 @@ const Post = ({ header, text, image, posterAddress }) => {
   }, [])
 
   return (
-    <div className='bg-[#959cc484] border-b p-5'>
-      <span className='flex items-center'>
-        <div className='flex flex-col items-center'>
-          <Image
-            src={
-              data
-                ? data[1]
-                  ? resolveLink(data[1])
-                  : pfpPlaceholder
+    <div className='bg-[#959cc484] border-b p-5 flex'>
+      <div className='flex flex-col items-center'>
+        <Image
+          src={
+            data
+              ? data[1]
+                ? resolveLink(data[1])
                 : pfpPlaceholder
-            }
-            alt={pfpPlaceholder}
-            height={45}
-            width={45}
-            style={{ borderRadius: 45 / 2 }}
-          />
-        </div>
+              : pfpPlaceholder
+          }
+          alt={pfpPlaceholder}
+          height={45}
+          width={45}
+          style={{ borderRadius: 45 / 2 }}
+        />
+      </div>
 
-        <div className='ml-2'>
-          <span className='flex space-x-2'>
-            <h3 className='font-medium'>
-              {data ? (data[0] === "" ? "No name" : data[0]) : "Loading..."}
-            </h3>
-            <p className='text-gray-300'>
-              {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
-            </p>
-          </span>
-          <h2 className='font-semibold text-lg'>{header}</h2>
-        </div>
-      </span>
-      <p className='mt-1 mb-2 mx-14'>{text}</p>
+      <div className='ml-4'>
+        <span className='flex space-x-2'>
+          <h3 className='font-medium'>
+            {data ? (data[0] === "" ? "No name" : data[0]) : "Loading..."}
+          </h3>
+          <p className='text-gray-300'>
+            {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
+          </p>
+        </span>
+        <h2 className='font-semibold text-lg'>{header}</h2>
+        <p>{text}</p>
+      </div>
     </div>
   )
 }

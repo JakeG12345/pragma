@@ -103,7 +103,7 @@ const Sidebar = () => {
                               : pfpPlaceholder
                             : pfpPlaceholder
                         }
-                        alt={pfpPlaceholder}
+                        alt='pfp'
                         height={45}
                         width={45}
                         style={{ borderRadius: 45 / 2 }}
@@ -122,7 +122,7 @@ const Sidebar = () => {
                                 : pfpPlaceholder
                               : pfpPlaceholder
                           }
-                          alt={pfpPlaceholder}
+                          alt='pfp'
                           height={45}
                           width={45}
                           style={{ borderRadius: 45 / 2 }}
@@ -155,7 +155,7 @@ const Sidebar = () => {
                             : pfpPlaceholder
                           : pfpPlaceholder
                       }
-                      alt={pfpPlaceholder}
+                      alt='pfp'
                       height={45}
                       width={45}
                       style={{ borderRadius: 45 / 2 }}
@@ -179,7 +179,12 @@ const Sidebar = () => {
                     className='cursor-pointer'
                     onClick={() => setIsLogoutShowing((prev) => !prev)}
                   >
-                    <Image src='/more.svg' height={17.5} width={17.5} />
+                    <Image
+                      src='/more.svg'
+                      height={17.5}
+                      width={17.5}
+                      alt='more'
+                    />
                   </button>
                 </div>
               </span>
@@ -193,6 +198,7 @@ const Sidebar = () => {
               >
                 <Image
                   src={isLogoutHover ? "/logout-red.svg" : "/logout-white.svg"}
+                  alt='logout'
                   width={35}
                   height={35}
                   onMouseEnter={() => setIsLogoutHover(true)}
@@ -219,7 +225,7 @@ const Sidebar = () => {
             onClick={() => setIsLogoutShowing(false)}
           >
             <div className='flex items-center justify-center'>
-              <Image src='/xmark-solid.svg' width={25} height={25} />
+              <Image src='/xmark-solid.svg' width={25} height={25} alt='X' />
             </div>
           </button>
         </span>
