@@ -41,10 +41,6 @@ const Sidebar = () => {
     })
   }
 
-  const post = () => {
-    console.log("Post function was called")
-  }
-
   return (
     <div className='flex flex-col items-center w-16 md:20 lg:w-64 xl:w-72'>
       <Link href='/'>
@@ -78,12 +74,21 @@ const Sidebar = () => {
       </nav>
 
       <div className='absolute bottom-20 space-y-5 flex flex-col items-center'>
-        <button
-          className='py-3 w-52 xl:w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e] hidden lg:block'
-          onClick={isAuthenticated ? post : login}
-        >
-          {isAuthenticated ? "Mint Post" : "Connect Wallet"}
-        </button>
+        {isAuthenticated ? (
+          <Link href='/'>
+            <button className='py-3 w-52 xl:w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e] hidden lg:block'>
+              Mint Post
+            </button>
+          </Link>
+        ) : (
+          <button
+            className='py-3 w-52 xl:w-60 rounded-full text-xl font-semibold bg-[#22184c] hover:bg-[#150f2e] hidden lg:block'
+            onClick={login}
+          >
+            Connect Wallet
+          </button>
+        )}
+
         {isAuthenticated && (
           <div>
             <span className='flex items-center justify-center'>

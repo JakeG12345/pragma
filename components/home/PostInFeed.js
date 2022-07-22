@@ -27,7 +27,9 @@ const PostInFeed = () => {
   const post = async () => {
 
     if (heading.length == 0) return handleNewNotification("ERROR", "Heading is required for all NFT posts")
-
+    if (heading.length > 30) return handleNewNotification("ERROR", "Heading must not be more than 30 characters")
+    if (text.length == 0) return handleNewNotification("ERROR", "Text is required for all NFT posts")
+    if (text.length > 100) return handleNewNotification("ERROR", "Text must not be more than 100 characters")
 
     await enableWeb3()
 
@@ -53,7 +55,7 @@ const PostInFeed = () => {
   }
 
   return (
-    <div className='bg-[#00000045] border-b border-gray-500'>
+    <div className='bg-[#00000045] border-b border-white'>
       <span className='py-5 space-x-10 flex'>
         <div className='ml-7 mt-5 h-20 w-20 rounded-full border-2 border-white'>
           <Image
@@ -88,8 +90,8 @@ const PostInFeed = () => {
             }}
           />
           <div className='space-y-1'>
-            <div className=''>
-              {/* <Image src={pfpPlaceholder} layout='responsive' /> */}
+            <div className='w-full flex justify-center'>
+              {/* <Image src={pfpPlaceholder} height={300} width={300} /> */}
             </div>
             <span className='flex items-center justify-between'>
               <IndigoButton text='Select Image' extraStyles='font-semibold' />

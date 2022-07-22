@@ -10,6 +10,7 @@ import Link from "next/link"
 import About from "../components/profile/About"
 import NFTs from "../components/profile/NFTs"
 import { IndigoButton, OpenseaButton } from "../components/Buttons"
+import ProfilePosts from '../components/profile/ProfilePosts'
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
@@ -23,18 +24,21 @@ const Profile = () => {
         <div>
           <div className='bg-[#00000045]'>
             <div className='border-b border-gray-500'>
-              <Image
-                src={
-                  userdata
-                    ? userdata[2]
-                      ? resolveLink(userdata[2])
+                <Image
+                  src={
+                    userdata
+                      ? userdata[2]
+                        ? resolveLink(userdata[2])
+                        : bannerPlaceholder
                       : bannerPlaceholder
-                    : bannerPlaceholder
-                }
-                alt='banner'
-                width={1000}
-                height={250}
-              />
+                  }
+                  alt='banner'
+                  
+                  layout='responsive'
+                  width={900}
+                  priority
+                  height={250}
+                />
             </div>
 
             <span className='flex justify-between items-center'>
@@ -106,8 +110,9 @@ const Profile = () => {
                 </Link>
               </span>
             </span>
+
             <div className='flex justify-center border-b border-gray-500'>
-              <span className='flex lg:w-1/2 justify-around mt-5 font-semibold'>
+              <span className='flex lg:w-3/5 justify-around mt-5 font-semibold'>
                 <div
                   className={`${
                     selectedTab == 1 && "border-b-4 border-sky-500"
@@ -136,7 +141,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            {selectedTab == 1 && <div>Posts</div>}
+            {selectedTab == 1 && <ProfilePosts />}
             {selectedTab == 2 && <About />}
             {selectedTab == 3 && <NFTs />}
           </div>

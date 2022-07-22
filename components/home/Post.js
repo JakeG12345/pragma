@@ -1,47 +1,19 @@
-import React, { useEffect } from "react"
-import { useMoralisWeb3Api, useMoralisWeb3ApiCall } from "react-moralis"
-import abi from "../../helpers/userdataAbi.json"
+import React from "react"
 import Image from "next/image"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { OpenseaButton } from "../Buttons"
-import { userdataAddress } from '../../helpers/info'
 
-const Post = ({ header, text, image, tokenId, posterAddress }) => {
-  const { native } = useMoralisWeb3Api()
-
-  const userdataOptions = {
-    chain: "mumbai",
-    address: userdataAddress,
-    function_name: "getUserData",
-    abi: abi,
-    params: { userAddress: posterAddress },
-  }
-
-  const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
-    native.runContractFunction,
-    { ...userdataOptions }
-  )
-
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await delay(500)
-      fetch({ params: userdataOptions })
-    }
-
-    fetchData()
-  }, [])
+const Post = ({ header, text, image, tokenId, posterAddress, posterData }) => {
 
   return (
-    <div className='bg-[#959cc484] border-b p-5 flex'>
+    <div className='bg-[#959cc484] border-gray-300 border-b p-5 flex'>
       <div className='flex flex-col items-center'>
         <Image
           src={
-            data
-              ? data[1]
-                ? resolveLink(data[1])
+            posterData
+              ? posterData[1]
+                ? resolveLink(posterData[1])
                 : pfpPlaceholder
               : pfpPlaceholder
           }
@@ -55,7 +27,7 @@ const Post = ({ header, text, image, tokenId, posterAddress }) => {
       <div className='ml-4 w-full'>
         <span className='flex space-x-2'>
           <h3 className='font-medium'>
-            {data ? (data[0] === "" ? "No name" : data[0]) : "Loading..."}
+            {posterData ? (posterData[0] === "" ? "No name" : posterData[0]) : "Loading..."}
           </h3>
           <p className='text-gray-300'>
             {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
