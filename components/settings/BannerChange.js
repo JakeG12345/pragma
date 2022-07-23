@@ -96,7 +96,7 @@ const BannerChange = () => {
     <div className='space-y-3'>
       <span className='flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between'>
         <h2 className='text-xl font-semibold'>Change Banner</h2>
-        <div className='flex justify-between lg:'>
+        <div className='flex justify-between'>
           <div>
             <input
               type='file'

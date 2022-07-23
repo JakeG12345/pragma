@@ -1,10 +1,13 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Image from "next/image"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { OpenseaButton } from "../Buttons"
 
 const Post = ({ header, text, image, tokenId, posterAddress, posterData }) => {
+  useEffect(() => {
+    console.log(resolveLink(image))
+  }, [])
 
   return (
     <div className='bg-[#959cc484] border-gray-300 border-b p-5 flex'>
@@ -27,7 +30,11 @@ const Post = ({ header, text, image, tokenId, posterAddress, posterData }) => {
       <div className='ml-4 w-full'>
         <span className='flex space-x-2'>
           <h3 className='font-medium'>
-            {posterData ? (posterData[0] === "" ? "No name" : posterData[0]) : "Loading..."}
+            {posterData
+              ? posterData[0] === ""
+                ? "No name"
+                : posterData[0]
+              : "Loading..."}
           </h3>
           <p className='text-gray-300'>
             {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
@@ -43,7 +50,17 @@ const Post = ({ header, text, image, tokenId, posterAddress, posterData }) => {
             <OpenseaButton />
           </a>
         </span>
-        <p>{text}</p>
+        <p className='mb-2'>{text}</p>
+        {image != "ipfs://No img" && (
+          <div className='w-3/4'>
+            <img
+              src={resolveLink(image)}
+              alt='Post Image'
+              style={{ maxHeight: 500 }}
+              className='rounded-lg'
+            />
+          </div>
+        )}
       </div>
     </div>
   )

@@ -33,7 +33,6 @@ const Profile = () => {
                       : bannerPlaceholder
                   }
                   alt='banner'
-                  
                   layout='responsive'
                   width={900}
                   priority
@@ -79,7 +78,7 @@ const Profile = () => {
                 </div>
                 <span className='flex ml-3 mt-5 space-x-10'>
                   <span className='flex text-sm hover:underline cursor-pointer'>
-                    <h4 className='font-semibold cursor-pointer'>73</h4>
+                    <h4 className='font-semibold cursor-pointer'>{userdata[5].length}</h4>
                     &nbsp;
                     <h5 className='text-gray-300'>Following</h5>
                   </span>

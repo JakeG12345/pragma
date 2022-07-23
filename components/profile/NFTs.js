@@ -14,7 +14,7 @@ const NFTs = () => {
             userNFTs.map((e, i) => {
               return (
                 <div key={i}>
-                  <Image src={e} height={300} width={300} />
+                  <Image src={e} alt='Image could not be fetched from ipfs gateway in time' height={300} width={300} />
                 </div>
               )
             })}
