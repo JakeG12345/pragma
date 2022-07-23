@@ -4,9 +4,9 @@ import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { OpenseaButton } from "../Buttons"
 
-const Post = ({ header, text, image, tokenId, posterAddress, posterData }) => {
+const Post = ({ header, text, image, tokenId, posterAddress, posterData, isLast }) => {
   return (
-    <div className='bg-[#959cc484] border-gray-300 border-b p-5 flex'>
+    <div className={`bg-[#959cc484] ${!isLast && "border-gray-300 border-b"} p-5 flex`}>
       <div className='flex flex-col items-center'>
         <Image
           src={

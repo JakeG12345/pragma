@@ -10,7 +10,7 @@ const ProfilePosts = () => {
   return (
     <div>
       {nftData ? (
-        nftData.result.map((nft) => {
+        nftData.result.map((nft, i) => {
           if (nft.token_address == postsAddress.toLowerCase()) {
             const metadata = JSON.parse(nft.metadata)
             return (
@@ -21,6 +21,7 @@ const ProfilePosts = () => {
                 tokenId={nft.token_id}
                 posterData={userdata}
                 posterAddress={userAddress}
+                isLast={i+1 == nftData.result.length}
                 key={nft.token_id}
               />
             )
