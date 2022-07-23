@@ -1,14 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import Image from "next/image"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { OpenseaButton } from "../Buttons"
 
 const Post = ({ header, text, image, tokenId, posterAddress, posterData }) => {
-  useEffect(() => {
-    console.log(resolveLink(image))
-  }, [])
-
   return (
     <div className='bg-[#959cc484] border-gray-300 border-b p-5 flex'>
       <div className='flex flex-col items-center'>

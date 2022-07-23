@@ -90,7 +90,6 @@ const PostInFeed = () => {
       )
 
     const image = await uploadImageToIPFS()
-    console.log(image)
     if (image == "invalid image") return
 
     await enableWeb3()

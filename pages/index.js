@@ -15,7 +15,7 @@ export default function Home({ posts }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const res = await fetch(
       `https://deep-index.moralis.io/api/v2/nft/${postsAddress}/owners?chain=mumbai&format=decimal`,
