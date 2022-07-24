@@ -3,24 +3,42 @@ import Image from "next/image"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import resolveLink from "../../helpers/resolveLink"
 import { OpenseaButton } from "../Buttons"
+import Link from "next/link"
 
-const Post = ({ header, text, image, tokenId, posterAddress, posterData, isLast }) => {
+const Post = ({
+  header,
+  text,
+  image,
+  tokenId,
+  posterAddress,
+  posterData,
+  isLast,
+}) => {
   return (
-    <div className={`bg-[#959cc484] ${!isLast && "border-gray-300 border-b"} p-5 flex`}>
+    <div
+      className={`bg-[#959cc484] ${
+        !isLast && "border-gray-300 border-b"
+      } p-5 flex`}
+    >
       <div className='flex flex-col items-center'>
-        <Image
-          src={
-            posterData
-              ? posterData[1]
-                ? resolveLink(posterData[1])
-                : pfpPlaceholder
-              : pfpPlaceholder
-          }
-          alt={pfpPlaceholder}
-          height={45}
-          width={45}
-          style={{ borderRadius: 45 / 2 }}
-        />
+        <Link href={`/account/${posterAddress}`}>
+          <div>
+            <Image
+              src={
+                posterData
+                  ? posterData[1]
+                    ? resolveLink(posterData[1])
+                    : pfpPlaceholder
+                  : pfpPlaceholder
+              }
+              alt={pfpPlaceholder}
+              height={45}
+              width={45}
+              className='cursor-pointer'
+              style={{ borderRadius: 45 / 2 }}
+            />
+          </div>
+        </Link>
       </div>
 
       <div className='ml-4 w-full'>
