@@ -5,7 +5,7 @@ import ProfilePosts from "./ProfilePosts"
 import About from "./About"
 import NFTs from "./NFTs"
 
-const AccountUI = ({ userdata, address, isProfile }) => {
+const AccountUI = ({ userdata, address, isProfile, nftImages, nftData }) => {
   const [selectedTab, setSelectedTab] = useState(1)
 
   const getTabClassName = (tabNum) => {
@@ -25,7 +25,7 @@ const AccountUI = ({ userdata, address, isProfile }) => {
         <Main userdata={userdata} address={address} isProfile={isProfile} />
 
         <div className='flex justify-center border-b border-gray-500'>
-          <span className='flex lg:w-3/5 justify-around mt-5 font-semibold'>
+          <span className='flex w-3/4 justify-around mt-5 font-semibold'>
             <div
               className={getTabClassName(1)}
               onClick={() => setSelectedTab(1)}
@@ -48,9 +48,9 @@ const AccountUI = ({ userdata, address, isProfile }) => {
         </div>
       </div>
       <div>
-        {selectedTab == 1 && <ProfilePosts />}
-        {selectedTab == 2 && <About />}
-        {selectedTab == 3 && <NFTs />}
+        {selectedTab == 1 && <ProfilePosts nftData={nftData} userdata={userdata} address={address} />}
+        {selectedTab == 2 && <About userdata={userdata} isProfile={isProfile} />}
+        {selectedTab == 3 && <NFTs userdata={userdata} isProfile={isProfile} nftImages={nftImages} />}
       </div>
     </div>
   )

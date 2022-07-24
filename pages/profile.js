@@ -6,12 +6,12 @@ import Context from '../contexts/Context'
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata] = useContext(Context)
+  const [userAddress, userShortenedAddress, userdata, a, nftImages, nftData] = useContext(Context)
 
   return (
     <div>
       {isAuthenticated ? (
-        <AccountUI userdata={userdata} address={userAddress} isProfile={true} />
+        <AccountUI userdata={userdata} address={userAddress} isProfile={true} nftImages={nftImages} nftData={nftData} />
       ) : (
         <NotAuthenticated pageName='profile' />
       )}

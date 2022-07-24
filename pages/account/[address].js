@@ -1,13 +1,21 @@
 import { useRouter } from "next/router"
 import ReactLoading from "react-loading"
-import { useMoralisWeb3Api, useMoralisWeb3ApiCall } from "react-moralis"
+import {
+  useMoralis,
+  useMoralisWeb3Api,
+  useMoralisWeb3ApiCall,
+} from "react-moralis"
 import { userdataAddress } from "../../helpers/info"
 import abi from "../../helpers/userdataAbi.json"
 import AccountUI from "../../components/profile/AccountUI"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import resolveLink from "../../helpers/resolveLink"
 
 const Account = () => {
-  const { native } = useMoralisWeb3Api()
+  const { Moralis } = useMoralis()
+  const { native, account } = useMoralisWeb3Api()
+  const [nftImages, setNftImages] = useState()
+  const [nftData, setNftData] = useState()
   const router = useRouter()
   const { address } = router.query
 
@@ -25,7 +33,41 @@ const Account = () => {
   )
 
   useEffect(() => {
+    const getNFTData = async () => {
+      const getNftOptions = {
+        chain: "mumbai",
+        address: address,
+      }
+      try {
+        const nftData = await account.getNFTs(getNftOptions)
+        return nftData
+      } catch {
+        await Moralis.start({
+          serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
+          appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
+        })
+        const nftData = await account.getNFTs(getNftOptions)
+        return nftData
+      }
+    }
+    const sortNFTData = async () => {
+      const nftData = await getNFTData()
+      const nftImages = nftData.result.map((e) => {
+        const image = JSON.parse(e.metadata)?.image
+        // If image does not exist or is less than a bit less than expected, it is classified as no image
+        if (image == null || image.length < 40) return "no img"
+        return resolveLink(image)
+      })
+      function imageFilterer(value) {
+        return value != "no img"
+      }
+      const filteredNftImages = nftImages.filter(imageFilterer)
+      setNftImages(filteredNftImages)
+      setNftData(nftData)
+    }
+
     fetch({ params: options })
+    sortNFTData()
   }, [address])
 
   if (!address) {
@@ -48,6 +90,8 @@ const Account = () => {
         address={address}
         userdata={data}
         isProfile={false}
+        nftImages={nftImages}
+        nftData={nftData}
       />
     )
 }

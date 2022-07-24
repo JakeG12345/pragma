@@ -62,7 +62,7 @@ export const ContextProvider = ({ children }) => {
     setUserNftData(nftData)
     const nftImages = nftData.result.map((e) => {
       const image = JSON.parse(e.metadata)?.image
-      // Image would be classified if less than 40 characters so is classified as no img
+      // If image does not exist or is less than a bit less than expected, it is classified as no image
       if (image == null || image.length < 40) return "no img"
       return resolveLink(image)
     })
