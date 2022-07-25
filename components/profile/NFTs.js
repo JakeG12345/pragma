@@ -9,7 +9,7 @@ const NFTs = ({ userdata, isProfile, nftImages }) => {
       </h1>
       <div className='flex items-center justify-center'>
         <div className='grid grid-cols-2 gap-5'>
-          {nftImages &&
+          {nftImages ? (
             nftImages.map((e, i) => {
               return (
                 <div key={i}>
@@ -22,7 +22,10 @@ const NFTs = ({ userdata, isProfile, nftImages }) => {
                   />
                 </div>
               )
-            })}
+            })
+          ) : (
+            <div>Loading</div>
+          )}
         </div>
       </div>
     </div>

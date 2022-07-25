@@ -72,8 +72,10 @@ const Main = ({ userdata, address, isProfile }) => {
           <OpenseaButton />
         </a>
         {isProfile ? (
-          <Link href='/settings' passHref>
-            <IndigoButton text='Edit Profile' extraStyles='mr-12 font-bold' />
+          <Link href='/settings'>
+            <div>
+              <IndigoButton text='Edit Profile' extraStyles='mr-12 font-bold' />
+            </div>
           </Link>
         ) : (
           <IndigoButton text='Follow' extraStyles='mr-12 font-bold px-7' />
