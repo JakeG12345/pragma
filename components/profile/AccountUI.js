@@ -48,7 +48,7 @@ const AccountUI = ({ userdata, address, isProfile, nftImages, nftData }) => {
         </div>
       </div>
       <div>
-        {selectedTab == 1 && <ProfilePosts nftData={nftData} userdata={userdata} address={address} />}
+        {selectedTab == 1 && <ProfilePosts nftData={nftData} userdata={userdata} address={address} isProfile={isProfile} />}
         {selectedTab == 2 && <About userdata={userdata} isProfile={isProfile} />}
         {selectedTab == 3 && <NFTs userdata={userdata} isProfile={isProfile} nftImages={nftImages} />}
       </div>

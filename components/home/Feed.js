@@ -44,6 +44,7 @@ const Feed = ({ posts }) => {
               image={metadata.image}
               tokenId={nft.token_id}
               posterData={data[i]}
+              timestamp={nft.updated_at}
               posterAddress={nft.owner_of}
               isLast={i+1 == posts.data.result.length}
               key={nft.token_id}

@@ -10,10 +10,13 @@ const Post = ({
   text,
   image,
   tokenId,
+  timestamp,
   posterAddress,
   posterData,
   isLast,
 }) => {
+  const date = new Date(timestamp*1000).toLocaleDateString("en-US")
+
   return (
     <div
       className={`bg-[#959cc484] ${
@@ -52,6 +55,9 @@ const Post = ({
           </h3>
           <p className='text-gray-300'>
             {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
+          </p>
+          <p className='pl-5 text-gray-300' onClick={() => console.log(date)}>
+            {date}
           </p>
         </span>
         <span className='flex justify-between items-center mb-2'>

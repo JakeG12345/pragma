@@ -34,6 +34,7 @@ const ProfilePosts = ({ nftData, userdata, address, isProfile }) => {
               tokenId={post.token_id}
               posterData={userdata}
               posterAddress={address}
+              timestamp={post.updated_at}
               isLast={i + 1 == posts.length}
               key={post.token_id}
             />
