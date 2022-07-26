@@ -15,7 +15,8 @@ const Post = ({
   posterData,
   isLast,
 }) => {
-  const date = new Date(timestamp*1000).toLocaleDateString("en-US")
+  const longDate = new Date(timestamp*1000)
+  const date = longDate.toLocaleDateString()
 
   return (
     <div
@@ -56,7 +57,7 @@ const Post = ({
           <p className='text-gray-300'>
             {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
           </p>
-          <p className='pl-5 text-gray-300' onClick={() => console.log(date)}>
+          <p className='pl-5 text-gray-300' onClick={() => console.log(when)}>
             {date}
           </p>
         </span>

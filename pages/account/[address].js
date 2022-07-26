@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import ReactLoading from "react-loading"
 import {
-  useMoralis,
   useMoralisWeb3Api,
   useMoralisWeb3ApiCall,
 } from "react-moralis"
@@ -9,11 +8,9 @@ import { userdataAddress } from "../../helpers/info"
 import abi from "../../helpers/userdataAbi.json"
 import AccountUI from "../../components/profile/AccountUI"
 import { useEffect, useState } from "react"
-import resolveLink from "../../helpers/resolveLink"
 
 const Account = () => {
-  const { Moralis } = useMoralis()
-  const { native, account } = useMoralisWeb3Api()
+  const { native } = useMoralisWeb3Api()
   const [nftImages, setNftImages] = useState()
   const [nftData, setNftData] = useState()
   const router = useRouter()
@@ -27,47 +24,24 @@ const Account = () => {
     params: { userAddress: address },
   }
 
-  const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
-    native.runContractFunction,
-    { ...options }
-  )
+  const userdata = useMoralisWeb3ApiCall(native.runContractFunction, {
+    ...options,
+  })
 
   useEffect(() => {
-    const getNFTData = async () => {
-      const getNftOptions = {
-        chain: "mumbai",
-        address: address,
-      }
+    const fetchUserNFTData = async () => {
       try {
-        const nftData = await account.getNFTs(getNftOptions)
-        return nftData
-      } catch {
-        await Moralis.start({
-          serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
-          appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
-        })
-        const nftData = await account.getNFTs(getNftOptions)
-        return nftData
+        const res = await fetch(`/api/account/${address}`)
+        const data = await res.json()
+        setNftImages(data.nftImages)
+        setNftData(data.nftData)
+      } catch (error) {
+        console.log(error)
       }
     }
-    const sortNFTData = async () => {
-      const nftData = await getNFTData()
-      const nftImages = nftData.result.map((e) => {
-        const image = JSON.parse(e.metadata)?.image
-        // If image does not exist or is less than a bit less than expected, it is classified as no image
-        if (image == null || image.length < 40) return "no img"
-        return resolveLink(image)
-      })
-      function imageFilterer(value) {
-        return value != "no img"
-      }
-      const filteredNftImages = nftImages.filter(imageFilterer)
-      setNftImages(filteredNftImages)
-      setNftData(nftData)
-    }
+    fetchUserNFTData()
 
-    fetch({ params: options })
-    sortNFTData()
+    userdata.fetch({ params: options })
   }, [address])
 
   if (!address) {
@@ -78,7 +52,7 @@ const Account = () => {
     )
   } else if (address.slice(0, 2) != "0x" || address.length != 42)
     return <div>ERROR: Account address is not a valid address</div>
-  else if (data == undefined) {
+  else if (userdata.data == undefined) {
     return (
       <div className='flex items-center justify-center mt-10'>
         <ReactLoading type='bubbles' width={200} />
@@ -88,7 +62,7 @@ const Account = () => {
     return (
       <AccountUI
         address={address}
-        userdata={data}
+        userdata={userdata.data}
         isProfile={false}
         nftImages={nftImages}
         nftData={nftData}
