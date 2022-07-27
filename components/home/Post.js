@@ -15,7 +15,7 @@ const Post = ({
   posterData,
   isLast,
 }) => {
-  const longDate = new Date(timestamp*1000)
+  const longDate = new Date(timestamp * 1000)
   const date = longDate.toLocaleDateString()
 
   return (
@@ -47,18 +47,24 @@ const Post = ({
 
       <div className='ml-4 w-full'>
         <span className='flex space-x-2'>
-          <h3 className='font-medium'>
-            {posterData
-              ? posterData[0] === ""
-                ? "No name"
-                : posterData[0]
-              : "Loading..."}
-          </h3>
-          <p className='text-gray-300'>
-            {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
-          </p>
+          <Link href={`/account/${posterAddress}`}>
+            <h3 className='font-medium cursor-pointer hover:underline'>
+              {posterData
+                ? posterData[0] === ""
+                  ? "No name"
+                  : posterData[0]
+                : "Loading..."}
+            </h3>
+          </Link>
+
+          <Link href={`/account/${posterAddress}`}>
+            <p className='text-gray-300 cursor-pointer'>
+              {`${posterAddress.slice(0, 4)}...${posterAddress.slice(38)}`}
+            </p>
+          </Link>
+
           <p className='pl-5 text-gray-300' onClick={() => console.log(when)}>
-            {date}
+            {date.slice(0, 5)}
           </p>
         </span>
         <span className='flex justify-between items-center mb-2'>

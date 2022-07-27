@@ -54,9 +54,9 @@ const Main = ({ userdata, address, isProfile }) => {
             &nbsp;
             <h5 className='text-gray-300'>Following</h5>
           </span>
-          <span className='flex text-sm hover:underline cursor-pointer'>
+          <span className='flex text-sm hover:underline cursor-pointer' onClick={() => console.log(userdata)}>
             <h4 className='font-semibold cursor-pointer'>
-              {userdata && userdata[4]}
+              {userdata && userdata[4].length}
             </h4>
             &nbsp;
             <h5 className='text-gray-300'>Followers</h5>

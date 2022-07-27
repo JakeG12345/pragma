@@ -97,9 +97,9 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
-            "name": "followers",
-            "type": "uint256"
+            "internalType": "address[]",
+            "name": "followersArray",
+            "type": "address[]"
           },
           {
             "internalType": "address[]",
@@ -148,9 +148,9 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
-            "name": "followers",
-            "type": "uint256"
+            "internalType": "address[]",
+            "name": "followersArray",
+            "type": "address[]"
           },
           {
             "internalType": "address[]",
@@ -164,6 +164,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "unfollow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -195,11 +208,6 @@
         "internalType": "string",
         "name": "bio",
         "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "followers",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
