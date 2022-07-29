@@ -11,7 +11,7 @@ import UnfollowButton from "./UnfollowButton"
 
 const Main = ({ userdata, address, isProfile }) => {
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
-  const [isFollowingAccount, setIsFollowingAccount] = useState()
+  const [isFollowingAccount, setIsFollowingAccount] = useState(null)
   const [
     userAddress,
     userShortenedAddress,
@@ -40,25 +40,26 @@ const Main = ({ userdata, address, isProfile }) => {
   }
 
   const checkIsFollowingAccount = () => {
-    console.log("Checking")
-    if (userdata == null) return console.log("Bob")
-    
-    userdata[4].map((follower, i) => {
-      if (follower == userAddress) setIsFollowingAccount(true)
-      else if (i + 1 == userdata[4].length) setIsFollowingAccount(false)
-      console.log("ya")
-    })
+    if (userdata[4].length == 0) {
+      setIsFollowingAccount(false)
+    } else {
+      userdata[4].map((follower, i) => {
+        if (userAddress.toLowerCase() == follower.toLowerCase()) {
+          setIsFollowingAccount(true)
+        } else if (i + 1 == userdata[4].length) {
+          setIsFollowingAccount(false)
+        }
+      })
+    }
   }
 
   useEffect(() => {
     checkIsFollowingAccount()
-  }, [userdata, address])
+  }, [userdata, address, userAddress])
 
   return (
     <span
-      className='flex justify-between items-center'
-      onClick={() => console.log(userdata, isFollowingAccount)}
-    >
+      className='flex justify-between items-center'>
       <div className='-mt-24 ml-10 z-10'>
         <div className='border-white border-2 rounded-full w-40 h-40'>
           <Image
@@ -131,7 +132,7 @@ const Main = ({ userdata, address, isProfile }) => {
             extraStyles='mr-12 font-bold px-7'
             onClick={login}
           />
-        ) : isFollowingAccount == false ? (
+        ) : isFollowingAccount == true ? (
           <UnfollowButton address={address} />
         ) : (
           <FollowButton address={address} />

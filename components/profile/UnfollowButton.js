@@ -1,14 +1,21 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { userdataAddress } from '../../helpers/info'
 import { IndigoButton } from "../Buttons"
 import abi from "../../helpers/userdataAbi.json"
+import useNotification from '../notifications/useNotification'
+import Context from '../../contexts/Context'
 
 const UnfollowButton = ({ address }) => {
   const { enableWeb3, isWeb3Enabled } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
+  const [userAddress] = useContext(Context)
+  const dispatch = useNotification()
 
   const unfollow = async () => {
+    if ((address = userAddress))
+      return dispatch({ type: "ERROR", message: "You can't follow yourself!" })
+
     if (!isWeb3Enabled) await enableWeb3()
 
     const options = {
@@ -21,10 +28,17 @@ const UnfollowButton = ({ address }) => {
     await contractProcessor.fetch({
       params: options,
       onSuccess: () => {
-        console.log("Successfully unfollowing")
+        dispatch({
+          type: "SUCCESS",
+          message:
+            "Following account looks to be successful. Check wallet to see transaction.",
+        })
       },
       onError: (error) => {
-        console.log(error.message)
+        dispatch({
+          type: "SUCCESS",
+          message: error.message,
+        })
       },
     })
   }
