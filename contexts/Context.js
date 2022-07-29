@@ -86,6 +86,7 @@ export const ContextProvider = ({ children }) => {
         updateData,
         userNFTs,
         userNftData,
+        isLoading
       ]}
     >
       {children}

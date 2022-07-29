@@ -1,16 +1,64 @@
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Image from "next/image"
 import resolveLink from "../../helpers/resolveLink"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import { IndigoButton, OpenseaButton } from "../Buttons"
 import Link from "next/link"
+import Context from "../../contexts/Context"
+import { useMoralis } from "react-moralis"
+import FollowButton from "./FollowButton"
+import UnfollowButton from "./UnfollowButton"
 
 const Main = ({ userdata, address, isProfile }) => {
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
+  const [isFollowingAccount, setIsFollowingAccount] = useState()
+  const [
+    userAddress,
+    userShortenedAddress,
+    currentUserData,
+    updateData,
+    userNFTs,
+    userNftData,
+    isCurrentUserdataLoading,
+  ] = useContext(Context)
   const shortAddress = `${address.slice(0, 4)}...${address.slice(38)}`
+  const { isAuthenticated, authenticate } = useMoralis()
+
+  const login = async () => {
+    if (!isAuthenticated) {
+      await authenticate({
+        signingMessage: "Please sign to connect to Pragma",
+      })
+        .then(function (user) {
+          console.log("logged in user:", user)
+          updateData()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  }
+
+  const checkIsFollowingAccount = () => {
+    console.log("Checking")
+    if (userdata == null) return console.log("Bob")
+    
+    userdata[4].map((follower, i) => {
+      if (follower == userAddress) setIsFollowingAccount(true)
+      else if (i + 1 == userdata[4].length) setIsFollowingAccount(false)
+      console.log("ya")
+    })
+  }
+
+  useEffect(() => {
+    checkIsFollowingAccount()
+  }, [userdata, address])
 
   return (
-    <span className='flex justify-between items-center'>
+    <span
+      className='flex justify-between items-center'
+      onClick={() => console.log(userdata, isFollowingAccount)}
+    >
       <div className='-mt-24 ml-10 z-10'>
         <div className='border-white border-2 rounded-full w-40 h-40'>
           <Image
@@ -54,7 +102,7 @@ const Main = ({ userdata, address, isProfile }) => {
             &nbsp;
             <h5 className='text-gray-300'>Following</h5>
           </span>
-          <span className='flex text-sm hover:underline cursor-pointer' onClick={() => console.log(userdata)}>
+          <span className='flex text-sm hover:underline cursor-pointer'>
             <h4 className='font-semibold cursor-pointer'>
               {userdata && userdata[4].length}
             </h4>
@@ -77,8 +125,16 @@ const Main = ({ userdata, address, isProfile }) => {
               <IndigoButton text='Edit Profile' extraStyles='mr-12 font-bold' />
             </div>
           </Link>
+        ) : isAuthenticated == false ? (
+          <IndigoButton
+            text='Connect'
+            extraStyles='mr-12 font-bold px-7'
+            onClick={login}
+          />
+        ) : isFollowingAccount == false ? (
+          <UnfollowButton address={address} />
         ) : (
-          <IndigoButton text='Follow' extraStyles='mr-12 font-bold px-7' />
+          <FollowButton address={address} />
         )}
       </span>
     </span>
