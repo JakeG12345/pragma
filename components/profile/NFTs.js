@@ -11,11 +11,11 @@ const NFTs = ({ userdata, isProfile, nftImages }) => {
       <div>
         {nftImages ? (
           nftImages.length == 0 ? (
-            <h3 className='text-lg ml-5'>
+            <p className='ml-5'>
               {isProfile
                 ? "It appears you don't have any NFT Images in your wallet"
                 : "The user does not have any NFT Images"}
-            </h3>
+            </p>
           ) : (
             <div className='flex items-center justify-center'>
               <div className='grid grid-cols-2 gap-5'>

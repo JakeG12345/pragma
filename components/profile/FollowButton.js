@@ -13,7 +13,7 @@ const FollowButton = ({ address }) => {
   const dispatch = useNotification()
 
   const follow = async () => {
-    if ((address = userAddress))
+    if (address == userAddress)
       return dispatch({ type: "ERROR", message: "You can't follow yourself!" })
 
     if (!isWeb3Enabled) await enableWeb3()

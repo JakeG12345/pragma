@@ -28,16 +28,16 @@ const About = ({ userdata, isProfile }) => {
         )
       else
         return (
-          <div className='mx-10 mt-10 space-y-1'>
-            <h1 className='text-xl font-bold'>Bio</h1>
+          <div className='m-14 mt-5 ml-10 space-y-3'>
+            <h1 className='text-2xl font-bold'>Bio</h1>
             <p>User does not have a bio</p>
           </div>
         )
     } else {
       return (
-        <div className='mx-10 mt-10 space-y-1'>
-          <h1 className='text-xl font-bold'>Bio</h1>
-          <p className=''>{userdata[3]}</p>
+        <div className='m-14 mt-5 ml-10 space-y-3'>
+          <h1 className='text-2xl font-bold'>Bio</h1>
+          <p>{userdata[3]}</p>
         </div>
       )
     }

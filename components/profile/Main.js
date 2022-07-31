@@ -40,6 +40,7 @@ const Main = ({ userdata, address, isProfile }) => {
   }
 
   const checkIsFollowingAccount = () => {
+    if (userdata === null) return
     if (userdata[4].length == 0) {
       setIsFollowingAccount(false)
     } else {
