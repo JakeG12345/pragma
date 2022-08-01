@@ -8,6 +8,7 @@ export const AccountsContext = createContext()
 export const AccountsProvider = ({ children }) => {
   const { native } = useMoralisWeb3Api()
   const [accountsData, setAccountsData] = useState([])
+  const [recentAddresses, setRecentAddresses] = useState()
 
   const getAccountsDataOptions = {
     chain: "mumbai",
@@ -26,20 +27,27 @@ export const AccountsProvider = ({ children }) => {
       (address) => !accountsData.includes(address)
     )
 
+    setRecentAddresses(newAddresses)
+
     const options = {
-        ...getAccountsDataOptions,
-        params: { addresses: newAddresses }
+      ...getAccountsDataOptions,
+      params: { addresses: newAddresses },
     }
 
     fetch({ params: options })
-
-    newAddresses.map((e) => {
-      setAccountsData((prev) => [...prev, e])
-    })
   }
 
   useEffect(() => {
-    console.log(data)
+    if (data != null)
+      setAccountsData((prev) => {
+        const dataWithAddress = recentAddresses.map((e, i) => {
+          return {
+            e,
+            ...data[i],
+          }
+        })
+        return dataWithAddress
+      })
   }, [data])
 
   return (
