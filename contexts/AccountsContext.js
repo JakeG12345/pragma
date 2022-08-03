@@ -10,7 +10,7 @@ export const AccountsProvider = ({ children }) => {
   const [accountsData, setAccountsData] = useState([])
   const [addressesFetched, setAddressesFetched] = useState([])
   const [recentAddresses, setRecentAddresses] = useState()
-  const [objectAccountData, setObjectAccountData] = useState({})
+  const [objectAccountsData, setObjectAccountsData] = useState({})
 
   const getAccountsDataOptions = {
     chain: "mumbai",
@@ -53,7 +53,7 @@ export const AccountsProvider = ({ children }) => {
           followers: accData[4],
           following: accData[5],
         }
-        setObjectAccountData((prev) => {
+        setObjectAccountsData((prev) => {
           prev[e] = objectAccData
           return prev
         })
