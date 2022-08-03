@@ -1,12 +1,13 @@
 import { createContext, useEffect, useState } from "react"
 import { useMoralisWeb3Api, useMoralisWeb3ApiCall } from "react-moralis"
 import { userdataAddress } from "../helpers/info"
+import resolveLink from "../helpers/resolveLink"
 import abi from "../helpers/userdataAbi.json"
 
 export const AccountsContext = createContext()
 
 export const AccountsProvider = ({ children }) => {
-  const { native } = useMoralisWeb3Api()
+  const { native, account } = useMoralisWeb3Api()
   const [accountsData, setAccountsData] = useState([])
   const [addressesFetched, setAddressesFetched] = useState([])
   const [recentAddresses, setRecentAddresses] = useState()
@@ -42,7 +43,22 @@ export const AccountsProvider = ({ children }) => {
 
   useEffect(() => {
     if (data != null) {
-      const dataWithAddress = recentAddresses.map((e, i) => {
+      const dataWithAddress = recentAddresses.map(async (e, i) => {
+        const getNftOptions = {
+          chain: "mumbai",
+          address: e,
+        }
+        const nftData = await account.getNFTs(getNftOptions)
+        const nftImages = nftData.result.map((e) => {
+          const image = JSON.parse(e.metadata)?.image
+          // If image does not exist or is less than a bit less than expected, it is classified as no image
+          if (image == null || image.length < 40) return "no img"
+          return resolveLink(image)
+        })
+        function imageFilterer(value) {
+          return value != "no img"
+        }
+        const filteredNftImages = nftImages.filter(imageFilterer)
         const accData = data[i]
         const address = { address: e }
         const objectAccData = {
@@ -52,6 +68,9 @@ export const AccountsProvider = ({ children }) => {
           bio: accData[3],
           followers: accData[4],
           following: accData[5],
+          nftData: nftData,
+          nftResult: nftData.result,
+          nftImages: filteredNftImages,
         }
         setObjectAccountsData((prev) => {
           prev[e] = objectAccData

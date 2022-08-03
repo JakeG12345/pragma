@@ -1,52 +1,33 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { useMoralisWeb3Api, useMoralisWeb3ApiCall } from "react-moralis"
 import { userdataAddress } from "../../helpers/info"
 import Post from "./Post"
 import abi from "../../helpers/userdataAbi.json"
 import ReactLoading from "react-loading"
+import { PostsContext } from '../../contexts/PostsContext'
+import { AccountsContext } from '../../contexts/AccountsContext'
 
 const Feed = ({ posts }) => {
-  const { native } = useMoralisWeb3Api()
-
-  const userdataOptions = {
-    chain: "mumbai",
-    address: userdataAddress,
-    function_name: "getBulkUserData",
-    abi: abi,
-    params: { addresses: posts.addresses },
-  }
-
-  const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
-    native.runContractFunction,
-    { ...userdataOptions }
-  )
-
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
-  useEffect(() => {
-    const updatePostersData = async () => {
-      await delay(500)
-      fetch({ params: userdataOptions })
-    }
-    updatePostersData()
-  }, [posts])
+  const postContext = useContext(PostsContext)
+  const accountContext = useContext(AccountsContext)
 
   return (
     <div>
-      {data ? (
-        posts.data.result &&
-        posts.data.result.map((nft, i) => {
+      {postContext.postData ? (
+        postContext.postData.map((nft, i) => {
           const metadata = JSON.parse(nft.metadata)
+          const address = nft.owner_of
+          console.log(accountContext.objectAccountData?.address)
           return (
             <Post
               header={metadata.name}
               text={metadata.description}
               image={metadata.image}
               tokenId={nft.token_id}
-              posterData={data[i]}
+              posterData={accountContext.objectAccountData?.address}
               timestamp={nft.updated_at}
-              posterAddress={nft.owner_of}
-              isLast={i+1 == posts.data.result.length}
+              posterAddress={address}
+              isLast={i+1 == postContext.postData.length}
               key={nft.token_id}
             />
           )

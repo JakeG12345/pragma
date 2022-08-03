@@ -4,6 +4,7 @@ import NotificationProvider from "../components/notifications/NotificationProvid
 import Sidebar from "../components/Sidebar"
 import { AccountsProvider } from "../contexts/AccountsContext"
 import { ContextProvider } from "../contexts/Context"
+import { PostsProvider } from '../contexts/PostsContext'
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
@@ -27,12 +28,14 @@ function MyApp({ Component, pageProps }) {
 const AppWrapper = ({ children }) => {
   return (
     <MoralisProvider
-      serverUrl='https://vitfkaqzlt7v.usemoralis.com:2053/server'
-      appId='xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL'
+      serverUrl={process.env.MORALIS_SERVER_URL}
+      appId={process.env.MORALIS_APP_ID}
     >
       <NotificationProvider>
         <AccountsProvider>
-          <ContextProvider>{children}</ContextProvider>
+          <PostsProvider>
+            <ContextProvider>{children}</ContextProvider>
+          </PostsProvider>
         </AccountsProvider>
       </NotificationProvider>
     </MoralisProvider>
