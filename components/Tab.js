@@ -14,7 +14,7 @@ const Tab = ({ tabName, to, svgLocation }) => {
         }`}
       >
         <div className='w-14 flex items-center justify-center'>
-          <Image src={svgLocation} width={25} height={25} />
+          <Image src={svgLocation} alt='' width={25} height={25} />
         </div>
         <h3 className='text-2xl font-semibold hidden lg:block'>{tabName}</h3>
       </button>

@@ -4,6 +4,7 @@ import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
 import abi from "../../helpers/userdataAbi.json"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
+import { userdataAddress } from '../../helpers/info'
 
 const BannerChange = () => {
   const { Moralis, enableWeb3 } = useMoralis()
@@ -13,7 +14,7 @@ const BannerChange = () => {
   const [selectedFile, setSelectedFile] = useState()
   const [theFile, setTheFile] = useState()
   const inputFile = useRef(null)
-
+  
   const handleNewNotification = (type, message) => {
     dispatch({
       type: type,
@@ -71,7 +72,7 @@ const BannerChange = () => {
     )
 
     const options = {
-      contractAddress: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
+      contractAddress: userdataAddress,
       functionName: "changeBanner",
       abi: abi,
       params: { newBanner: ipfsBannerLink },
@@ -95,7 +96,7 @@ const BannerChange = () => {
     <div className='space-y-3'>
       <span className='flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between'>
         <h2 className='text-xl font-semibold'>Change Banner</h2>
-        <div className='flex justify-between lg:'>
+        <div className='flex justify-between'>
           <div>
             <input
               type='file'

@@ -7,7 +7,7 @@ contract PragmaUserdata {
         string pfp;
         string banner;
         string bio;
-        uint followers;
+        address[] followersArray;
         address[] followingArray;
     }
 
@@ -19,6 +19,18 @@ contract PragmaUserdata {
         returns (user memory)
     {
         return users[userAddress];
+    }
+
+    function getBulkUserData(address[] memory addresses)
+        external
+        view
+        returns (user[] memory)
+    {
+        user[] memory theUsers = new user[](addresses.length);
+        for (uint i = 0; i < addresses.length; i++) {
+            theUsers[i] = users[addresses[i]];
+        }
+        return theUsers;
     }
 
     function changeName(string memory newUsername) external {
@@ -38,11 +50,42 @@ contract PragmaUserdata {
     }
 
     function follow(address account) external {
+        require(account != msg.sender, "You can't follow yourself");
+
         for (uint i = 0; i < users[msg.sender].followingArray.length; i++) {
-            if (users[msg.sender].followingArray[i] == account) return;
+            require(
+                users[msg.sender].followingArray[i] != account,
+                "User is already following account"
+            );
         }
 
         users[msg.sender].followingArray.push(account);
-        users[account].followers++;
+        users[account].followersArray.push(msg.sender);
+    }
+
+    function unfollow(address account) external {
+        require(account != msg.sender, "You can't unfollow yourself");
+        // Loops through users followings
+        for (uint i = 0; i < users[msg.sender].followingArray.length; i++) {
+            if (users[msg.sender].followingArray[i] == account) {
+                users[msg.sender].followingArray[i] = users[msg.sender]
+                    .followingArray[
+                        users[msg.sender].followingArray.length - 1
+                    ];
+                users[msg.sender].followingArray.pop();
+            }
+            // If none of the users followings are the address they want to unfollow, nothing will happen
+        }
+
+        // Loops through unfollow accounts followers
+        for (uint i = 0; i < users[account].followersArray.length; i++) {
+            if (users[account].followersArray[i] == msg.sender) {
+                users[account].followersArray[i] = users[account]
+                    .followersArray[
+                        users[account].followersArray.length - 1
+                    ];
+                users[account].followersArray.pop();
+            }
+        }
     }
 }
