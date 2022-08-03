@@ -3,7 +3,6 @@ import abi from "../../helpers/userdataAbi.json"
 import useNotification from "../notifications/useNotification"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { SaveButton } from "../Buttons"
-import { userdataAddress } from '../../helpers/info'
 
 const UsernameChange = () => {
   const { enableWeb3 } = useMoralis()
@@ -31,7 +30,7 @@ const UsernameChange = () => {
       return
     }
     const options = {
-      contractAddress: userdataAddress,
+      contractAddress: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
       functionName: "changeName",
       abi: abi,
       params: { newUsername: newUsername },

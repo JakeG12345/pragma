@@ -6,7 +6,6 @@ import {
 } from "react-moralis"
 import abi from "../helpers/userdataAbi.json"
 import resolveLink from "../helpers/resolveLink"
-import { postsAddress, userdataAddress } from "../helpers/info"
 
 export const Context = createContext(null)
 
@@ -18,12 +17,14 @@ export const ContextProvider = ({ children }) => {
   const [userShortenedAddress, setUserShortenedAddress] = useState("Loading...")
   const [userNFTs, setUserNFTs] = useState()
   const [userNftData, setUserNftData] = useState()
+  const [postNftData, setPostNftData] = useState()
 
   const getUserdataOptions = {
     chain: "mumbai",
-    address: userdataAddress,
+    address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
     function_name: "getUserData",
     abi: abi,
+    params: { userAddress: userAddress },
   }
 
   const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
@@ -47,7 +48,7 @@ export const ContextProvider = ({ children }) => {
 
     const userdataOptions = {
       chain: "mumbai",
-      address: userdataAddress,
+      address: "0xfeCe8d74537C3246A959c6fBc34f5317F303af0c",
       function_name: "getUserData",
       abi: abi,
       params: { userAddress: ethAddress },
@@ -62,7 +63,7 @@ export const ContextProvider = ({ children }) => {
     setUserNftData(nftData)
     const nftImages = nftData.result.map((e) => {
       const image = JSON.parse(e.metadata)?.image
-      // If image does not exist or is less than a bit less than expected, it is classified as no image
+      // Image would be classified if less than 40 characters so is classified as no img
       if (image == null || image.length < 40) return "no img"
       return resolveLink(image)
     })
@@ -71,6 +72,13 @@ export const ContextProvider = ({ children }) => {
     }
     const filteredNftImages = nftImages.filter(imageFilterer)
     setUserNFTs(filteredNftImages)
+
+    const postsOptions = {
+      chain: "mumbai",
+      token_address: "0xf99F9f79BD478415807aF5a0b7C49f17E40981D5",
+    }
+    const postData = await account.getNFTsForContract(postsOptions)
+    setPostNftData(postData)
   }
 
   useEffect(() => {
@@ -86,7 +94,7 @@ export const ContextProvider = ({ children }) => {
         updateData,
         userNFTs,
         userNftData,
-        isLoading
+        postNftData,
       ]}
     >
       {children}
