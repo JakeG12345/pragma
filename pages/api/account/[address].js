@@ -16,18 +16,31 @@ export default async function handler(req, res) {
     )
     const nftData = await addressNftData.json()
 
-    const nftImages = nftData.result.map((e) => {
-      const image = JSON.parse(e.metadata)?.image
-      // If image does not exist or is less than a bit less than expected, it is classified as no image
-      if (image == null || image.length < 40) return "no img"
-      return resolveLink(image)
-    })
+    const nftImages = () => {
+      if (nftData.result.length != 0) {
+        const images = nftData.result.map((e) => {
+          const image = JSON.parse(e.metadata)?.image
+          // If image does not exist or is less than a bit less than expected, it is classified as no image
+          if (image == null || image.length < 40) return "no img"
+          return resolveLink(image)
+        })
+        return images
+      } else return []
+    }
+
     function imageFilterer(value) {
       return value != "no img"
     }
-    const filteredNftImages = nftImages.filter(imageFilterer)
+    const images = nftImages()
+    const filteredNftImages = images.filter(imageFilterer)
 
-    res.status(200).json({ nftImages: filteredNftImages, nftData: nftData })
+    if (nftData) {
+      res.status(200).json({ nftImages: filteredNftImages, nftData: nftData })
+    } else {
+      res
+        .status(200)
+        .json({ nftImages: filteredNftImages, nftData: { result: [] } })
+    }
   } catch (error) {
     console.log(error)
   }

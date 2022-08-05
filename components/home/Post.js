@@ -30,8 +30,8 @@ const Post = ({
             <Image
               src={
                 posterData
-                  ? posterData[1]
-                    ? resolveLink(posterData[1])
+                  ? posterData.pfp
+                    ? resolveLink(posterData.pfp)
                     : pfpPlaceholder
                   : pfpPlaceholder
               }
@@ -50,9 +50,9 @@ const Post = ({
           <Link href={`/account/${posterAddress}`}>
             <h3 className='font-medium cursor-pointer hover:underline'>
               {posterData
-                ? posterData[0] === ""
+                ? posterData.name == ""
                   ? "No name"
-                  : posterData[0]
+                  : posterData.name
                 : "Loading..."}
             </h3>
           </Link>

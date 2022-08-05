@@ -20,10 +20,9 @@ export const AccountsProvider = ({ children }) => {
     abi: abi,
   }
 
-  const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
-    native.runContractFunction,
-    { ...getAccountsDataOptions }
-  )
+  const getAccounts = useMoralisWeb3ApiCall(native.runContractFunction, {
+    ...getAccountsDataOptions,
+  })
 
   const addAccountData = (addresses) => {
     const newAddresses = addresses.filter(
@@ -38,28 +37,16 @@ export const AccountsProvider = ({ children }) => {
       params: { addresses: newAddresses },
     }
 
-    fetch({ params: options })
+    getAccounts.fetch({ params: options })
   }
 
   useEffect(() => {
-    if (data != null) {
+    if (getAccounts.data != null) {
       const dataWithAddress = recentAddresses.map(async (e, i) => {
-        const getNftOptions = {
-          chain: "mumbai",
-          address: e,
-        }
-        const nftData = await account.getNFTs(getNftOptions)
-        const nftImages = nftData.result.map((e) => {
-          const image = JSON.parse(e.metadata)?.image
-          // If image does not exist or is less than a bit less than expected, it is classified as no image
-          if (image == null || image.length < 40) return "no img"
-          return resolveLink(image)
-        })
-        function imageFilterer(value) {
-          return value != "no img"
-        }
-        const filteredNftImages = nftImages.filter(imageFilterer)
-        const accData = data[i]
+        const userNftRes = await fetch(`/api/account/${e}`)
+        const userNftData = await userNftRes.json()
+        // console.log(userNftData)
+        const accData = getAccounts.data[i]
         const address = { address: e }
         const objectAccData = {
           name: accData[0],
@@ -68,9 +55,9 @@ export const AccountsProvider = ({ children }) => {
           bio: accData[3],
           followers: accData[4],
           following: accData[5],
-          nftData: nftData,
-          nftResult: nftData.result,
-          nftImages: filteredNftImages,
+          nftData: userNftData.nftData,
+          nftResult: userNftData.nftData.result,
+          nftImages: userNftData.nftImages,
         }
         setObjectAccountsData((prev) => {
           prev[e] = objectAccData
@@ -82,7 +69,7 @@ export const AccountsProvider = ({ children }) => {
         return [...prev, ...dataWithAddress]
       })
     }
-  }, [data])
+  }, [getAccounts.data])
 
   return (
     <AccountsContext.Provider

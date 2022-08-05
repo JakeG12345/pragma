@@ -20,15 +20,32 @@ export const PostsProvider = ({ children }) => {
       }
     )
     const jsonData = await res.json()
-    setPostData(jsonData.result)
 
-    console.log(jsonData.result)
+    const addresses = jsonData.result.map((e) => e.owner_of)
+    accounts.addAccountData(addresses)
 
-    if (postData) {
-      const addresses = postData.map((e) => e.owner_of)
-      console.log(addresses)
-      accounts.addAccountData(addresses)
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+    for (let index = 0; index < addresses.length; index++) {
+      const address = addresses[index]
+
+      let timeDelayed = 0
+      while (
+        accounts.objectAccountsData[address] == undefined &&
+        timeDelayed < 5000
+      ) {
+        timeDelayed += 10
+        await delay(timeDelayed)
+      }
     }
+
+    const postsWithUserdata = jsonData.result.map((e) => {
+      const address = e.owner_of
+      const userdata = accounts.objectAccountsData[address]
+      return { ...e, userdata: userdata }
+    })
+
+    setPostData(postsWithUserdata)
   }
 
   useEffect(() => {
