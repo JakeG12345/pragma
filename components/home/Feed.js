@@ -9,12 +9,11 @@ const Feed = () => {
   const accountContext = useContext(AccountsContext)
 
   return (
-    <div onClick={() => console.log(postContext.postData, accountContext.objectAccountsData)} >
+    <div>
       {postContext.postData ? (
         postContext.postData.map((nft, i) => {
           const metadata = JSON.parse(nft.metadata)
           const address = nft.owner_of
-          
           return (
             <Post
               header={metadata.name}
@@ -22,7 +21,6 @@ const Feed = () => {
               image={metadata.image}
               tokenId={nft.token_id}
               posterData={nft.userdata}
-              timestamp={nft.updated_at}
               posterAddress={address}
               isLast={i + 1 == postContext.postData.length}
               key={nft.token_id}
