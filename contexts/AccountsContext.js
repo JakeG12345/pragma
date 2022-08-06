@@ -35,20 +35,22 @@ export const AccountsProvider = ({ children }) => {
       params: { addresses: newAddresses },
     }
 
-    newAddresses.map(async (e) => {
-      const userNftRes = await fetch(`/api/account/${e}`)
-      const userNftData = await userNftRes.json()
-      setObjectAccountsData((prev) => {
-        prev[e] = {
-          ...prev[e],
-          nftData: userNftData.nftData,
-          nftResult: userNftData.nftData.result,
-          nftImages: userNftData.nftImages,
-        }
-        return prev
-      })
-    })
     getAccounts.fetch({ params: options })
+  }
+
+  const updateUserNFTs = async (accAddress) => {
+    const userNftRes = await fetch(`/api/account/${accAddress}`)
+    const userNftData = await userNftRes.json()
+    setObjectAccountsData((prev) => {
+      prev[accAddress] = {
+        ...prev[accAddress],
+        nftData: userNftData.nftData,
+        nftResult: userNftData.nftData.result,
+        nftImages: userNftData.nftImages,
+      }
+      return prev
+    })
+    return userNftData
   }
 
   const updateData = (data) => {
@@ -76,7 +78,7 @@ export const AccountsProvider = ({ children }) => {
   }, [getAccounts.data])
 
   return (
-    <AccountsContext.Provider value={{ addAccountData, objectAccountsData }}>
+    <AccountsContext.Provider value={{ addAccountData, objectAccountsData, updateUserNFTs }}>
       {children}
     </AccountsContext.Provider>
   )

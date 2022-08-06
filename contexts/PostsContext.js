@@ -45,15 +45,8 @@ export const PostsProvider = ({ children }) => {
   const updatePostData = (data) => {
     const postsWithUserdata = data.map((e) => {
       const address = e.owner_of
-      if (accounts.objectAccountsData[address]) {
-        const userdata = accounts.objectAccountsData[address]
-        console.log(userdata)
-        return { ...e, userdata: userdata }
-      }
-      else {
-        console.log(e)
-        return e
-      }
+      const userdata = accounts.objectAccountsData[address]
+      return { ...e, userdata: userdata }
     })
     setPostData(postsWithUserdata)
   }
