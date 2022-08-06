@@ -2,11 +2,11 @@ import React, { useContext } from "react"
 import { useMoralis } from "react-moralis"
 import NotAuthenticated from "../components/NotAuthenticated"
 import AccountUI from '../components/profile/AccountUI'
-import Context from '../contexts/Context'
+import UserContext from '../contexts/UserContext'
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata, a, nftImages, nftData] = useContext(Context)
+  const { userAddress, userShortenedAddress, userdata, a, nftImages, nftData } = useContext(UserContext)
 
   return (
     <div>

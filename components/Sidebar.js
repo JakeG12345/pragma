@@ -5,7 +5,7 @@ import polygonLogo from "../images/polygonLogo.png"
 import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
 import Link from "next/link"
 import { useMoralis } from "react-moralis"
-import Context from "../contexts/Context"
+import Context, { UserContext } from "../contexts/UserContext"
 import resolveLink from "../helpers/resolveLink"
 import useNotification from "./notifications/useNotification"
 
@@ -13,6 +13,7 @@ const Sidebar = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis()
   const [userAddress, userShortenedAddress, userdata, updateUserdata] =
     useContext(Context)
+  const currentUser = useContext(UserContext)
   const dispatch = useNotification()
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
   const [isDetailsShowing, setIsDetailsShowing] = useState(false)
@@ -25,7 +26,7 @@ const Sidebar = () => {
       })
         .then(function (user) {
           console.log("logged in user:", user)
-          updateUserdata()
+          currentUser.updateData()
         })
         .catch(function (error) {
           console.log(error)
@@ -102,9 +103,9 @@ const Sidebar = () => {
                     <div>
                       <Image
                         src={
-                          userdata
-                            ? userdata[1]
-                              ? resolveLink(userdata[1])
+                          currentUser.data
+                            ? currentUser.data[1]
+                              ? resolveLink(currentUser.data[1])
                               : pfpPlaceholder
                             : pfpPlaceholder
                         }
@@ -121,9 +122,9 @@ const Sidebar = () => {
                       <div className='w-12 h-12 rounded-full border-white border-2'>
                         <Image
                           src={
-                            userdata
-                              ? userdata[1]
-                                ? resolveLink(userdata[1])
+                            currentUser.data
+                              ? currentUser.data[1]
+                                ? resolveLink(currentUser.data[1])
                                 : pfpPlaceholder
                               : pfpPlaceholder
                           }
@@ -135,14 +136,14 @@ const Sidebar = () => {
                       </div>
                       <div className='pr-2'>
                         <h5 className='font-bold'>
-                          {userdata
-                            ? userdata[0] === ""
+                          {currentUser.data
+                            ? currentUser.data[0] === ""
                               ? "No name"
-                              : userdata[0]
+                              : currentUser.data[0]
                             : "Loading..."}
                         </h5>
                         <p className='text-gray-300 text-sm'>
-                          {userShortenedAddress}
+                          {currentUser.addressShort}
                         </p>
                       </div>
                     </span>
@@ -154,9 +155,9 @@ const Sidebar = () => {
                   <div className='flex flex-col items-center cursor-pointer'>
                     <Image
                       src={
-                        userdata
-                          ? userdata[1]
-                            ? resolveLink(userdata[1])
+                        currentUser.data
+                          ? currentUser.data[1]
+                            ? resolveLink(currentUser.data[1])
                             : pfpPlaceholder
                           : pfpPlaceholder
                       }
@@ -169,14 +170,14 @@ const Sidebar = () => {
                 </Link>
                 <div>
                   <h5 className='font-bold'>
-                    {userdata
-                      ? userdata[0] === ""
+                    {currentUser.data
+                      ? currentUser.data[0] === ""
                         ? "No name"
-                        : userdata[0]
+                        : currentUser.data[0]
                       : "Loading..."}
                   </h5>
                   <p className='text-gray-300 text-sm'>
-                    {userShortenedAddress}
+                    {currentUser.addressShort}
                   </p>
                 </div>
                 <div className='hidden lg:block pl-1 xl:pl-2'>

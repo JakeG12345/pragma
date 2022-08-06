@@ -6,13 +6,13 @@ import { IndigoButton } from "../Buttons"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import abi from "../../helpers/postsAbi.json"
 import useNotification from "../notifications/useNotification"
-import Context from "../../contexts/Context"
 import { postsAddress } from "../../helpers/info"
+import UserContext from '../../contexts/UserContext'
 
 const PostInFeed = () => {
   const { enableWeb3, Moralis } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const [userAddress, userShortenedAddress, userdata] = useContext(Context)
+  const user = useContext(UserContext)
   const dispatch = useNotification()
   const [heading, setHeading] = useState("")
   const [text, setText] = useState("")
@@ -122,9 +122,9 @@ const PostInFeed = () => {
           <div className='mt-5 h-20 w-20 rounded-full border-2 border-white'>
             <Image
               src={
-                userdata
-                  ? userdata[1]
-                    ? resolveLink(userdata[1])
+                user.data
+                  ? user.data[1]
+                    ? resolveLink(user.data[1])
                     : pfpPlaceholder
                   : pfpPlaceholder
               }

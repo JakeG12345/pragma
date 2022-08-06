@@ -6,11 +6,11 @@ import {
 } from "react-moralis"
 import abi from "../helpers/userdataAbi.json"
 import resolveLink from "../helpers/resolveLink"
-import { postsAddress, userdataAddress } from "../helpers/info"
+import { userdataAddress } from "../helpers/info"
 
-export const Context = createContext(null)
+export const UserContext = createContext(null)
 
-export const ContextProvider = ({ children }) => {
+export const UserContextProvider = ({ children }) => {
   const { Moralis } = useMoralis()
   const { native, account } = useMoralisWeb3Api()
 
@@ -26,12 +26,12 @@ export const ContextProvider = ({ children }) => {
     abi: abi,
   }
 
-  const { fetch, data, error, isLoading } = useMoralisWeb3ApiCall(
+  const getUserdata = useMoralisWeb3ApiCall(
     native.runContractFunction,
     { ...getUserdataOptions }
   )
 
-  const updateData = async () => {
+  const updateUserData = async () => {
     await Moralis.start({
       serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
       appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
@@ -52,7 +52,7 @@ export const ContextProvider = ({ children }) => {
       abi: abi,
       params: { userAddress: ethAddress },
     }
-    fetch({ params: userdataOptions })
+    getUserdata.fetch({ params: userdataOptions })
 
     const getNftOptions = {
       chain: "mumbai",
@@ -74,24 +74,23 @@ export const ContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    updateData()
+    updateUserData()
   }, [])
 
   return (
-    <Context.Provider
-      value={[
-        userAddress,
-        userShortenedAddress,
-        data,
-        updateData,
-        userNFTs,
-        userNftData,
-        isLoading
-      ]}
+    <UserContext.Provider
+      value={{
+        address: userAddress,
+        addressShort: userShortenedAddress,
+        data: getUserdata.data,
+        updateData: updateUserData,
+        nftImages: userNFTs,
+        nftData: userNftData,
+      }}
     >
       {children}
-    </Context.Provider>
+    </UserContext.Provider>
   )
 }
 
-export default Context
+export default UserContext

@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
 import { useMoralis } from "react-moralis"
-import Context from '../contexts/Context'
+import UserContext from '../contexts/UserContext'
 
 const NotAuthenticated = ({ pageName }) => {
   const { authenticate, isAuthenticated } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata, updateUserdata] = useContext(Context)
+  const { updateData } = useContext(UserContext)
 
   const login = async () => {
     if (!isAuthenticated) {
@@ -13,7 +13,7 @@ const NotAuthenticated = ({ pageName }) => {
       })
         .then(function (user) {
           console.log("logged in user:", user)
-          updateUserdata()
+          updateData()
         })
         .catch(function (error) {
           console.log(error)

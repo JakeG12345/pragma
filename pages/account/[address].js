@@ -47,7 +47,7 @@ const Account = () => {
         <div>
           <h1>
             Looks like the address your searching for doesn&apos;t have any account
-            details or the time taken to get those details took to long
+            details, nfts/posts or the time taken to get those details took to long
           </h1>
         </div>
       )

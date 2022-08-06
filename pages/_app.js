@@ -3,8 +3,8 @@ import AdBar from "../components/AdBar"
 import NotificationProvider from "../components/notifications/NotificationProvider"
 import Sidebar from "../components/Sidebar"
 import { AccountsProvider } from "../contexts/AccountsContext"
-import { ContextProvider } from "../contexts/Context"
 import { PostsProvider } from '../contexts/PostsContext'
+import { UserContextProvider } from '../contexts/UserContext'
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
@@ -34,7 +34,7 @@ const AppWrapper = ({ children }) => {
       <NotificationProvider>
         <AccountsProvider>
           <PostsProvider>
-            <ContextProvider>{children}</ContextProvider>
+            <UserContextProvider>{children}</UserContextProvider>
           </PostsProvider>
         </AccountsProvider>
       </NotificationProvider>

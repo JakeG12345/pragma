@@ -3,17 +3,17 @@ import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { userdataAddress } from "../../helpers/info"
 import { IndigoButton } from "../Buttons"
 import abi from "../../helpers/userdataAbi.json"
-import Context from "../../contexts/Context"
+import { UserContext } from "../../contexts/UserContext"
 import useNotification from "../notifications/useNotification"
 
 const FollowButton = ({ address }) => {
   const { enableWeb3, isWeb3Enabled } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const [userAddress] = useContext(Context)
+  const user = useContext(UserContext)
   const dispatch = useNotification()
 
   const follow = async () => {
-    if (address == userAddress)
+    if (address == user.address)
       return dispatch({ type: "ERROR", message: "You can't follow yourself!" })
 
     if (!isWeb3Enabled) await enableWeb3()

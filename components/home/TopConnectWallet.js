@@ -1,12 +1,10 @@
 import React, { useContext } from "react"
 import { useMoralis } from "react-moralis"
-import Context from '../../contexts/Context'
+import UserContext from '../../contexts/UserContext'
 
 const TopConnectWallet = () => {
   const { authenticate, isAuthenticated } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata, updateUserdata] = useContext(Context)
-
-//0x2B6326DC3cf0aDDd9920C0721c9fFEB23D9160c5
+  const { updateData } = useContext(UserContext)
 
   const login = async () => {
     if (!isAuthenticated) {
@@ -15,7 +13,7 @@ const TopConnectWallet = () => {
       })
         .then(function (user) {
           console.log("logged in user:", user)
-          updateUserdata()
+          updateData()
         })
         .catch(function (error) {
           console.log(error)

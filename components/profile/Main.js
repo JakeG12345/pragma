@@ -4,7 +4,7 @@ import resolveLink from "../../helpers/resolveLink"
 import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import { IndigoButton, OpenseaButton } from "../Buttons"
 import Link from "next/link"
-import Context from "../../contexts/Context"
+import UserContext from "../../contexts/UserContext"
 import { useMoralis } from "react-moralis"
 import FollowButton from "./FollowButton"
 import UnfollowButton from "./UnfollowButton"
@@ -12,15 +12,7 @@ import UnfollowButton from "./UnfollowButton"
 const Main = ({ userdata, address, isProfile }) => {
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
   const [isFollowingAccount, setIsFollowingAccount] = useState(null)
-  const [
-    userAddress,
-    userShortenedAddress,
-    currentUserData,
-    updateData,
-    userNFTs,
-    userNftData,
-    isCurrentUserdataLoading,
-  ] = useContext(Context)
+  const currentUser = useContext(UserContext)
   const shortAddress = `${address.slice(0, 4)}...${address.slice(38)}`
   const { isAuthenticated, authenticate } = useMoralis()
 
@@ -31,7 +23,7 @@ const Main = ({ userdata, address, isProfile }) => {
       })
         .then(function (user) {
           console.log("logged in user:", user)
-          updateData()
+          currentUser.updateData()
         })
         .catch(function (error) {
           console.log(error)
@@ -44,7 +36,7 @@ const Main = ({ userdata, address, isProfile }) => {
       setIsFollowingAccount(false)
     } else {
       userdata.followers.map((follower, i) => {
-        if (userAddress.toLowerCase() === follower.toLowerCase()) {
+        if (currentUser.address.toLowerCase() === follower.toLowerCase()) {
           setIsFollowingAccount(true)
         } else if (i + 1 == userdata.following.length) {
           setIsFollowingAccount(false)
@@ -55,11 +47,10 @@ const Main = ({ userdata, address, isProfile }) => {
 
   useEffect(() => {
     checkIsFollowingAccount()
-  }, [userdata, address, userAddress])
+  }, [userdata, address, currentUser.address])
 
   return (
-    <span
-      className='flex justify-between items-center'>
+    <span className='flex justify-between items-center'>
       <div className='-mt-24 ml-10 z-10'>
         <div className='border-white border-2 rounded-full w-40 h-40'>
           <Image

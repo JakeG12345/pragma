@@ -4,13 +4,13 @@ import Image from "next/image"
 import { IndigoButton, SaveButton } from "../Buttons"
 import useNotification from "../notifications/useNotification"
 import abi from "../../helpers/userdataAbi.json"
-import Context from '../../contexts/Context'
 import { userdataAddress } from '../../helpers/info'
+import UserContext from '../../contexts/UserContext'
 
 const PfpChange = () => {
   const { enableWeb3, Moralis } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const [userAddress, a, b, c, userNFTs] = useContext(Context)
+  const { nftImages } = useContext(UserContext)
   const dispatch = useNotification()
 
   const [selectedPfp, setSelectedPfp] = useState()
@@ -168,8 +168,8 @@ const PfpChange = () => {
       </span>
       <div className='flex items-center justify-center -mx-10 xl:-mx-14'>
         <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3'>
-          {userNFTs &&
-            userNFTs.map((e, i) => {
+          {nftImages &&
+            nftImages.map((e, i) => {
               return (
                 <div
                   key={i}
