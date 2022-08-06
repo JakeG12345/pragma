@@ -40,14 +40,13 @@ const Main = ({ userdata, address, isProfile }) => {
   }
 
   const checkIsFollowingAccount = () => {
-    if (userdata === null) return
-    if (userdata[4].length == 0) {
+    if (userdata.followers.length == 0) {
       setIsFollowingAccount(false)
     } else {
-      userdata[4].map((follower, i) => {
-        if (userAddress.toLowerCase() == follower.toLowerCase()) {
+      userdata.followers.map((follower, i) => {
+        if (userAddress.toLowerCase() === follower.toLowerCase()) {
           setIsFollowingAccount(true)
-        } else if (i + 1 == userdata[4].length) {
+        } else if (i + 1 == userdata.following.length) {
           setIsFollowingAccount(false)
         }
       })
@@ -65,9 +64,9 @@ const Main = ({ userdata, address, isProfile }) => {
         <div className='border-white border-2 rounded-full w-40 h-40'>
           <Image
             src={
-              userdata
-                ? userdata[1]
-                  ? resolveLink(userdata[1])
+              userdata.pfp
+                ? userdata.pfp
+                  ? resolveLink(userdata.pfp)
                   : pfpPlaceholder
                 : pfpPlaceholder
             }
@@ -80,7 +79,7 @@ const Main = ({ userdata, address, isProfile }) => {
         </div>
         <div className='ml-3'>
           <h1 className='text-xl font-semibold mt-3'>
-            {userdata && userdata[0]}
+            {userdata && userdata.name}
           </h1>
           <a
             href={`https://mumbai.polygonscan.com/address/${address}`}
@@ -99,14 +98,14 @@ const Main = ({ userdata, address, isProfile }) => {
         <span className='flex ml-3 mt-5 space-x-10'>
           <span className='flex text-sm hover:underline cursor-pointer'>
             <h4 className='font-semibold cursor-pointer'>
-              {userdata && userdata[5].length}
+              {userdata && userdata.following.length}
             </h4>
             &nbsp;
             <h5 className='text-gray-300'>Following</h5>
           </span>
           <span className='flex text-sm hover:underline cursor-pointer'>
             <h4 className='font-semibold cursor-pointer'>
-              {userdata && userdata[4].length}
+              {userdata && userdata.followers.length}
             </h4>
             &nbsp;
             <h5 className='text-gray-300'>Followers</h5>

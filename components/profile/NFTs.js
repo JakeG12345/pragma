@@ -1,16 +1,16 @@
 import Image from "next/image"
 import ReactLoading from "react-loading"
 
-const NFTs = ({ userdata, isProfile, nftImages }) => {
+const NFTs = ({ userdata, isProfile }) => {
   return (
-    <div className='m-14 mt-5 mx-5 space-y-3'>
+    <div className='m-14 mt-5 mx-5 space-y-3' onClick={() => console.log(userdata)}>
       <h1 className='ml-5 text-2xl font-bold'>
-        {isProfile ? "Your" : userdata[0] ? `${userdata[0]}'s` : "No name's"}{" "}
+        {isProfile ? "Your" : userdata.name ? `${userdata.name}'s` : "No name's"}{" "}
         NFT Images
       </h1>
       <div>
-        {nftImages ? (
-          nftImages.length == 0 ? (
+        {userdata.nftImages ? (
+          userdata.nftImages.length == 0 ? (
             <p className='ml-5'>
               {isProfile
                 ? "It appears you don't have any NFT Images in your wallet"
@@ -19,7 +19,7 @@ const NFTs = ({ userdata, isProfile, nftImages }) => {
           ) : (
             <div className='flex items-center justify-center'>
               <div className='grid grid-cols-2 gap-5'>
-                {nftImages.map((e, i) => {
+                {userdata.nftImages.map((e, i) => {
                   return (
                     <div key={i}>
                       <Image

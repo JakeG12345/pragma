@@ -10,7 +10,7 @@ const About = ({ userdata, isProfile }) => {
       </div>
     )
   } else {
-    if (userdata[3] == "") {
+    if (userdata.bio == "") {
       if (isProfile)
         return (
           <div className='flex flex-col items-center justify-center mt-5'>
@@ -37,7 +37,7 @@ const About = ({ userdata, isProfile }) => {
       return (
         <div className='m-14 mt-5 ml-10 space-y-3'>
           <h1 className='text-2xl font-bold'>Bio</h1>
-          <p>{userdata[3]}</p>
+          <p>{userdata.bio}</p>
         </div>
       )
     }

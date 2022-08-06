@@ -41,6 +41,7 @@ export const AccountsProvider = ({ children }) => {
   const updateUserNFTs = async (accAddress) => {
     const userNftRes = await fetch(`/api/account/${accAddress}`)
     const userNftData = await userNftRes.json()
+    console.log(userNftData)
     setObjectAccountsData((prev) => {
       prev[accAddress] = {
         ...prev[accAddress],
