@@ -23,7 +23,9 @@ export const AccountsProvider = ({ children }) => {
   })
 
   const addAccountData = (addresses) => {
-    const newAddresses = addresses.filter(
+    const uniqueAddresses = [...new Set(addresses)]
+
+    const newAddresses = uniqueAddresses.filter(
       (address) => !addressesFetched.includes(address)
     )
 
@@ -41,7 +43,6 @@ export const AccountsProvider = ({ children }) => {
   const updateUserNFTs = async (accAddress) => {
     const userNftRes = await fetch(`/api/account/${accAddress}`)
     const userNftData = await userNftRes.json()
-    console.log(userNftData)
     setObjectAccountsData((prev) => {
       prev[accAddress] = {
         ...prev[accAddress],
@@ -57,18 +58,20 @@ export const AccountsProvider = ({ children }) => {
   const updateData = (data) => {
     recentAddresses.map((e, i) => {
       const accData = data[i]
-      const objectAccData = {
-        name: accData[0],
-        pfp: accData[1],
-        banner: accData[2],
-        bio: accData[3],
-        followers: accData[4],
-        following: accData[5],
+      if (accData) {
+        const objectAccData = {
+          name: accData[0],
+          pfp: accData[1],
+          banner: accData[2],
+          bio: accData[3],
+          followers: accData[4],
+          following: accData[5],
+        }
+        setObjectAccountsData((prev) => {
+          prev[e] = { ...prev[e], ...objectAccData }
+          return prev
+        })
       }
-      setObjectAccountsData((prev) => {
-        prev[e] = { ...prev[e], ...objectAccData }
-        return prev
-      })
     })
   }
 
@@ -79,7 +82,9 @@ export const AccountsProvider = ({ children }) => {
   }, [getAccounts.data])
 
   return (
-    <AccountsContext.Provider value={{ addAccountData, objectAccountsData, updateUserNFTs }}>
+    <AccountsContext.Provider
+      value={{ addAccountData, objectAccountsData, updateUserNFTs }}
+    >
       {children}
     </AccountsContext.Provider>
   )
