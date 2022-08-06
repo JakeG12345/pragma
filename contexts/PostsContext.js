@@ -32,19 +32,29 @@ export const PostsProvider = ({ children }) => {
       let timeDelayed = 0
       while (
         accounts.objectAccountsData[address] == undefined &&
-        timeDelayed < 5000
+        timeDelayed < 1000
       ) {
         timeDelayed += 10
         await delay(timeDelayed)
       }
     }
 
-    const postsWithUserdata = jsonData.result.map((e) => {
-      const address = e.owner_of
-      const userdata = accounts.objectAccountsData[address]
-      return { ...e, userdata: userdata }
-    })
+    updatePostData(jsonData.result)
+  }
 
+  const updatePostData = (data) => {
+    const postsWithUserdata = data.map((e) => {
+      const address = e.owner_of
+      if (accounts.objectAccountsData[address]) {
+        const userdata = accounts.objectAccountsData[address]
+        console.log(userdata)
+        return { ...e, userdata: userdata }
+      }
+      else {
+        console.log(e)
+        return e
+      }
+    })
     setPostData(postsWithUserdata)
   }
 

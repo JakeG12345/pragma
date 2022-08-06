@@ -1,14 +1,12 @@
 import { createContext, useEffect, useState } from "react"
 import { useMoralisWeb3Api, useMoralisWeb3ApiCall } from "react-moralis"
 import { userdataAddress } from "../helpers/info"
-import resolveLink from "../helpers/resolveLink"
 import abi from "../helpers/userdataAbi.json"
 
 export const AccountsContext = createContext()
 
 export const AccountsProvider = ({ children }) => {
-  const { native, account } = useMoralisWeb3Api()
-  const [accountsData, setAccountsData] = useState([])
+  const { native } = useMoralisWeb3Api()
   const [addressesFetched, setAddressesFetched] = useState([])
   const [recentAddresses, setRecentAddresses] = useState()
   const [objectAccountsData, setObjectAccountsData] = useState({})
@@ -37,44 +35,48 @@ export const AccountsProvider = ({ children }) => {
       params: { addresses: newAddresses },
     }
 
-    getAccounts.fetch({ params: options })
-  }
-
-  useEffect(() => {
-    if (getAccounts.data != null) {
-      const dataWithAddress = recentAddresses.map(async (e, i) => {
-        const userNftRes = await fetch(`/api/account/${e}`)
-        const userNftData = await userNftRes.json()
-        // console.log(userNftData)
-        const accData = getAccounts.data[i]
-        const address = { address: e }
-        const objectAccData = {
-          name: accData[0],
-          pfp: accData[1],
-          banner: accData[2],
-          bio: accData[3],
-          followers: accData[4],
-          following: accData[5],
+    newAddresses.map(async (e) => {
+      const userNftRes = await fetch(`/api/account/${e}`)
+      const userNftData = await userNftRes.json()
+      setObjectAccountsData((prev) => {
+        prev[e] = {
+          ...prev[e],
           nftData: userNftData.nftData,
           nftResult: userNftData.nftData.result,
           nftImages: userNftData.nftImages,
         }
-        setObjectAccountsData((prev) => {
-          prev[e] = objectAccData
-          return prev
-        })
-        return { ...objectAccData, ...address }
+        return prev
       })
-      setAccountsData((prev) => {
-        return [...prev, ...dataWithAddress]
+    })
+    getAccounts.fetch({ params: options })
+  }
+
+  const updateData = (data) => {
+    recentAddresses.map((e, i) => {
+      const accData = data[i]
+      const objectAccData = {
+        name: accData[0],
+        pfp: accData[1],
+        banner: accData[2],
+        bio: accData[3],
+        followers: accData[4],
+        following: accData[5],
+      }
+      setObjectAccountsData((prev) => {
+        prev[e] = { ...prev[e], ...objectAccData }
+        return prev
       })
+    })
+  }
+
+  useEffect(() => {
+    if (getAccounts.data != null) {
+      updateData(getAccounts.data)
     }
   }, [getAccounts.data])
 
   return (
-    <AccountsContext.Provider
-      value={{ accountsData, addAccountData, objectAccountsData }}
-    >
+    <AccountsContext.Provider value={{ addAccountData, objectAccountsData }}>
       {children}
     </AccountsContext.Provider>
   )

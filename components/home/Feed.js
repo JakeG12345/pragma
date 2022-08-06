@@ -9,12 +9,12 @@ const Feed = () => {
   const accountContext = useContext(AccountsContext)
 
   return (
-    <div>
+    <div onClick={() => console.log(postContext.postData, accountContext.objectAccountsData)} >
       {postContext.postData ? (
         postContext.postData.map((nft, i) => {
           const metadata = JSON.parse(nft.metadata)
           const address = nft.owner_of
-
+          
           return (
             <Post
               header={metadata.name}
