@@ -9,8 +9,8 @@ const Banner = ({ userdata }) => {
       <Image
         src={
           userdata
-            ? userdata[2]
-              ? resolveLink(userdata[2])
+            ? userdata.banner
+              ? resolveLink(userdata.banner)
               : bannerPlaceholder
             : bannerPlaceholder
         }

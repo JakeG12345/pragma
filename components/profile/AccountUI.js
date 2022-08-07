@@ -5,7 +5,7 @@ import ProfilePosts from "./ProfilePosts"
 import About from "./About"
 import NFTs from "./NFTs"
 
-const AccountUI = ({ userdata, address, isProfile, nftImages, nftData }) => {
+const AccountUI = ({ userdata, address, isProfile }) => {
   const [selectedTab, setSelectedTab] = useState(1)
 
   const getTabClassName = (tabNum) => {

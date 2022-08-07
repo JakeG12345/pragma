@@ -53,23 +53,11 @@ export const UserContextProvider = ({ children }) => {
     }
     getUserdata.fetch({ params: userdataOptions })
 
-    const getNftOptions = {
-      chain: "mumbai",
-      address: ethAddress,
-    }
-    const nftData = await account.getNFTs(getNftOptions)
-    setUserNftData(nftData)
-    const nftImages = nftData.result.map((e) => {
-      const image = JSON.parse(e.metadata)?.image
-      // If image does not exist or is less than a bit less than expected, it is classified as no image
-      if (image == null || image.length < 40) return "no img"
-      return resolveLink(image)
-    })
-    function imageFilterer(value) {
-      return value != "no img"
-    }
-    const filteredNftImages = nftImages.filter(imageFilterer)
-    setUserNFTs(filteredNftImages)
+    const userNftRes = await fetch(`/api/account/${ethAddress}`)
+    const userNftData = await userNftRes.json()
+
+    setUserNftData(userNftData.nftData)
+    setUserNFTs(userNftData.nftImages)
   }
 
   useEffect(() => {
