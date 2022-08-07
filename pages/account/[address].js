@@ -46,23 +46,27 @@ const Account = () => {
       return (
         <div>
           <h1>
-            Looks like the address your searching for doesn&apos;t have any account
-            details, nfts/posts or the time taken to get those details took to long
+            Looks like the address your searching for doesn&apos;t have any
+            account details, nfts/posts or the time taken to get those details
+            took to long
           </h1>
         </div>
       )
     else
       return (
-        <div
-          className='flex items-center justify-center mt-10'
-          onClick={() => console.log(delayTime)}
-        >
+        <div className='flex items-center justify-center mt-10'>
           <ReactLoading type='bubbles' width={200} />
         </div>
       )
   } else {
     if (userdata.nftData == undefined) addNFTs()
-    return <AccountUI address={address} userdata={userdata} isProfile={false} />
+    return (
+      <AccountUI
+        address={address}
+        userdata={userdata}
+        isProfile={false}
+      />
+    )
   }
 }
 

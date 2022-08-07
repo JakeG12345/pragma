@@ -32,7 +32,7 @@ const Main = ({ userdata, address, isProfile }) => {
   }
 
   const checkIsFollowingAccount = () => {
-    if (userdata.followers.length == 0) {
+    if (userdata == null || userdata.followers.length == 0) {
       setIsFollowingAccount(false)
     } else {
       userdata.followers.map((follower, i) => {
@@ -55,7 +55,7 @@ const Main = ({ userdata, address, isProfile }) => {
         <div className='border-white border-2 rounded-full w-40 h-40'>
           <Image
             src={
-              userdata.pfp
+              userdata
                 ? userdata.pfp
                   ? resolveLink(userdata.pfp)
                   : pfpPlaceholder

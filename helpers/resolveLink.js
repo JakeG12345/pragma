@@ -1,6 +1,7 @@
 const resolveLink = (url) => {
-  if (!url || !url.includes("ipfs://")) return url
-  return url.replace("ipfs://", "https://gateway.ipfs.io/ipfs/")
+  const link = String(url)
+  if (!link || !link.includes("ipfs://")) return link
+  return link.replace("ipfs://", "https://gateway.ipfs.io/ipfs/")
 }
 
 export default resolveLink

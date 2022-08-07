@@ -5,12 +5,11 @@ import { postsAddress } from '../../helpers/info'
 
 const ProfilePosts = ({ userdata, address, isProfile }) => {
   const [posts, setPosts] = useState()
-  const nftData = userdata.nftResult
 
   useEffect(() => {
-    if (nftData) {
+    if (userdata && userdata.nftResult) {
       setPosts(null)
-      nftData.map((nft) => {
+      userdata.nftResult.map((nft) => {
         if (nft.token_address == postsAddress.toLowerCase()) {
           setPosts((prev) => {
             if (prev == null) return [nft]
@@ -19,7 +18,7 @@ const ProfilePosts = ({ userdata, address, isProfile }) => {
         }
       })
     }
-  }, [nftData])
+  }, [userdata])
 
   return (
     <div>

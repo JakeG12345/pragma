@@ -26,10 +26,9 @@ export const UserContextProvider = ({ children }) => {
     abi: abi,
   }
 
-  const getUserdata = useMoralisWeb3ApiCall(
-    native.runContractFunction,
-    { ...getUserdataOptions }
-  )
+  const getUserdata = useMoralisWeb3ApiCall(native.runContractFunction, {
+    ...getUserdataOptions,
+  })
 
   const updateUserData = async () => {
     await Moralis.start({
@@ -76,6 +75,7 @@ export const UserContextProvider = ({ children }) => {
   useEffect(() => {
     updateUserData()
   }, [])
+
 
   return (
     <UserContext.Provider
