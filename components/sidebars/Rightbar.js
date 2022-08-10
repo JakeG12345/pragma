@@ -1,11 +1,12 @@
-import Image from "next/image"
 import React, { useState } from "react"
-import testImg from "../../images/pfpPlaceholder.jpeg"
+import FeaturedHeadline from "./FeaturedHeadline"
+import ReactLoading from "react-loading"
+import Article from "./Article"
 
 // 7c3f6be619fd4f3188e242d365e28613
 
 const Rightbar = () => {
-  const [headlines, setHeadlines] = useState([])
+  const [headlines, setHeadlines] = useState()
 
   const getHeadlines = async () => {
     const res = await fetch(
@@ -21,26 +22,26 @@ const Rightbar = () => {
     getHeadlines()
   }, [])
 
-  return (
-    <div className='w-64 xl:w-72'>
-      <h1 className='mt-10 text-center text-xl font-bold'>
-        Bitcoin Crashes Over 52%
-      </h1>
-      <p className='mt-3 mx-3'>
-        It appears bitcoin is going to continue to crash over the next few
-        months as holders are selling all their tokens. It is currently expected
-        that they will reach a valuation of under $40,000 before the end of the
-        year
-      </p>
-      <div className='p-3'>
-        <Image src={testImg} alt='' width={300} height={300} />
+  if (headlines)
+    return (
+      <div className='sticky hidden md:block top-0 bg-gradient-to-b h-full from-sky-500 to-indigo-500'>
+        <div className='w-72 xl:w-80'>
+          <div className='mt-3'>
+            <FeaturedHeadline article={headlines[0]} />
+          </div>
+          {headlines.map((e, i) => {
+            if (i != 0) return <Article key={i} article={e} />
+          })}
+          <button onClick={() => console.log(headlines)}>Get Headlines</button>
+        </div>
       </div>
-      {headlines.map((e, i) => {
-        return <div key={i}>{e.title}</div>
-      })}
-      <button onClick={() => console.log(headlines)}>Get Headlines</button>
-    </div>
-  )
+    )
+  else
+    return (
+      <div className='w-72 xl:w-80 sticky hidden md:block items-center justify-center top-0 bg-gradient-to-b h-screen from-sky-500 to-indigo-500'>
+        <ReactLoading type='bubbles' width={200} />
+      </div>
+    )
 }
 
 export default Rightbar

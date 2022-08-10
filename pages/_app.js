@@ -17,9 +17,7 @@ function MyApp({ Component, pageProps }) {
         <div className='w-full'>
           <Component {...pageProps} />
         </div>
-        <div className='sticky hidden md:block top-0 bg-gradient-to-b h-full from-sky-500 to-indigo-500'>
-          <Rightbar />
-        </div>
+        <Rightbar />
       </div>
     </AppWrapper>
   )
