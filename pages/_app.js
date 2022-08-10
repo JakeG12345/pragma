@@ -1,10 +1,10 @@
 import { MoralisProvider } from "react-moralis"
-import AdBar from "../components/AdBar"
 import NotificationProvider from "../components/notifications/NotificationProvider"
-import Sidebar from "../components/Sidebar"
+import Rightbar from "../components/sidebars/Rightbar"
+import Sidebar from "../components/sidebars/Sidebar"
 import { AccountsProvider } from "../contexts/AccountsContext"
-import { PostsProvider } from '../contexts/PostsContext'
-import { UserContextProvider } from '../contexts/UserContext'
+import { PostsProvider } from "../contexts/PostsContext"
+import { UserContextProvider } from "../contexts/UserContext"
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
@@ -17,8 +17,8 @@ function MyApp({ Component, pageProps }) {
         <div className='w-full'>
           <Component {...pageProps} />
         </div>
-        <div className='sticky hidden md:block top-0 h-screen bg-gradient-to-b from-sky-500 to-indigo-500'>
-          <AdBar />
+        <div className='sticky hidden md:block top-0 bg-gradient-to-b h-full from-sky-500 to-indigo-500'>
+          <Rightbar />
         </div>
       </div>
     </AppWrapper>

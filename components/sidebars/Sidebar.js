@@ -1,18 +1,16 @@
 import React, { useState, useContext } from "react"
 import Tab from "./Tab"
 import Image from "next/image"
-import polygonLogo from "../images/polygonLogo.png"
-import pfpPlaceholder from "../images/pfpPlaceholder.jpeg"
+import polygonLogo from "../../images/polygonLogo.png"
+import pfpPlaceholder from "../../images/pfpPlaceholder.jpeg"
 import Link from "next/link"
 import { useMoralis } from "react-moralis"
-import Context, { UserContext } from "../contexts/UserContext"
-import resolveLink from "../helpers/resolveLink"
-import useNotification from "./notifications/useNotification"
+import UserContext from "../../contexts/UserContext"
+import resolveLink from "../../helpers/resolveLink"
+import useNotification from "../notifications/useNotification"
 
 const Sidebar = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis()
-  const [userAddress, userShortenedAddress, userdata, updateUserdata] =
-    useContext(Context)
   const currentUser = useContext(UserContext)
   const dispatch = useNotification()
   const [isLogoutShowing, setIsLogoutShowing] = useState(false)
