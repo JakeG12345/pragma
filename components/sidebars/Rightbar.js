@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import FeaturedHeadline from "./FeaturedHeadline"
 import ReactLoading from "react-loading"
 import Article from "./Article"
 
@@ -10,11 +9,11 @@ const Rightbar = () => {
 
   const getHeadlines = async () => {
     const res = await fetch(
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=7c3f6be619fd4f3188e242d365e28613"
+      "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=7c3f6be619fd4f3188e242d365e28613"
     )
     const data = await res.json()
     const articles = data.articles
-    const featuredArticles = articles.slice(0, 5)
+    const featuredArticles = articles.slice(0, 6)
     setHeadlines(featuredArticles)
   }
 
@@ -24,22 +23,25 @@ const Rightbar = () => {
 
   if (headlines)
     return (
-      <div className='sticky hidden md:block top-0 bg-gradient-to-b h-full from-sky-500 to-indigo-500'>
+      <div className='sticky hidden md:block top-0 bg-gradient-to-b h-screen from-sky-500 to-indigo-500'>
         <div className='w-72 xl:w-80'>
-          <div className='mt-3'>
-            <FeaturedHeadline article={headlines[0]} />
+          <h1 className='text-xl text-center font-bold mt-5 mb-2'>
+            News in Tech
+          </h1>
+          <div className='grid grid-cols-2' >
+            {headlines.map((e, i) => {
+              return <Article key={i} article={e} />
+            })}
           </div>
-          {headlines.map((e, i) => {
-            if (i != 0) return <Article key={i} article={e} />
-          })}
-          <button onClick={() => console.log(headlines)}>Get Headlines</button>
         </div>
       </div>
     )
   else
     return (
-      <div className='w-72 xl:w-80 sticky hidden md:block items-center justify-center top-0 bg-gradient-to-b h-screen from-sky-500 to-indigo-500'>
-        <ReactLoading type='bubbles' width={200} />
+      <div className='sticky hidden md:block top-0 bg-gradient-to-b h-screen from-sky-500 to-indigo-500'>
+        <div className='w-72 xl:w-80 flex items-center justify-center'>
+          <ReactLoading type='bubbles' width={200} />
+        </div>
       </div>
     )
 }
