@@ -1,4 +1,5 @@
-import React, { useContext } from "react"
+import { useRouter } from "next/router"
+import React, { useContext, useEffect, useState } from "react"
 import { useMoralis } from "react-moralis"
 import NotAuthenticated from "../components/NotAuthenticated"
 import AccountUI from "../components/profile/AccountUI"
@@ -6,13 +7,31 @@ import UserContext from "../contexts/UserContext"
 
 const Profile = () => {
   const { isAuthenticated } = useMoralis()
-  const { address, nftImages, nftData, data } =
-    useContext(UserContext)
+  const { address, nftImages, nftData, data } = useContext(UserContext)
+  const [state, setState] = useState("posts")
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const theState = router.asPath.slice(15)
+    if (
+      router.asPath.slice(9, 14) != "state" ||
+      (theState != "posts" && theState != "about" && theState != "nfts")
+    ) {
+      router.push("/profile?state=posts", undefined, { shallow: true })
+    }
+  }, [])
+
+  useEffect(() => {
+    const theState = router.query.state
+    if (theState != undefined) setState(theState)
+  }, [router.query.state])
 
   return (
     <div>
       {isAuthenticated ? (
         <AccountUI
+          state={state}
           userdata={{
             name: data && data[0],
             pfp: data && data[1],
@@ -21,7 +40,7 @@ const Profile = () => {
             followers: data ? data[4] : [],
             following: data ? data[5] : [],
             nftData: nftData && nftData,
-            nftResult: nftData && (nftData.result && nftData.result),
+            nftResult: nftData && nftData.result && nftData.result,
             nftImages: nftImages && nftImages,
           }}
           address={address}

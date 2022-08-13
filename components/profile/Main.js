@@ -8,12 +8,10 @@ import UserContext from "../../contexts/UserContext"
 import { useMoralis } from "react-moralis"
 import FollowButton from "./FollowButton"
 import UnfollowButton from "./UnfollowButton"
-import FollowingModal from "./FollowingModal"
 
 const Main = ({ userdata, address, isProfile }) => {
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
   const [isFollowingAccount, setIsFollowingAccount] = useState(null)
-  const [showFollowing, setShowFollowing] = useState(false)
   const currentUser = useContext(UserContext)
   const shortAddress = `${address.slice(0, 4)}...${address.slice(38)}`
   const { isAuthenticated, authenticate } = useMoralis()
@@ -53,13 +51,9 @@ const Main = ({ userdata, address, isProfile }) => {
 
   return (
     <>
-      <div className='absolute z-50 w-screen bg-black'>
-        {showFollowing && <FollowingModal following={userdata.followers} />}
-      </div>
 
       <span
         className='flex justify-between items-center'
-        onMouseEnter={() => setShowFollowing(false)}
       >
         <div className='-mt-24 ml-10 z-10'>
           <div className='border-white border-2 rounded-full w-40 h-40'>
@@ -99,7 +93,6 @@ const Main = ({ userdata, address, isProfile }) => {
           <span className='flex ml-3 mt-5 space-x-10'>
             <span
               className='flex text-sm hover:underline cursor-pointer'
-              onMouseEnter={() => setShowFollowing(true)}
             >
               <h4 className='font-semibold cursor-pointer'>
                 {userdata && userdata.following.length}

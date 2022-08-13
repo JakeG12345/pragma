@@ -4,16 +4,15 @@ import Main from "./Main"
 import ProfilePosts from "./ProfilePosts"
 import About from "./About"
 import NFTs from "./NFTs"
+import { useRouter } from 'next/router'
 
-const AccountUI = ({ userdata, address, isProfile }) => {
-  const [selectedTab, setSelectedTab] = useState(1)
+const AccountUI = ({ userdata, address, isProfile, state }) => {
+  const router = useRouter()
 
-  const getTabClassName = (tabNum) => {
+  const getTabClassName = (tabName) => {
     const defaultStyles = "cursor-pointer w-14 text-center"
     const isSelectedStyles = "border-b-4 border-sky-500"
-    const style = `${
-      selectedTab == tabNum && isSelectedStyles
-    } ${defaultStyles}`
+    const style = `${state == tabName && isSelectedStyles} ${defaultStyles}`
     return style
   }
 
@@ -27,20 +26,30 @@ const AccountUI = ({ userdata, address, isProfile }) => {
         <div className='flex justify-center border-b border-gray-500'>
           <span className='flex w-3/4 justify-around mt-5 font-semibold'>
             <div
-              className={getTabClassName(1)}
-              onClick={() => setSelectedTab(1)}
+              className={getTabClassName("posts")}
+              onClick={() =>
+                router.push("/profile?state=posts", undefined, {
+                  shallow: true,
+                })
+              }
             >
               Posts
             </div>
             <div
-              className={getTabClassName(2)}
-              onClick={() => setSelectedTab(2)}
+              className={getTabClassName("about")}
+              onClick={() =>
+                router.push("/profile?state=about", undefined, {
+                  shallow: true,
+                })
+              }
             >
               About
             </div>
             <div
-              className={getTabClassName(3)}
-              onClick={() => setSelectedTab(3)}
+              className={getTabClassName("nfts")}
+              onClick={() =>
+                router.push("/profile?state=nfts", undefined, { shallow: true })
+              }
             >
               NFTs
             </div>
@@ -48,9 +57,17 @@ const AccountUI = ({ userdata, address, isProfile }) => {
         </div>
       </div>
       <div>
-        {selectedTab == 1 && <ProfilePosts userdata={userdata} isProfile={isProfile} address={address} />}
-        {selectedTab == 2 && <About userdata={userdata} isProfile={isProfile} />}
-        {selectedTab == 3 && <NFTs userdata={userdata} isProfile={isProfile} />}
+        {state == "posts" && (
+          <ProfilePosts
+            userdata={userdata}
+            isProfile={isProfile}
+            address={address}
+          />
+        )}
+        {state == "about" && (
+          <About userdata={userdata} isProfile={isProfile} />
+        )}
+        {state == "nfts" && <NFTs userdata={userdata} isProfile={isProfile} />}
       </div>
     </div>
   )
