@@ -8,11 +8,13 @@ import UserContext from "../../contexts/UserContext"
 import { useMoralis } from "react-moralis"
 import FollowButton from "./FollowButton"
 import UnfollowButton from "./UnfollowButton"
+import { useRouter } from "next/router"
 
 const Main = ({ userdata, address, isProfile }) => {
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
   const [isFollowingAccount, setIsFollowingAccount] = useState(null)
   const currentUser = useContext(UserContext)
+  const router = useRouter()
   const shortAddress = `${address.slice(0, 4)}...${address.slice(38)}`
   const { isAuthenticated, authenticate } = useMoralis()
 
@@ -51,10 +53,7 @@ const Main = ({ userdata, address, isProfile }) => {
 
   return (
     <>
-
-      <span
-        className='flex justify-between items-center'
-      >
+      <span className='flex justify-between items-center'>
         <div className='-mt-24 ml-10 z-10'>
           <div className='border-white border-2 rounded-full w-40 h-40'>
             <Image
@@ -93,6 +92,11 @@ const Main = ({ userdata, address, isProfile }) => {
           <span className='flex ml-3 mt-5 space-x-10'>
             <span
               className='flex text-sm hover:underline cursor-pointer'
+              onClick={() =>
+                router.push("/profile?state=following", undefined, {
+                  shallow: true,
+                })
+              }
             >
               <h4 className='font-semibold cursor-pointer'>
                 {userdata && userdata.following.length}
@@ -100,7 +104,14 @@ const Main = ({ userdata, address, isProfile }) => {
               &nbsp;
               <h5 className='text-gray-300'>Following</h5>
             </span>
-            <span className='flex text-sm hover:underline cursor-pointer'>
+            <span
+              className='flex text-sm hover:underline cursor-pointer'
+              onClick={() =>
+                router.push("/profile?state=followers", undefined, {
+                  shallow: true,
+                })
+              }
+            >
               <h4 className='font-semibold cursor-pointer'>
                 {userdata && userdata.followers.length}
               </h4>
