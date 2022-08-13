@@ -41,7 +41,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='flex flex-col items-center w-16 md:20 lg:w-72 xl:w-80'>
+    <div className='flex flex-col items-center w-16 lg:w-64 xl:w-72'>
       <Link href='/'>
         <div className='my-12 cursor-pointer'>
           <span className='hidden lg:flex space-x-3'>

@@ -8,10 +8,12 @@ import UserContext from "../../contexts/UserContext"
 import { useMoralis } from "react-moralis"
 import FollowButton from "./FollowButton"
 import UnfollowButton from "./UnfollowButton"
+import FollowingModal from "./FollowingModal"
 
 const Main = ({ userdata, address, isProfile }) => {
   const [isMouseOverAddress, setIsMouseOverAddress] = useState(false)
   const [isFollowingAccount, setIsFollowingAccount] = useState(null)
+  const [showFollowing, setShowFollowing] = useState(false)
   const currentUser = useContext(UserContext)
   const shortAddress = `${address.slice(0, 4)}...${address.slice(38)}`
   const { isAuthenticated, authenticate } = useMoralis()
@@ -50,86 +52,101 @@ const Main = ({ userdata, address, isProfile }) => {
   }, [userdata, address, currentUser.address])
 
   return (
-    <span className='flex justify-between items-center'>
-      <div className='-mt-24 ml-10 z-10'>
-        <div className='border-white border-2 rounded-full w-40 h-40'>
-          <Image
-            src={
-              userdata
-                ? userdata.pfp
-                  ? resolveLink(userdata.pfp)
+    <>
+      <div className='absolute z-50 w-screen bg-black'>
+        {showFollowing && <FollowingModal following={userdata.followers} />}
+      </div>
+
+      <span
+        className='flex justify-between items-center'
+        onMouseEnter={() => setShowFollowing(false)}
+      >
+        <div className='-mt-24 ml-10 z-10'>
+          <div className='border-white border-2 rounded-full w-40 h-40'>
+            <Image
+              src={
+                userdata
+                  ? userdata.pfp
+                    ? resolveLink(userdata.pfp)
+                    : pfpPlaceholder
                   : pfpPlaceholder
-                : pfpPlaceholder
-            }
-            alt='pfp'
-            height={175}
-            width={175}
-            priority={true}
-            style={{ borderRadius: 175 / 2 }}
-          />
+              }
+              alt='pfp'
+              height={175}
+              width={175}
+              priority={true}
+              style={{ borderRadius: 175 / 2 }}
+            />
+          </div>
+          <div className='ml-3'>
+            <h1 className='text-xl font-semibold mt-3'>
+              {userdata && userdata.name}
+            </h1>
+            <a
+              href={`https://mumbai.polygonscan.com/address/${address}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              <p
+                className='text-gray-300 cursor-pointer'
+                onMouseEnter={() => setIsMouseOverAddress(true)}
+                onMouseLeave={() => setIsMouseOverAddress(false)}
+              >
+                {isMouseOverAddress ? address : shortAddress}
+              </p>
+            </a>
+          </div>
+          <span className='flex ml-3 mt-5 space-x-10'>
+            <span
+              className='flex text-sm hover:underline cursor-pointer'
+              onMouseEnter={() => setShowFollowing(true)}
+            >
+              <h4 className='font-semibold cursor-pointer'>
+                {userdata && userdata.following.length}
+              </h4>
+              &nbsp;
+              <h5 className='text-gray-300'>Following</h5>
+            </span>
+            <span className='flex text-sm hover:underline cursor-pointer'>
+              <h4 className='font-semibold cursor-pointer'>
+                {userdata && userdata.followers.length}
+              </h4>
+              &nbsp;
+              <h5 className='text-gray-300'>Followers</h5>
+            </span>
+          </span>
         </div>
-        <div className='ml-3'>
-          <h1 className='text-xl font-semibold mt-3'>
-            {userdata && userdata.name}
-          </h1>
+        <span className='-mt-12 flex items-center'>
           <a
-            href={`https://mumbai.polygonscan.com/address/${address}`}
+            href={`https://testnets.opensea.io/${address}`}
             target='_blank'
             rel='noreferrer'
           >
-            <p
-              className='text-gray-300 cursor-pointer'
-              onMouseEnter={() => setIsMouseOverAddress(true)}
-              onMouseLeave={() => setIsMouseOverAddress(false)}
-            >
-              {isMouseOverAddress ? address : shortAddress}
-            </p>
+            <OpenseaButton />
           </a>
-        </div>
-        <span className='flex ml-3 mt-5 space-x-10'>
-          <span className='flex text-sm hover:underline cursor-pointer'>
-            <h4 className='font-semibold cursor-pointer'>
-              {userdata && userdata.following.length}
-            </h4>
-            &nbsp;
-            <h5 className='text-gray-300'>Following</h5>
-          </span>
-          <span className='flex text-sm hover:underline cursor-pointer'>
-            <h4 className='font-semibold cursor-pointer'>
-              {userdata && userdata.followers.length}
-            </h4>
-            &nbsp;
-            <h5 className='text-gray-300'>Followers</h5>
-          </span>
+          {isProfile ? (
+            <Link href='/settings'>
+              <div>
+                <IndigoButton
+                  text='Edit Profile'
+                  extraStyles='mr-12 font-bold'
+                />
+              </div>
+            </Link>
+          ) : isAuthenticated == false ? (
+            <IndigoButton
+              text='Connect'
+              extraStyles='mr-12 font-bold px-7'
+              onClick={login}
+            />
+          ) : isFollowingAccount == true ? (
+            <UnfollowButton address={address} />
+          ) : (
+            <FollowButton address={address} />
+          )}
         </span>
-      </div>
-      <span className='-mt-12 flex items-center'>
-        <a
-          href={`https://testnets.opensea.io/${address}`}
-          target='_blank'
-          rel='noreferrer'
-        >
-          <OpenseaButton />
-        </a>
-        {isProfile ? (
-          <Link href='/settings'>
-            <div>
-              <IndigoButton text='Edit Profile' extraStyles='mr-12 font-bold' />
-            </div>
-          </Link>
-        ) : isAuthenticated == false ? (
-          <IndigoButton
-            text='Connect'
-            extraStyles='mr-12 font-bold px-7'
-            onClick={login}
-          />
-        ) : isFollowingAccount == true ? (
-          <UnfollowButton address={address} />
-        ) : (
-          <FollowButton address={address} />
-        )}
       </span>
-    </span>
+    </>
   )
 }
 

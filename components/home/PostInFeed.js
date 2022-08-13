@@ -117,7 +117,7 @@ const PostInFeed = () => {
 
   return (
     <div className='bg-[#00000045] border-b border-white'>
-      <span className='py-5 flex'>
+      <span className='py-5 flex pr-5 md:pr-10 lg:pr-20 xl:pr-28'>
         <div className='flex justify-center w-44'>
           <div className='mt-5 h-20 w-20 rounded-full border-2 border-white'>
             <Image
@@ -187,7 +187,6 @@ const PostInFeed = () => {
             </span>
           </div>
         </div>
-        <div className='w-44'></div>
       </span>
     </div>
   )

@@ -2,11 +2,9 @@ import React, { useContext } from "react"
 import Post from "./Post"
 import ReactLoading from "react-loading"
 import { PostsContext } from "../../contexts/PostsContext"
-import { AccountsContext } from "../../contexts/AccountsContext"
 
 const Feed = () => {
   const postContext = useContext(PostsContext)
-  const accountContext = useContext(AccountsContext)
 
   return (
     <div>

@@ -2,14 +2,12 @@ import React, { useState } from "react"
 import ReactLoading from "react-loading"
 import Article from "./Article"
 
-// 7c3f6be619fd4f3188e242d365e28613
-
-const Rightbar = () => {
+const NewsPanel = () => {
   const [headlines, setHeadlines] = useState()
 
   const getHeadlines = async () => {
     const res = await fetch(
-      "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=7c3f6be619fd4f3188e242d365e28613"
+      `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.NEWS_API_KEY}`
     )
     const data = await res.json()
     const articles = data.articles
@@ -46,4 +44,4 @@ const Rightbar = () => {
     )
 }
 
-export default Rightbar
+export default NewsPanel
