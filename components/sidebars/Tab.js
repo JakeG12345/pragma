@@ -10,7 +10,7 @@ const Tab = ({ tabName, to, svgLocation }) => {
     <Link href={to}>
       <button
         className={`flex items-center w-12 h-12 lg:w-44 lg:py-2 rounded-full hover:bg-[#150f2e] ${
-          router.asPath == to && "bg-[#22184c]"
+          ((router.asPath == to) || (router.asPath.slice(0,8) == to)) && "bg-[#22184c]"
         }`}
       >
         <div className='w-14 flex items-center justify-center'>
