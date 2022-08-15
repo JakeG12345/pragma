@@ -5,14 +5,13 @@ import {
   useMoralisWeb3ApiCall,
 } from "react-moralis"
 import abi from "../helpers/userdataAbi.json"
-import resolveLink from "../helpers/resolveLink"
 import { userdataAddress } from "../helpers/info"
 
 export const UserContext = createContext(null)
 
 export const UserContextProvider = ({ children }) => {
   const { Moralis } = useMoralis()
-  const { native, account } = useMoralisWeb3Api()
+  const { native } = useMoralisWeb3Api()
 
   const [userAddress, setUserAddress] = useState("Loading...")
   const [userShortenedAddress, setUserShortenedAddress] = useState("Loading...")
@@ -32,8 +31,9 @@ export const UserContextProvider = ({ children }) => {
 
   const updateUserData = async () => {
     await Moralis.start({
-      serverUrl: "https://vitfkaqzlt7v.usemoralis.com:2053/server",
-      appId: "xvr9Dhgt45W1cwe7Vjxb79OTNHGz6cHqH2cqvsUL",
+      serverUrl: process.env.MORALIS_SERVER_URL,
+      appId: process.env.MORALIS_APP_ID,
+      logLevel: 'verbose',
     })
     const user = Moralis.User.current()
     if (user == null) return

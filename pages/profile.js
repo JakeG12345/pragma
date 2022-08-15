@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { useMoralis } from "react-moralis"
 import NotAuthenticated from "../components/NotAuthenticated"
 import AccountUI from "../components/profile/AccountUI"
-import Followers from "../components/profile/Followers"
-import Following from "../components/profile/Following"
+import Followingers from '../components/profile/Followingers'
 import UserContext from "../contexts/UserContext"
 
 const Profile = () => {
@@ -37,12 +36,11 @@ const Profile = () => {
     <div>
       {isAuthenticated ? (
         state == "following" ? (
-          <Following />
+          <Followingers followingers={data && data[5]} isFollowers={false} />
         ) : state == "followers" ? (
-          <Followers />
+          <Followingers followingers={data && data[4]} isFollowers={true} />
         ) : (
           <AccountUI
-            state={state}
             userdata={{
               name: data && data[0],
               pfp: data && data[1],
@@ -54,6 +52,7 @@ const Profile = () => {
               nftResult: nftData && nftData.result && nftData.result,
               nftImages: nftImages && nftImages,
             }}
+            state={state}
             address={address}
             isProfile={true}
             nftImages={nftImages}
