@@ -6,13 +6,17 @@ const NewsPanel = () => {
   const [headlines, setHeadlines] = useState()
 
   const getHeadlines = async () => {
-    const res = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.NEWS_API_KEY}`
-    )
-    const data = await res.json()
-    const articles = data.articles
-    const featuredArticles = articles.slice(0, 6)
-    setHeadlines(featuredArticles)
+    try {
+      const res = await fetch(
+        `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.NEWS_API_KEY}`
+      )
+      const data = await res.json()
+      const articles = data.articles
+      const featuredArticles = articles.slice(0, 6)
+      setHeadlines(featuredArticles)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useState(() => {
@@ -26,7 +30,7 @@ const NewsPanel = () => {
           <h1 className='text-xl text-center font-bold mt-5 mb-2'>
             News in Tech
           </h1>
-          <div className='grid grid-cols-2' >
+          <div className='grid grid-cols-2'>
             {headlines.map((e, i) => {
               return <Article key={i} article={e} />
             })}
