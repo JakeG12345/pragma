@@ -4,15 +4,16 @@ import Main from "./Main"
 import ProfilePosts from "./ProfilePosts"
 import About from "./About"
 import NFTs from "./NFTs"
-import { useRouter } from 'next/router'
 
-const AccountUI = ({ userdata, address, isProfile, state }) => {
-  const router = useRouter()
+const AccountUI = ({ userdata, address, isProfile }) => {
+  const [selectedTab, setSelectedTab] = useState(1)
 
-  const getTabClassName = (tabName) => {
+  const getTabClassName = (tabNum) => {
     const defaultStyles = "cursor-pointer w-14 text-center"
     const isSelectedStyles = "border-b-4 border-sky-500"
-    const style = `${state == tabName && isSelectedStyles} ${defaultStyles}`
+    const style = `${
+      selectedTab == tabNum && isSelectedStyles
+    } ${defaultStyles}`
     return style
   }
 
@@ -26,30 +27,20 @@ const AccountUI = ({ userdata, address, isProfile, state }) => {
         <div className='flex justify-center border-b border-gray-500'>
           <span className='flex w-3/4 justify-around mt-5 font-semibold'>
             <div
-              className={getTabClassName("posts")}
-              onClick={() =>
-                router.push("/profile?state=posts", undefined, {
-                  shallow: true,
-                })
-              }
+              className={getTabClassName(1)}
+              onClick={() => setSelectedTab(1)}
             >
               Posts
             </div>
             <div
-              className={getTabClassName("about")}
-              onClick={() =>
-                router.push("/profile?state=about", undefined, {
-                  shallow: true,
-                })
-              }
+              className={getTabClassName(2)}
+              onClick={() => setSelectedTab(2)}
             >
               About
             </div>
             <div
-              className={getTabClassName("nfts")}
-              onClick={() =>
-                router.push("/profile?state=nfts", undefined, { shallow: true })
-              }
+              className={getTabClassName(3)}
+              onClick={() => setSelectedTab(3)}
             >
               NFTs
             </div>
@@ -57,17 +48,9 @@ const AccountUI = ({ userdata, address, isProfile, state }) => {
         </div>
       </div>
       <div>
-        {state == "posts" && (
-          <ProfilePosts
-            userdata={userdata}
-            isProfile={isProfile}
-            address={address}
-          />
-        )}
-        {state == "about" && (
-          <About userdata={userdata} isProfile={isProfile} />
-        )}
-        {state == "nfts" && <NFTs userdata={userdata} isProfile={isProfile} />}
+        {selectedTab == 1 && <ProfilePosts userdata={userdata} isProfile={isProfile} address={address} />}
+        {selectedTab == 2 && <About userdata={userdata} isProfile={isProfile} />}
+        {selectedTab == 3 && <NFTs userdata={userdata} isProfile={isProfile} />}
       </div>
     </div>
   )
