@@ -10,6 +10,7 @@ const NewsPanel = () => {
       const res = await fetch(
         `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.NEWS_API_KEY}`
       )
+      console.log(process.env.NEWS_API_KEY)
       const data = await res.json()
       const articles = data.articles
       const featuredArticles = articles.slice(0, 6)
