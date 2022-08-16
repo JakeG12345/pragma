@@ -1,7 +1,7 @@
 export default function handler(req, res) {
   const getData = async () => {
     const response = await fetch(
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=15&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`,
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=15&CMC_PRO_API_KEY=b1e07853-6fd3-4af7-8d5c-6b334df7bc0a`,
       {
         method: 'GET',
         headers: {

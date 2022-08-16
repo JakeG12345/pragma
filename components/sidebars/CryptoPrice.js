@@ -10,6 +10,7 @@ const CryptoPrice = ({ data }) => {
             src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${data.id}.png`}
             width={27}
             height={27}
+            alt=''
           />
           <h3 className='text-lg font-semibold'>{data.name}</h3>
           <h4 className='text-gray-300'>{data.symbol}</h4>
