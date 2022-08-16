@@ -1,6 +1,6 @@
 import { MoralisProvider } from "react-moralis"
 import NotificationProvider from "../components/notifications/NotificationProvider"
-import NewsPanel from '../components/sidebars/NewsPanel'
+import PricePanel from '../components/sidebars/PricePanel'
 import Sidebar from "../components/sidebars/Sidebar"
 import { AccountsProvider } from "../contexts/AccountsContext"
 import { PostsProvider } from "../contexts/PostsContext"
@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
         <div className='w-full'>
           <Component {...pageProps} />
         </div>
-        <NewsPanel />
+        <PricePanel />
       </div>
     </AppWrapper>
   )
