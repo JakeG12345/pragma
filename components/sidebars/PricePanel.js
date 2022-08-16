@@ -3,28 +3,28 @@ import ReactLoading from "react-loading"
 import CryptoPrice from "./CryptoPrice"
 
 const PricePanel = () => {
-  const [topTen, setTopTen] = useState()
+  const [top15, setTop15] = useState()
 
   useState(() => {
     const getData = async () => {
-      const res = await fetch("/api/getTopTen")
+      const res = await fetch("/api/getTop15")
       const data = await res.json()
-      console.log(data.data.data)
-      setTopTen(data.data.data)
+      setTop15(data.data.data)
     }
 
     getData()
   }, [])
 
-  if (topTen)
+  if (top15)
     return (
       <div className='sticky hidden md:block top-0 bg-gradient-to-b h-screen from-sky-500 to-indigo-500'>
         <div className='w-72 xl:w-80'>
           <h1 className='text-xl text-center font-bold mt-5 mb-2'>
             Top Crypto&apos;s
           </h1>
-          <div>
-            {topTen.map((e) => {
+          <p className='text-center'>All prices are in USD</p>
+          <div className='mt-5'>
+            {top15.map((e) => {
               return <CryptoPrice key={e.id} data={e} />
             })}
           </div>

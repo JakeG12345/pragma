@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['ipfs.moralis.io', 'gateway.ipfs.io'],
+    domains: ['ipfs.moralis.io', 'gateway.ipfs.io', 's2.coinmarketcap.com'],
   },
   env: {
     MORALIS_API_KEY: process.env.MORALIS_API_KEY,
