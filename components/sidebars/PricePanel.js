@@ -7,9 +7,14 @@ const PricePanel = () => {
 
   useState(() => {
     const getData = async () => {
-      const res = await fetch("/api/getTop15")
-      const data = await res.json()
-      setTop15(data.data.data)
+      try {
+        const res = await fetch("/api/get-crypto")
+        const data = await res.json()
+        console.log(data)
+        setTop15(data.data.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
 
     getData()
