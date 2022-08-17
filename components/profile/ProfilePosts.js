@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
 import Post from "../home/Post"
 import ReactLoading from "react-loading"
-import { postsAddress } from '../../helpers/info'
+import { postsAddress } from "../../helpers/info"
+import Link from 'next/link'
 
 const ProfilePosts = ({ userdata, address, isProfile }) => {
-  const [posts, setPosts] = useState()
+  const [posts, setPosts] = useState("not-set")
 
   useEffect(() => {
     if (userdata && userdata.nftResult) {
@@ -22,29 +23,27 @@ const ProfilePosts = ({ userdata, address, isProfile }) => {
 
   return (
     <div>
-      {
-        posts ? (
-          posts.map((post, i) => {
-            const metadata = JSON.parse(post.metadata)
-            return (
-              <Post
-                header={metadata.name}
-                text={metadata.description}
-                image={metadata.image}
-                tokenId={post.token_id}
-                posterData={userdata}
-                posterAddress={address}
-                isLast={i + 1 == posts.length}
-                key={post.token_id}
-              />
-            )
-          })
-        ) : (
-          // posts == "not-set" ?
-          <div className='flex items-center justify-center mt-10'>
-            <ReactLoading type='bubbles' width={200} />
-          </div>
-        ) /*  : (
+      {posts && posts != "not-set" ? (
+        posts.map((post, i) => {
+          const metadata = JSON.parse(post.metadata)
+          return (
+            <Post
+              header={metadata.name}
+              text={metadata.description}
+              image={metadata.image}
+              tokenId={post.token_id}
+              posterData={userdata}
+              posterAddress={address}
+              isLast={i + 1 == posts.length}
+              key={post.token_id}
+            />
+          )
+        })
+      ) : posts == "not-set" ? (
+        <div className='flex items-center justify-center mt-10'>
+          <ReactLoading type='bubbles' width={200} />
+        </div>
+      ) : (
         <div className='flex flex-col items-center space-y-3'>
           <h1 className='ml-5 mt-5 text-2xl font-bold'>
             {isProfile ? "You Have No Posts" : "User Has No Posts"}
@@ -58,8 +57,7 @@ const ProfilePosts = ({ userdata, address, isProfile }) => {
             </p>
           )}
         </div>
-          ) */
-      }
+      )}
     </div>
   )
 }
